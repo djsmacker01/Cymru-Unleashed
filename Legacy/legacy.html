@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-   
+
 </head>
 
 <body>
@@ -23,12 +23,18 @@
             </button>
             <nav id="nav">
                 <ul>
-                    <li><a href="/Home/index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/About/about.html"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/Activities/activities.html"><i class="fas fa-futbol"></i> Activities</a></li>
-                    <li><a href="legacy.html" class="active"><i class="fas fa-monument"></i> Legacy</a></li>
-                    <li><a href="media.html"><i class="fas fa-photo-video"></i> Media</a></li>
-                    <li><a href="get-involved.html"><i class="fas fa-hands-helping"></i> Get Involved</a></li>
+                    <li><a href="/Home/index.html"><i class="fas fa-home"></i> <span
+                                data-translate="home">Home</span></a></li>
+                    <li><a href="/About/about.html"><i class="fas fa-info-circle"></i> <span
+                                data-translate="about">About</span></a></li>
+                    <li><a href="/Activities/activities.html"><i class="fas fa-futbol"></i> <span
+                                data-translate="activities">Activities</span></a></li>
+                    <li><a href="legacy.html" class="active"><i class="fas fa-monument"></i> <span
+                                data-translate="legacy">Legacy</span></a></li>
+                    <li><a href="media.html"><i class="fas fa-photo-video"></i> <span
+                                data-translate="media">Media</span></a></li>
+                    <li><a href="get-involved.html"><i class="fas fa-hands-helping"></i> <span
+                                data-translate="get-involved">Get Involved</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -37,8 +43,8 @@
     <!-- Page Hero -->
     <section class="page-hero">
         <div class="container page-hero-content">
-            <h1>Our Legacy</h1>
-            <p>Creating lasting impact beyond UEFA Euro 2025</p>
+            <h1 data-translate="legacy-title">Our Legacy</h1>
+            <p data-translate="legacy-subtitle">Creating lasting impact beyond UEFA Euro 2025</p>
         </div>
     </section>
 
@@ -46,13 +52,13 @@
     <section>
         <div class="container">
             <div class="legacy-intro">
-                <h2>Legacy Beyond 2025</h2>
-                <p>Cymru Unleashed isn't just a project - it's a movement designed to create lasting change in
-                    communities across Wales, with a focus on empowering the next generation of Welsh women through
-                    sport, art, and culture.</p>
+                <h2 data-translate="legacy-title">Legacy Beyond 2025</h2>
+                <p data-translate="legacy-intro">Cymru Unleashed isn't just a project - it's a movement designed to
+                    create lasting change in communities across Wales, with a focus on empowering the next generation of
+                    Welsh women through sport, art, and culture.</p>
             </div>
 
-            <div class="legacy-quote">
+            <div class="legacy-quote" data-translate="legacy-quote">
                 "From a single summer to a lasting cultural shift - for girls, by girls, in Wales."
             </div>
 
@@ -65,11 +71,12 @@
                         <i class="fas fa-palette"></i>
                     </div>
                     <div class="pillar-content">
-                        <h3>Permanent Public Art</h3>
-                        <p>A landmark installation in Cardiff Bay Cultural Hub celebrating women in Welsh sport,
-                            co-created by young participants and professional artists.</p>
-                        <p>This permanent piece will stand as a visible reminder of the power of women's sport and its
-                            cultural significance in Wales.</p>
+                        <h3 data-translate="permanent-art">Permanent Public Art</h3>
+                        <p data-translate="permanent-art-desc">A landmark installation in Cardiff Bay Cultural Hub
+                            celebrating women in Welsh sport, co-created by young participants and professional artists.
+                        </p>
+                        <p data-translate="permanent-art-impact">This permanent piece will stand as a visible reminder
+                            of the power of women's sport and its cultural significance in Wales.</p>
                     </div>
                 </div>
 
@@ -81,11 +88,11 @@
                         <i class="fas fa-cloud"></i>
                     </div>
                     <div class="pillar-content">
-                        <h3>Digital Archive for Schools</h3>
-                        <p>A comprehensive bilingual digital resource featuring VR content, lesson plans, and
-                            educational materials on sport, equality, and Welsh culture.</p>
-                        <p>This archive will be freely available to schools across Wales, ensuring the project's impact
-                            continues in classrooms for years to come.</p>
+                        <h3 data-translate="digital-archive">Digital Archive for Schools</h3>
+                        <p data-translate="digital-archive-desc">A comprehensive bilingual digital resource featuring VR
+                            content, lesson plans, and educational materials on sport, equality, and Welsh culture.</p>
+                        <p data-translate="digital-archive-impact">This archive will be freely available to schools
+                            across Wales, ensuring the project's impact continues in classrooms for years to come.</p>
                     </div>
                 </div>
 
@@ -97,11 +104,12 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="pillar-content">
-                        <h3>Annual Sports-Art Workshops</h3>
-                        <p>Through signed MOUs with partner schools, we'll deliver ongoing workshops that blend sports
-                            skills with creative expression.</p>
-                        <p>These annual programs will ensure that the connections between sport, identity, and culture
-                            continue to be explored by new generations of young Welsh women.</p>
+                        <h3 data-translate="annual-workshops">Annual Sports-Art Workshops</h3>
+                        <p data-translate="annual-workshops-desc">Through signed MOUs with partner schools, we'll
+                            deliver ongoing workshops that blend sports skills with creative expression.</p>
+                        <p data-translate="annual-workshops-impact">These annual programs will ensure that the
+                            connections between sport, identity, and culture continue to be explored by new generations
+                            of young Welsh women.</p>
                     </div>
                 </div>
             </div>
@@ -111,7 +119,7 @@
     <!-- Impact Stories -->
     <section class="impact-stories">
         <div class="container">
-            <h2>Impact Stories</h2>
+            <h2 data-translate="impact-stories">Impact Stories</h2>
             <div class="stories-slider">
                 <div class="stories-track" id="stories-track">
                     <div class="story-slide">
@@ -320,7 +328,8 @@
     </footer>
 
     <!-- JavaScript -->
- <script src="script.js"></script>
+    <script src="/js/language.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
