@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities | Cymru Unleashed</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+</head>
+
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="/Home/index.html" class="logo">Cymru <span>Unleashed</span></a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="nav">
+                <ul>
+                    <li><a href="/Home/index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/About/about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="activities.html" class="active"><i class="fas fa-futbol"></i> Activities</a></li>
+                    <li><a href="legacy.html"><i class="fas fa-monument"></i> Legacy</a></li>
+                    <li><a href="media.html"><i class="fas fa-photo-video"></i> Media</a></li>
+                    <li><a href="get-involved.html"><i class="fas fa-hands-helping"></i> Get Involved</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container page-hero-content">
+            <h1>Our Activities</h1>
+            <p>Empowering young Welsh women through sport, art, and digital innovation</p>
+        </div>
+    </section>
+
+    <!-- Activities Tabs -->
+    <section>
+        <div class="container">
+            <div class="activities-tabs">
+                <button class="activity-tab active" data-tab="sports"><i class="fas fa-futbol"></i> Sports
+                    Workshops</button>
+                <button class="activity-tab" data-tab="art"><i class="fas fa-palette"></i> Art Installations</button>
+                <button class="activity-tab" data-tab="digital"><i class="fas fa-vr-cardboard"></i> Digital
+                    Campaign</button>
+                <button class="activity-tab" data-tab="timeline"><i class="fas fa-calendar-alt"></i> Project
+                    Timeline</button>
+            </div>
+
+            <!-- Sports Workshops Tab -->
+            <div class="activity-content active" id="sports-content">
+                <div class="activity-intro">
+                    <h2>Sports Workshops & Tournaments</h2>
+                    <p>Our sports workshops bring together young women, local coaches, and professional athletes to
+                        build skills, confidence, and community through football and other sports activities.</p>
+                </div>
+
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="/api/placeholder/600/400" alt="Football Skills Workshop">
+                        </div>
+                        <div class="event-details">
+                            <div class="event-meta">
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i> Butetown Community Centre
+                                </div>
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i> June 12, 2025
+                                </div>
+                            </div>
+                            <h3>Football Skills Workshop</h3>
+                            <div class="event-description">
+                                <p>Learn fundamental football skills from professional coaches. This beginner-friendly
+                                    workshop focuses on building confidence, teamwork, and technical skills for girls
+                                    aged 12-15.</p>
+                            </div>
+                            <a href="get-involved.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="/api/placeholder/600/400" alt="Leadership Through Sport">
+                        </div>
+                        <div class="event-details">
+                            <div class="event-meta">
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i> Grangetown Youth Centre
+                                </div>
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i> June 18, 2025
+                                </div>
+                            </div>
+                            <h3>Leadership Through Sport</h3>
+                            <div class="event-description">
+                                <p>This workshop combines sports activities with leadership development, helping young
+                                    women build confidence and essential leadership skills both on and off the field.
+                                </p>
+                            </div>
+                            <a href="get-involved.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="/api/placeholder/600/400" alt="Mini-Tournament">
+                        </div>
+                        <div class="event-details">
+                            <div class="event-meta">
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i> Tiger Bay FC Grounds
+                                </div>
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i> July 5, 2025
+                                </div>
+                            </div>
+                            <h3>Community Mini-Tournament</h3>
+                            <div class="event-description">
+                                <p>Join our inclusive mini-tournament where teams from different communities come
+                                    together to play, learn, and celebrate women's football in the lead-up to Euro 2025.
+                                </p>
+                            </div>
+                            <a href="get-involved.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="/api/placeholder/600/400" alt="Meet the Pros">
+                        </div>
+                        <div class="event-details">
+                            <div class="event-meta">
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i> Cardiff Sports Village
+                                </div>
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i> July 12, 2025
+                                </div>
+                            </div>
+                            <h3>Meet the Pros Session</h3>
+                            <div class="event-description">
+                                <p>An inspiring opportunity for young girls to meet and train with professional women
+                                    footballers, including members of the Welsh national team.</p>
+                            </div>
+                            <a href="get-involved.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Art Installations Tab -->
+            <div class="activity-content" id="art-content">
+                <div class="activity-intro">
+                    <h2>Community Art Installations</h2>
+                    <p>Our traveling art exhibitions celebrate the stories of Welsh women in sport through various
+                        creative mediums, giving voice to underrepresented communities and inspiring the next
+                        generation.</p>
+                </div>
+
+                <div class="installations-grid">
+                    <div class="installation-card">
+                        <div class="installation-image">
+                            <img src="/api/placeholder/400/300" alt="Women of Welsh Football">
+                        </div>
+                        <div class="installation-content">
+                            <h3>Women of Welsh Football</h3>
+                            <p>A photographic exhibition celebrating the pioneers and current stars of women's football
+                                in Wales, telling their stories through powerful imagery and personal narratives.</p>
+                            <div class="installation-details">
+                                <span><i class="fas fa-palette"></i> Photography & Text</span>
+                                <span><i class="fas fa-map-pin"></i> Cardiff Bay</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="installation-card">
+                        <div class="installation-image">
+                            <img src="/api/placeholder/400/300" alt="Breaking Barriers">
+                        </div>
+                        <div class="installation-content">
+                            <h3>Breaking Barriers</h3>
+                            <p>A mixed-media installation exploring the challenges and triumphs of women from
+                                marginalized communities in Welsh sport, co-created with young participants.</p>
+                            <div class="installation-details">
+                                <span><i class="fas fa-palette"></i> Mixed Media</span>
+                                <span><i class="fas fa-map-pin"></i> Multiple Venues</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="installation-card">
+                        <div class="installation-image">
+                            <img src="/api/placeholder/400/300" alt="The Future is Female">
+                        </div>
+                        <div class="installation-content">
+                            <h3>The Future is Female</h3>
+                            <p>A forward-looking exhibition featuring artwork created by young Welsh girls expressing
+                                their hopes, dreams, and vision for women in sport and society.</p>
+                            <div class="installation-details">
+                                <span><i class="fas fa-palette"></i> Various Media</span>
+                                <span><i class="fas fa-map-pin"></i> Schools Tour</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="installation-card">
+                        <div class="installation-image">
+                            <img src="/api/placeholder/400/300" alt="Voices of the Valleys">
+                        </div>
+                        <div class="installation-content">
+                            <h3>Voices of the Valleys</h3>
+                            <p>An audio-visual installation featuring stories and testimonials from women in sports from
+                                the Welsh valleys, highlighting the importance of community and cultural identity.</p>
+                            <div class="installation-details">
+                                <span><i class="fas fa-palette"></i> Audio-Visual</span>
+                                <span><i class="fas fa-map-pin"></i> Valley Communities</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="installation-card">
+                        <div class="installation-image">
+                            <img src="/api/placeholder/400/300" alt="Celtic Warriors">
+                        </div>
+                        <div class="installation-content">
+                            <h3>Celtic Warriors</h3>
+                            <p>A celebration of Welsh heritage through sport, featuring vibrant murals and installations
+                                that connect contemporary women's sports with Welsh cultural traditions.</p>
+                            <div class="installation-details">
+                                <span><i class="fas fa-palette"></i> Murals & Sculpture</span>
+                                <span><i class="fas fa-map-pin"></i> Cultural Centres</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Digital Campaign Tab -->
+            <div class="activity-content" id="digital-content">
+                <div class="activity-intro">
+                    <h2>Digital Campaign & VR Experience</h2>
+                    <p>Our digital strategy connects Welsh culture and women's sport through innovative content,
+                        bilingual storytelling, and immersive experiences that reach audiences around the world.</p>
+                </div>
+
+                <div class="campaign-content">
+                    <div class="campaign-text">
+                        <h3>Bilingual Digital Content</h3>
+                        <p>Our social media campaign celebrates Welsh women in sport through engaging, shareable content
+                            in both English and Welsh, ensuring our message is inclusive and representative of Welsh
+                            culture.</p>
+
+                        <ul class="feature-list">
+                            <li>Dynamic content across Instagram, TikTok, and Twitter</li>
+                            <li>Athlete spotlights featuring current and aspiring Welsh sports stars</li>
+                            <li>Behind-the-scenes footage from our events and workshops</li>
+                            <li>Interactive challenges and participation opportunities</li>
+                            <li>Collaboration with Welsh influencers and community leaders</li>
+                        </ul>
+
+                        <a href="media.html" class="btn">Follow Our Channels</a>
+                    </div>
+
+                    <div class="campaign-image">
+                        <img src="/api/placeholder/600/400" alt="Digital Campaign">
+                    </div>
+                </div>
+
+                <div class="vr-experience">
+                    <h3>360° VR Journey: "In Her Boots"</h3>
+                    <p>Our flagship digital project is an immersive VR experience that follows a young Welsh girl's
+                        journey through sport, identity, and culture. Viewers can experience firsthand the challenges,
+                        triumphs, and transformative power of sport for young women in Wales.</p>
+
+                    <div class="vr-image">
+                        <img src="/api/placeholder/800/400" alt="VR Experience">
+                    </div>
+
+                    <p>The VR experience will be available on YouTube VR and showcased at all our events, schools, and
+                        community centers. It features bilingual narration and has been created in collaboration with
+                        young women from across Wales who shared their stories and perspectives.</p>
+
+                    <a href="#" class="btn">Preview the Experience</a>
+                </div>
+            </div>
+
+            <!-- Timeline Tab -->
+            <div class="activity-content" id="timeline-content">
+                <div class="activity-intro">
+                    <h2>Project Timeline</h2>
+                    <p>Cymru Unleashed spans from early 2025 through 2026, with activities planned before, during, and
+                        after UEFA Women's Euro 2025 to create lasting impact.</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Planning & Development</h4>
+                            <p>April 2025</p>
+                            <p>Team formation, partnership building, and detailed planning of all activities and events.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>VR Content Creation</h4>
+                            <p>April - May 2025</p>
+                            <p>Production of our 360° VR experience "In Her Boots" featuring young Welsh women's
+                                journeys in sport.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Pre-Tournament Workshops</h4>
+                            <p>May - June 2025</p>
+                            <p>First series of sports workshops and art sessions in communities across Wales.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Exhibition Launches</h4>
+                            <p>June 2025</p>
+                            <p>Opening of our traveling art exhibitions in Cardiff Bay and other key locations.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Tournament Activities</h4>
+                            <p>July 2025</p>
+                            <p>Peak activity during UEFA Women's Euro 2025 with tournaments, viewing parties, and
+                                special events.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Digital Campaign Launch</h4>
+                            <p>July 2025</p>
+                            <p>Full rollout of social media campaign and VR experience release.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Post-Tournament Events</h4>
+                            <p>August - September 2025</p>
+                            <p>Continuing workshops and events to maintain momentum after the tournament.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>School Program Integration</h4>
+                            <p>September 2025 - 2026</p>
+                            <p>Implementation of ongoing school workshops and educational resources.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Legacy Phase</h4>
+                            <p>2026 and beyond</p>
+                            <p>Permanent art installation unveiling, digital archive launch, and ongoing community
+                                programs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join CTA -->
+    <section class="join-cta">
+        <div class="container">
+            <h2>Be Part of the Movement</h2>
+            <p>Whether you want to participate in our events, volunteer your time, or partner with us as an
+                organization, there are many ways to get involved with Cymru Unleashed.</p>
+            <a href="get-involved.html" class="btn">Get Involved Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Cymru <span>Unleashed</span></div>
+                    <p>Empowering the next generation of Welsh women through sport, art, and culture.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="partner-logos">
+                        <img src="/api/placeholder/100/40" alt="OTID Entertainment" class="partner-logo">
+                        <img src="/api/placeholder/100/40" alt="Afrowales" class="partner-logo">
+                        <img src="/api/placeholder/100/40" alt="Race Council Cymru" class="partner-logo">
+                        <img src="/api/placeholder/100/40" alt="Klat" class="partner-logo">
+                        <img src="/api/placeholder/100/40" alt="Native Radio" class="partner-logo">
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="media.html">Media</a></li>
+                        <li><a href="get-involved.html">Get Involved</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:osama@otidentertainment.com">Email: osama@otidentertainment.com</a></li>
+                        <li><a href="#">Instagram: @CymruUnleashed</a></li>
+                        <li><a href="#">Twitter: @UnleashedWales</a></li>
+                        <li><a href="#">TikTok: @CymruUnleashed</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Cymru Unleashed. All rights reserved.</p>
+                <div class="language-toggle">
+                    <a href="#" class="active">English</a> | <a href="#">Cymraeg</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
