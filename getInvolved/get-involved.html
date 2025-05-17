@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Involved | Cymru Unleashed</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+</head>
+
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">Cymru <span>Unleashed</span></a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="activities.html"><i class="fas fa-futbol"></i> Activities</a></li>
+                    <li><a href="legacy.html"><i class="fas fa-monument"></i> Legacy</a></li>
+                    <li><a href="media.html"><i class="fas fa-photo-video"></i> Media</a></li>
+                    <li><a href="get-involved.html" class="active"><i class="fas fa-hands-helping"></i> Get Involved</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container page-hero-content">
+            <h1>Join the Movement</h1>
+            <p>Be part of empowering the next generation of Welsh women</p>
+        </div>
+    </section>
+
+    <!-- Options Section -->
+    <section>
+        <div class="container">
+            <div class="options-intro">
+                <h2>How You Can Help</h2>
+                <p>There are many ways to get involved with Cymru Unleashed, from volunteering your time to partnering
+                    with us as an organization.</p>
+            </div>
+
+            <div class="get-involved-options">
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Volunteer</h3>
+                    <p>Help at workshops or support on-site events across Wales. Be part of creating impact in your
+                        community. We need volunteers with all kinds of skills and availability.</p>
+                    <button class="btn form-tab-btn" data-tab="volunteer">Learn More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3>School Sign-Up</h3>
+                    <p>Host events or request curriculum resources for your school. Connect your students with inspiring
+                        opportunities through our workshops and digital archive.</p>
+                    <button class="btn form-tab-btn" data-tab="school">Register Interest <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Partner With Us</h3>
+                    <p>Organizations, charities, and funders can co-create impact. Let's collaborate to empower young
+                        Welsh women through sport, art, and culture.</p>
+                    <button class="btn form-tab-btn" data-tab="partner">Get In Touch <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forms Section -->
+    <section>
+        <div class="container">
+            <div class="form-tabs">
+                <button class="form-tab" data-tab="volunteer"><i class="fas fa-hands-helping"></i> Volunteer</button>
+                <button class="form-tab" data-tab="school"><i class="fas fa-school"></i> School Sign-Up</button>
+                <button class="form-tab" data-tab="partner"><i class="fas fa-handshake"></i> Partner With Us</button>
+            </div>
+
+            <!-- Volunteer Form -->
+            <div class="form-content" id="volunteer-content">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3>Volunteer Registration</h3>
+                        <p>Join our team of volunteers and help make a difference</p>
+                    </div>
+                    <form id="volunteer-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="volunteer-name">Full Name</label>
+                                <input type="text" class="form-control" id="volunteer-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteer-email">Email Address</label>
+                                <input type="email" class="form-control" id="volunteer-email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="volunteer-phone">Phone Number</label>
+                                <input type="tel" class="form-control" id="volunteer-phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteer-location">Location in Wales</label>
+                                <input type="text" class="form-control" id="volunteer-location" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Areas of Interest</label>
+                            <div class="form-check">
+                                <input type="checkbox" id="sports-events">
+                                <label for="sports-events">Sports Events & Workshops</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="art-installations">
+                                <label for="art-installations">Art Installations</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="digital-campaign">
+                                <label for="digital-campaign">Digital Campaign & Social Media</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="general-support">
+                                <label for="general-support">General Event Support</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="volunteer-experience">Relevant Experience</label>
+                            <textarea class="form-control" id="volunteer-experience"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="volunteer-availability">Availability</label>
+                            <textarea class="form-control" id="volunteer-availability"
+                                placeholder="Please share your general availability (weekdays, weekends, specific dates)"></textarea>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn">Submit Registration</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- School Form -->
+            <div class="form-content" id="school-content">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3>School Registration</h3>
+                        <p>Register your school's interest in our programs</p>
+                    </div>
+                    <form id="school-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="school-name">School Name</label>
+                                <input type="text" class="form-control" id="school-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-name">Contact Person</label>
+                                <input type="text" class="form-control" id="contact-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="position">Position</label>
+                                <input type="text" class="form-control" id="position" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="school-email">Email Address</label>
+                                <input type="email" class="form-control" id="school-email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="school-phone">Phone Number</label>
+                                <input type="tel" class="form-control" id="school-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="school-location">School Location</label>
+                                <input type="text" class="form-control" id="school-location" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Interested In</label>
+                            <div class="form-check">
+                                <input type="checkbox" id="hosting-events">
+                                <label for="hosting-events">Hosting Events or Workshops</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="curriculum">
+                                <label for="curriculum">Curriculum Resources</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="vr-experience">
+                                <label for="vr-experience">VR Experience Showcase</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="partnership">
+                                <label for="partnership">Long-term Partnership</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-age">Student Age Range</label>
+                            <select class="form-control" id="student-age" required>
+                                <option value="">Select age range</option>
+                                <option value="primary">Primary (7-11)</option>
+                                <option value="lower-secondary">Lower Secondary (11-14)</option>
+                                <option value="upper-secondary">Upper Secondary (14-18)</option>
+                                <option value="multiple">Multiple Age Groups</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="additional-info">Additional Information</label>
+                            <textarea class="form-control" id="additional-info"
+                                placeholder="Please share any specific details or requests"></textarea>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn">Submit Registration</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Partner Form -->
+            <div class="form-content" id="partner-content">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3>Partnership Inquiry</h3>
+                        <p>Let's collaborate to create a bigger impact</p>
+                    </div>
+                    <form id="partner-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="org-name">Organization Name</label>
+                                <input type="text" class="form-control" id="org-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="org-type">Organization Type</label>
+                                <select class="form-control" id="org-type" required>
+                                    <option value="">Select type</option>
+                                    <option value="nonprofit">Non-profit / Charity</option>
+                                    <option value="business">Business</option>
+                                    <option value="government">Government Agency</option>
+                                    <option value="sports">Sports Organization</option>
+                                    <option value="arts">Arts & Culture Organization</option>
+                                    <option value="education">Educational Institution</option>
+                                    <option value="media">Media Organization</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-person">Contact Person</label>
+                                <input type="text" class="form-control" id="contact-person" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email Address</label>
+                                <input type="email" class="form-control" id="contact-email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="contact-phone">
+                        </div>
+                        <div class="form-group">
+                            <label>Partnership Interest</label>
+                            <div class="form-check">
+                                <input type="checkbox" id="sponsorship">
+                                <label for="sponsorship">Sponsorship Opportunities</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="content-collab">
+                                <label for="content-collab">Content Collaboration</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="resource-sharing">
+                                <label for="resource-sharing">Resource Sharing</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="event-partnership">
+                                <label for="event-partnership">Event Partnership</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="other-partnership">
+                                <label for="other-partnership">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="partnership-details">Partnership Details</label>
+                            <textarea class="form-control" id="partnership-details"
+                                placeholder="Please describe how you envision partnering with Cymru Unleashed"
+                                required></textarea>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn">Submit Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="testimonials-intro">
+                <h2>Hear From Our Community</h2>
+                <p>Read what volunteers, schools, and partners have to say about their experiences with Cymru Unleashed.
+                </p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">
+                            Volunteering with Cymru Unleashed has been one of the most rewarding experiences of my life.
+                            Seeing the confidence grow in these young girls as they discover their strength through
+                            sport and creative expression is incredible. I've learned so much from them and from the
+                            amazing team behind this initiative.
+                        </div>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Volunteer">
+                            </div>
+                            <div class="testimonial-details">
+                                <h4>Lowri Thomas</h4>
+                                <span>Volunteer, Cardiff</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">
+                            Our school's partnership with Cymru Unleashed has transformed our approach to sports and
+                            arts education. The workshops blend physical activity with creative expression in a way that
+                            engages students who previously showed little interest in either. The digital resources have
+                            become an integral part of our curriculum.
+                        </div>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Teacher">
+                            </div>
+                            <div class="testimonial-details">
+                                <h4>Huw Davies</h4>
+                                <span>PE Teacher, Swansea</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">
+                            As a corporate partner, we've been impressed by the professionalism and impact of Cymru
+                            Unleashed. Their innovative approach to combining sport and culture has allowed us to reach
+                            communities we'd struggled to engage with through traditional sponsorship. The quantifiable
+                            results and positive feedback make this a valuable partnership.
+                        </div>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Partner">
+                            </div>
+                            <div class="testimonial-details">
+                                <h4>Sarah Williams</h4>
+                                <span>Community Engagement Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-intro">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about getting involved with Cymru Unleashed.</p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>What skills do I need to volunteer?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>We welcome volunteers with all kinds of skills and experience levels. Whether you have
+                                expertise in sports coaching, arts and crafts, event management, digital media, or
+                                simply enthusiasm and a willingness to help, there's a place for you in our team. We
+                                provide training and support for all volunteers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>How much time do I need to commit as a volunteer?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>We offer flexible volunteering opportunities to accommodate different schedules. You can
+                                volunteer for one-time events, regular weekly sessions, or specific project phases. Even
+                                a few hours a month can make a significant difference. In your application, you can
+                                specify your availability, and we'll work to find opportunities that match your
+                                schedule.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>What does a school partnership involve?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>School partnerships can be tailored to your institution's needs and capacity. Options
+                                include hosting workshops or events, incorporating our curriculum resources into your
+                                teaching, arranging VR experience showcases, or establishing longer-term programs. We
+                                work closely with schools to develop partnerships that benefit students while fitting
+                                within existing schedules and resources.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Can organizations outside of Wales partner with Cymru Unleashed?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>Yes, while our activities are focused in Wales, we welcome partnerships with
+                                organizations from across the UK and beyond. These collaborations can bring valuable
+                                perspectives, resources, and opportunities to our participants. We're particularly
+                                interested in partnerships that can help expand our reach or enhance our programming.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Is there a cost for schools to participate?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>Thanks to our funders and sponsors, most of our school programs are offered at no or
+                                minimal cost. Our digital resources are completely free to access, and many of our
+                                workshops are fully funded. For certain specialized programs or ongoing partnerships,
+                                there may be costs involved, but we work with schools to find funding solutions and
+                                ensure that financial constraints don't prevent participation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>What types of sponsorship opportunities are available?</h3>
+                        <div class="accordion-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-text">
+                            <p>We offer various sponsorship packages, from event-specific sponsorships to program-wide
+                                partnerships. Benefits can include brand visibility across our platforms, recognition at
+                                events, content collaboration, employee engagement opportunities, and impact reporting.
+                                We customize sponsorship arrangements to align with your organization's goals, values,
+                                and desired level of involvement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p>Have questions or need more information? Our team is here to help.</p>
+            <a href="mailto:osama@otidentertainment.com" class="btn">Contact Us</a>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <a href="mailto:osama@otidentertainment.com">osama@otidentertainment.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <a href="tel:+44123456789">+44 12345 67890</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <span>Cardiff, Wales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Cymru <span>Unleashed</span></div>
+                    <p>Empowering the next generation of Welsh women through sport, art, and culture.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="partner-logos">
+                        <img src="/api/placeholder/100/40" alt="OTID Entertainment">
+                        <img src="/api/placeholder/100/40" alt="Afrowales">
+                        <img src="/api/placeholder/100/40" alt="Race Council Cymru">
+                        <img src="/api/placeholder/100/40" alt="Klat">
+                        <img src="/api/placeholder/100/40" alt="Native Radio">
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="media.html">Media</a></li>
+                        <li><a href="get-involved.html">Get Involved</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:osama@otidentertainment.com">Email: osama@otidentertainment.com</a></li>
+                        <li><a href="#">Instagram: @CymruUnleashed</a></li>
+                        <li><a href="#">Twitter: @UnleashedWales</a></li>
+                        <li><a href="#">TikTok: @CymruUnleashed</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Cymru Unleashed. All rights reserved.</p>
+                <div class="language-toggle">
+                    <a href="#" class="active">English</a> | <a href="#">Cymraeg</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const overlay = document.getElementById('overlay');
+
+        const toggleMenu = () => {
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            hamburger.innerHTML = nav.classList.contains('active') ?
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+
+            // Toggle body scroll
+            if (nav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking navigation links
+        document.querySelectorAll('nav a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (nav.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Sticky Header on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Form Tabs
+        const tabButtons = document.querySelectorAll('.form-tab');
+        const tabContents = document.querySelectorAll('.form-content');
+        const optionButtons = document.querySelectorAll('.form-tab-btn');
+
+        // Show tab content based on ID
+        const showTabContent = (tabId) => {
+            // Remove active class from all tabs and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked tab
+            document.querySelector(`.form-tab[data-tab="${tabId}"]`).classList.add('active');
+
+            // Show corresponding content
+            document.getElementById(`${tabId}-content`).classList.add('active');
+
+            // Scroll to the form with a slight delay for animation
+            setTimeout(() => {
+                document.querySelector('.form-tabs').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        };
+
+        // Tab button click
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                showTabContent(tabId);
+            });
+        });
+
+        // Option button click
+        optionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                showTabContent(tabId);
+            });
+        });
+
+        // Form Submissions with validation feedback
+        const forms = document.querySelectorAll('form');
+
+        forms.forEach(form => {
+            // Real-time validation
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('blur', () => {
+                    if (!field.value.trim()) {
+                        field.classList.add('invalid');
+                        // Add error message
+                        if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('error-message')) {
+                            const errorMessage = document.createElement('div');
+                            errorMessage.className = 'error-message';
+                            errorMessage.textContent = 'This field is required';
+                            errorMessage.style.color = 'var(--primary)';
+                            errorMessage.style.fontSize = '0.8rem';
+                            errorMessage.style.marginTop = '5px';
+                            field.insertAdjacentElement('afterend', errorMessage);
+                        }
+                    } else {
+                        field.classList.remove('invalid');
+                        // Remove error message if exists
+                        if (field.nextElementSibling && field.nextElementSibling.classList.contains('error-message')) {
+                            field.nextElementSibling.remove();
+                        }
+                    }
+                });
+
+                // Clear error on input
+                field.addEventListener('input', () => {
+                    if (field.value.trim()) {
+                        field.classList.remove('invalid');
+                        // Remove error message if exists
+                        if (field.nextElementSibling && field.nextElementSibling.classList.contains('error-message')) {
+                            field.nextElementSibling.remove();
+                        }
+                    }
+                });
+            });
+
+            // Form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Simple form validation
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.classList.add('invalid');
+                        // Add error message if not exists
+                        if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('error-message')) {
+                            const errorMessage = document.createElement('div');
+                            errorMessage.className = 'error-message';
+                            errorMessage.textContent = 'This field is required';
+                            errorMessage.style.color = 'var(--primary)';
+                            errorMessage.style.fontSize = '0.8rem';
+                            errorMessage.style.marginTop = '5px';
+                            field.insertAdjacentElement('afterend', errorMessage);
+                        }
+                    } else {
+                        field.classList.remove('invalid');
+                        // Remove error message if exists
+                        if (field.nextElementSibling && field.nextElementSibling.classList.contains('error-message')) {
+                            field.nextElementSibling.remove();
+                        }
+                    }
+                });
+
+                if (isValid) {
+                    // Simulate form submission
+                    const submitButton = form.querySelector('[type="submit"]');
+                    const originalText = submitButton.textContent;
+
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+                    setTimeout(() => {
+                        form.innerHTML = `
+                            <div class="form-success">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h3>Thank You!</h3>
+                                <p>Your submission has been received. We'll be in touch soon.</p>
+                            </div>
+                        `;
+                    }, 1500);
+                } else {
+                    // Scroll to first error
+                    const firstError = form.querySelector('.invalid');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstError.focus();
+                    }
+                }
+            });
+        });
+
+        // FAQ Accordion
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+
+            header.addEventListener('click', () => {
+                // Get the height of the content
+                const contentHeight = item.querySelector('.accordion-text').offsetHeight;
+
+                // Toggle active class
+                item.classList.toggle('active');
+
+                // Set max-height to enable animation
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = contentHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0';
+                }
+            });
+        });
+
+        // Animation on scroll with Intersection Observer
+        const animateElements = document.querySelectorAll('.option-card, .testimonial-card, .accordion-item');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Stop observing after animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '-50px'
+        });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Language Toggle
+        const languageToggle = document.querySelectorAll('.language-toggle a');
+
+        languageToggle.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Remove active class from all links
+                languageToggle.forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                link.classList.add('active');
+
+                // In a real implementation, this would change the language
+                alert(`Language would change to: ${link.textContent}`);
+            });
+        });
+
+        // Check URL hash for direct tab access
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const validTabs = ['volunteer', 'school', 'partner'];
+
+                if (validTabs.includes(hash)) {
+                    showTabContent(hash);
+                }
+            }
+        });
+
+        // Handle touch events for mobile
+        document.addEventListener('touchstart', () => { }, { passive: true });
+    </script>
+</body>
+
+</html>
