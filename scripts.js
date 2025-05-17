@@ -295,3 +295,82 @@ window.addEventListener("load", () => {
 
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
+
+// Carousel functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.hero-carousel');
+    const slides = carousel.querySelectorAll('.hero-slide');
+    const indicators = carousel.querySelectorAll('.indicator');
+    const prevBtn = carousel.querySelector('.prev');
+    const nextBtn = carousel.querySelector('.next');
+    let currentSlide = 0;
+    let slideInterval;
+
+    // Function to show a specific slide
+    function showSlide(index) {
+        // Remove active class from all slides and indicators
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+
+        // Add active class to current slide and indicator
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    // Function to show next slide
+    function nextSlide() {
+        let next = currentSlide + 1;
+        if (next >= slides.length) {
+            next = 0;
+        }
+        showSlide(next);
+    }
+
+    // Function to show previous slide
+    function prevSlide() {
+        let prev = currentSlide - 1;
+        if (prev < 0) {
+            prev = slides.length - 1;
+        }
+        showSlide(prev);
+    }
+
+    // Start automatic slideshow
+    function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+
+    // Stop automatic slideshow
+    function stopSlideshow() {
+        clearInterval(slideInterval);
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+        stopSlideshow();
+        prevSlide();
+        startSlideshow();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        stopSlideshow();
+        nextSlide();
+        startSlideshow();
+    });
+
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            stopSlideshow();
+            showSlide(index);
+            startSlideshow();
+        });
+    });
+
+    // Pause slideshow when hovering over carousel
+    carousel.addEventListener('mouseenter', stopSlideshow);
+    carousel.addEventListener('mouseleave', startSlideshow);
+
+    // Start the slideshow
+    startSlideshow();
+});
