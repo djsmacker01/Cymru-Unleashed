@@ -187,11 +187,30 @@ nav ul li a.active {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .hero-slide.active {
     opacity: 1;
     z-index: 1;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    color: var(--light);
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
 }
 
 .carousel-control {
@@ -247,22 +266,6 @@ nav ul li a.active {
 .indicator.active {
     background: var(--light);
     transform: scale(1.2);
-}
-
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.hero-content h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-.hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
 }
 
 /* About Home Section */
