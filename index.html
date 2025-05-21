@@ -59,35 +59,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-carousel">
-            <div class="hero-slides">
-                <div class="hero-slide active"
-                    style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Images/hero1.jpg') center/cover no-repeat;">
-                    <div class="container hero-content">
-                        <h1 data-translate="hero-title">Cymru Unleashed</h1>
-                        <p data-translate="hero-subtitle">Empowering Wales Through Sport</p>
-                        <p data-translate="hero-subtitle2">Celebrating Women, Sport & Culture at UEFA Euro 2025</p>
-                        <a href="#about-home" class="btn" data-translate="explore-btn">Explore the Movement</a>
-                    </div>
-                </div>
-                <div class="hero-slide"
-                    style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Images/hero2.jpg') center/cover no-repeat;">
-                    <div class="container hero-content">
-                        <h1 data-translate="hero-title">Join the Movement</h1>
-                        <p data-translate="hero-subtitle">Be Part of Something Special</p>
-                        <p data-translate="hero-subtitle2">Creating Lasting Impact Through Sport</p>
-                        <a href="/getInvolved/get-involved.html" class="btn" data-translate="get-involved-btn">Get
-                            Involved</a>
-                    </div>
-                </div>
-                <div class="hero-slide"
-                    style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Images/hero3.jpg') center/cover no-repeat;">
-                    <div class="container hero-content">
-                        <h1 data-translate="hero-title">Our Legacy</h1>
-                        <p data-translate="hero-subtitle">Building a Brighter Future</p>
-                        <p data-translate="hero-subtitle2">Inspiring the Next Generation</p>
-                        <a href="/Legacy/legacy.html" class="btn" data-translate="learn-more">Learn More</a>
-                    </div>
-                </div>
+            <div class="hero-slides" id="heroSlides">
+                <!-- Slides will be dynamically inserted here -->
             </div>
             <button class="carousel-control prev" aria-label="Previous slide">
                 <i class="fas fa-chevron-left"></i>
@@ -95,10 +68,8 @@
             <button class="carousel-control next" aria-label="Next slide">
                 <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="carousel-indicators">
-                <button class="indicator active" aria-label="Go to slide 1"></button>
-                <button class="indicator" aria-label="Go to slide 2"></button>
-                <button class="indicator" aria-label="Go to slide 3"></button>
+            <div class="carousel-indicators" id="carouselIndicators">
+                <!-- Indicators will be dynamically inserted here -->
             </div>
         </div>
     </section>
