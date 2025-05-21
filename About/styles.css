@@ -162,6 +162,7 @@ nav ul li a.active {
 /* Page Hero */
 .page-hero {
     position: relative;
+    background-image: url('/Images/hero-about.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -181,7 +182,7 @@ nav ul li a.active {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     z-index: 1;
 }
 
