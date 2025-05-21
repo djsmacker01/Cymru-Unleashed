@@ -299,7 +299,7 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 // Hero Carousel Configuration
 const carouselSlides = [
   {
-    image: "/Images/hero1.jpg",
+    image: "/Images/cymru_team.jpg",
     title: "Cymru Unleashed",
     subtitle: "Empowering Wales Through Sport",
     subtitle2: "Celebrating Women, Sport & Culture at UEFA Euro 2025",
@@ -323,6 +323,15 @@ const carouselSlides = [
     subtitle2: "Inspiring the Next Generation",
     buttonText: "Learn More",
     buttonLink: "/Legacy/legacy.html",
+    buttonTranslate: "learn-more",
+  },
+  {
+    image: "/Images/welshCastle.jpg",
+    title: "Media",
+    subtitle: "Tapping into the future",
+    subtitle2: "Of Technology ",
+    buttonText: "Learn More",
+    buttonLink: "/Media/media.html",
     buttonTranslate: "learn-more",
   },
 ];
