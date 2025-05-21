@@ -328,8 +328,8 @@ const carouselSlides = [
   {
     image: "/Images/welshCastle.jpg",
     title: "Media",
-    subtitle: "Tapping into the future",
-    subtitle2: "Of Technology ",
+    subtitle: "Empowering young",
+    subtitle2: " Welsh women through sport and culture ",
     buttonText: "Learn More",
     buttonLink: "/Media/media.html",
     buttonTranslate: "learn-more",
