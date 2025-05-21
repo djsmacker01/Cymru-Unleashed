@@ -712,7 +712,7 @@ footer {
     gap: 20px;
     margin-top: 30px;
     align-items: center;
-    background-color: white;
+    /* background-color: white; */
     border: 1px solid white;
 }
 
@@ -721,6 +721,7 @@ footer {
     filter: brightness(0) invert(1);
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    background-color: #F6F6F6;
 }
 
 .partner-logos img:hover {
