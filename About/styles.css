@@ -168,11 +168,27 @@ nav ul li a.active {
     padding: 120px 0;
     color: white;
     text-align: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    background-attachment: fixed;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    z-index: 1;
 }
 
 .page-hero-content {
     position: relative;
     z-index: 2;
+    width: 100%;
 }
 
 .page-hero h1 {
@@ -496,6 +512,15 @@ footer {
 
 /* Responsive Styles */
 @media (max-width: 991px) {
+    .page-hero {
+        background-attachment: scroll;
+        min-height: 50vh;
+        padding: 100px 0;
+    }
+
+    .page-hero h1 {
+        font-size: 3rem;
+    }
 
     .about-page-content,
     .team-grid,
@@ -506,10 +531,6 @@ footer {
 
     .footer-content {
         grid-template-columns: 1fr 1fr;
-    }
-
-    .page-hero-content h1 {
-        font-size: 2.2rem;
     }
 }
 
@@ -606,6 +627,7 @@ footer {
     }
 
     .page-hero {
+        min-height: 40vh;
         padding: 80px 0;
     }
 
@@ -638,5 +660,28 @@ footer {
     .footer-content {
         grid-template-columns: 1fr;
         gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero {
+        min-height: 35vh;
+        padding: 60px 0;
+    }
+
+    .page-hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
     }
 }
