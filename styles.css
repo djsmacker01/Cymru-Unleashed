@@ -721,7 +721,7 @@ footer {
     filter: brightness(0) invert(1);
     opacity: 0.7;
     transition: opacity 0.3s ease;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .partner-logos img:hover {
