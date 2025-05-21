@@ -296,81 +296,110 @@ window.addEventListener("load", () => {
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-// Carousel functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.querySelector('.hero-carousel');
-    const slides = carousel.querySelectorAll('.hero-slide');
-    const indicators = carousel.querySelectorAll('.indicator');
-    const prevBtn = carousel.querySelector('.prev');
-    const nextBtn = carousel.querySelector('.next');
-    let currentSlide = 0;
-    let slideInterval;
+// Hero Carousel Configuration
+const carouselSlides = [
+  {
+    image: "/Images/hero1.jpg",
+    title: "Cymru Unleashed",
+    subtitle: "Empowering Wales Through Sport",
+    subtitle2: "Celebrating Women, Sport & Culture at UEFA Euro 2025",
+    buttonText: "Explore the Movement",
+    buttonLink: "#about-home",
+    buttonTranslate: "explore-btn",
+  },
+  {
+    image: "/Images/hero2.jpg",
+    title: "Join the Movement",
+    subtitle: "Be Part of Something Special",
+    subtitle2: "Creating Lasting Impact Through Sport",
+    buttonText: "Get Involved",
+    buttonLink: "/getInvolved/get-involved.html",
+    buttonTranslate: "get-involved-btn",
+  },
+  {
+    image: "/Images/hero3.jpg",
+    title: "Our Legacy",
+    subtitle: "Building a Brighter Future",
+    subtitle2: "Inspiring the Next Generation",
+    buttonText: "Learn More",
+    buttonLink: "/Legacy/legacy.html",
+    buttonTranslate: "learn-more",
+  },
+];
 
-    // Function to show a specific slide
-    function showSlide(index) {
-        // Remove active class from all slides and indicators
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
+// Initialize Carousel
+function initializeCarousel() {
+  const heroSlides = document.getElementById("heroSlides");
+  const carouselIndicators = document.getElementById("carouselIndicators");
+  let currentSlide = 0;
 
-        // Add active class to current slide and indicator
-        slides[index].classList.add('active');
-        indicators[index].classList.add('active');
-        currentSlide = index;
-    }
+  // Create slides
+  carouselSlides.forEach((slide, index) => {
+    const slideElement = document.createElement("div");
+    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+    slideElement.style.background = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${slide.image}') center/cover no-repeat`;
 
-    // Function to show next slide
-    function nextSlide() {
-        let next = currentSlide + 1;
-        if (next >= slides.length) {
-            next = 0;
-        }
-        showSlide(next);
-    }
+    slideElement.innerHTML = `
+            <div class="container hero-content">
+                <h1 data-translate="hero-title">${slide.title}</h1>
+                <p data-translate="hero-subtitle">${slide.subtitle}</p>
+                <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
+                <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">${slide.buttonText}</a>
+            </div>
+        `;
 
-    // Function to show previous slide
-    function prevSlide() {
-        let prev = currentSlide - 1;
-        if (prev < 0) {
-            prev = slides.length - 1;
-        }
-        showSlide(prev);
-    }
+    heroSlides.appendChild(slideElement);
 
-    // Start automatic slideshow
-    function startSlideshow() {
-        slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
-    }
+    // Create indicator
+    const indicator = document.createElement("button");
+    indicator.className = `indicator ${index === 0 ? "active" : ""}`;
+    indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
+    indicator.addEventListener("click", () => goToSlide(index));
+    carouselIndicators.appendChild(indicator);
+  });
 
-    // Stop automatic slideshow
-    function stopSlideshow() {
-        clearInterval(slideInterval);
-    }
+  // Carousel Controls
+  const prevButton = document.querySelector(".carousel-control.prev");
+  const nextButton = document.querySelector(".carousel-control.next");
 
-    // Event listeners
-    prevBtn.addEventListener('click', () => {
-        stopSlideshow();
-        prevSlide();
-        startSlideshow();
-    });
+  function goToSlide(index) {
+    const slides = document.querySelectorAll(".hero-slide");
+    const indicators = document.querySelectorAll(".indicator");
 
-    nextBtn.addEventListener('click', () => {
-        stopSlideshow();
-        nextSlide();
-        startSlideshow();
-    });
+    slides[currentSlide].classList.remove("active");
+    indicators[currentSlide].classList.remove("active");
 
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            stopSlideshow();
-            showSlide(index);
-            startSlideshow();
-        });
-    });
+    currentSlide = index;
 
-    // Pause slideshow when hovering over carousel
-    carousel.addEventListener('mouseenter', stopSlideshow);
-    carousel.addEventListener('mouseleave', startSlideshow);
+    slides[currentSlide].classList.add("active");
+    indicators[currentSlide].classList.add("active");
+  }
 
-    // Start the slideshow
-    startSlideshow();
-});
+  function nextSlide() {
+    const nextIndex = (currentSlide + 1) % carouselSlides.length;
+    goToSlide(nextIndex);
+  }
+
+  function prevSlide() {
+    const prevIndex =
+      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    goToSlide(prevIndex);
+  }
+
+  // Event Listeners
+  prevButton.addEventListener("click", prevSlide);
+  nextButton.addEventListener("click", nextSlide);
+
+  // Auto-advance slides every 5 seconds
+  let slideInterval = setInterval(nextSlide, 5000);
+
+  // Pause auto-advance on hover
+  const carousel = document.querySelector(".hero-carousel");
+  carousel.addEventListener("mouseenter", () => clearInterval(slideInterval));
+  carousel.addEventListener("mouseleave", () => {
+    slideInterval = setInterval(nextSlide, 5000);
+  });
+}
+
+// Initialize carousel when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeCarousel);
