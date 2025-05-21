@@ -161,30 +161,60 @@ nav ul li a.active {
 
 /* Page Hero */
 .page-hero {
-    height: 40vh;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/api/placeholder/1200/600") center/cover no-repeat;
-    color: var(--light);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 0;
+    color: white;
     text-align: center;
-    margin-top: 80px;
 }
 
 .page-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.page-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.page-hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 20px;
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: white;
     text-transform: uppercase;
-}
-
-.page-hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
 /* About Page Content */
@@ -575,12 +605,22 @@ footer {
         visibility: visible;
     }
 
-    .page-hero-content h1 {
-        font-size: 1.8rem;
+    .page-hero {
+        padding: 80px 0;
     }
 
-    .page-hero-content p {
-        font-size: 1rem;
+    .page-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 2rem;
     }
 
     section {
