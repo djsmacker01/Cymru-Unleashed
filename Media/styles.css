@@ -967,6 +967,7 @@ nav ul li a.active {
     width: 300px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .contact-card:hover {
@@ -993,16 +994,34 @@ nav ul li a.active {
     color: var(--primary);
 }
 
-.contact-card p,
-.contact-card a {
-    margin-bottom: 5px;
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.contact-info a {
     color: var(--dark);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: inline-block;
+    word-break: break-all;
 }
 
-.contact-card a:hover {
+.contact-info a:hover {
     color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .contact-card {
+        width: 100%;
+        max-width: 300px;
+    }
 }
 
 /* Footer */
