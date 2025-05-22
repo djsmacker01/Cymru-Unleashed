@@ -327,8 +327,76 @@ document.addEventListener("DOMContentLoaded", function () {
     statsObserver.observe(stat);
   });
 
-  // Smooth scroll functionality with enhanced animations
-  const scrollLinks = document.querySelectorAll('a[href^="#"]');
+  // Handle specific button scroll behaviors
+  const exploreLegacyBtn = document.querySelector(".btn-primary");
+  const viewImpactBtn = document.querySelector(".btn-secondary");
+
+  if (exploreLegacyBtn) {
+    exploreLegacyBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const legacySection = document.querySelector("#legacy-beyond");
+      if (legacySection) {
+        const headerOffset = 80;
+        const elementPosition = legacySection.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+
+        // Add ripple effect
+        const ripple = document.createElement("span");
+        ripple.classList.add("btn-ripple");
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1000);
+
+        // Smooth scroll to section
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        // Add highlight animation
+        legacySection.classList.add("section-highlight");
+        setTimeout(() => {
+          legacySection.classList.remove("section-highlight");
+        }, 1500);
+      }
+    });
+  }
+
+  if (viewImpactBtn) {
+    viewImpactBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const impactSection = document.querySelector("#impact-stories");
+      if (impactSection) {
+        const headerOffset = 80;
+        const elementPosition = impactSection.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+
+        // Add ripple effect
+        const ripple = document.createElement("span");
+        ripple.classList.add("btn-ripple");
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1000);
+
+        // Smooth scroll to section
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        // Add highlight animation
+        impactSection.classList.add("section-highlight");
+        setTimeout(() => {
+          impactSection.classList.remove("section-highlight");
+        }, 1500);
+      }
+    });
+  }
+
+  // Smooth scroll functionality for other anchor links
+  const scrollLinks = document.querySelectorAll(
+    'a[href^="#"]:not(.btn-primary):not(.btn-secondary)'
+  );
   scrollLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
@@ -345,11 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const ripple = document.createElement("span");
         ripple.classList.add("btn-ripple");
         this.appendChild(ripple);
-
-        // Remove ripple after animation
-        setTimeout(() => {
-          ripple.remove();
-        }, 1000);
+        setTimeout(() => ripple.remove(), 1000);
 
         window.scrollTo({
           top: offsetPosition,
