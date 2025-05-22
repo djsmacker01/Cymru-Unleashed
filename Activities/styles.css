@@ -186,7 +186,7 @@ nav ul li a.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .hero-particles {
@@ -195,7 +195,7 @@ nav ul li a.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 60%);
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
     animation: particleFloat 20s infinite linear;
 }
 
@@ -464,6 +464,7 @@ nav ul li a.active {
 }
 
 @keyframes bounce {
+
     0%,
     20%,
     50%,
@@ -482,15 +483,20 @@ nav ul li a.active {
 }
 
 @keyframes floatShape {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(0, 0) rotate(0deg);
     }
+
     25% {
         transform: translate(50px, 50px) rotate(90deg);
     }
+
     50% {
         transform: translate(0, 100px) rotate(180deg);
     }
+
     75% {
         transform: translate(-50px, 50px) rotate(270deg);
     }
@@ -500,6 +506,7 @@ nav ul li a.active {
     0% {
         transform: translateY(0) rotate(0deg);
     }
+
     100% {
         transform: translateY(-100%) rotate(360deg);
     }
@@ -510,20 +517,20 @@ nav ul li a.active {
     .hero-title {
         font-size: 3rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.2rem;
     }
-    
+
     .hero-stats {
         flex-direction: column;
         gap: 1.5rem;
     }
-    
+
     .hero-cta {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
         justify-content: center;
