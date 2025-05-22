@@ -187,6 +187,7 @@ nav ul li a.active {
     width: 100%;
     height: 100%;
     background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    animation: overlayPulse 8s infinite ease-in-out;
 }
 
 .hero-particles {
@@ -195,7 +196,9 @@ nav ul li a.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
     animation: particleFloat 20s infinite linear;
 }
 
@@ -203,8 +206,11 @@ nav ul li a.active {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
-    animation: glowPulse 4s infinite ease-in-out;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(255, 107, 107, 0.15) 0%, transparent 50%);
+    animation: glowPulse 6s infinite ease-in-out;
+    filter: blur(20px);
 }
 
 .hero-shapes {
@@ -220,6 +226,18 @@ nav ul li a.active {
     border-radius: 50%;
     animation: floatShape 15s infinite ease-in-out;
     backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.shape::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shapeShine 3s infinite linear;
 }
 
 .shape-1 {
@@ -228,6 +246,7 @@ nav ul li a.active {
     top: -150px;
     left: -150px;
     animation-delay: 0s;
+    background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.05));
 }
 
 .shape-2 {
@@ -236,6 +255,7 @@ nav ul li a.active {
     top: 50%;
     right: -100px;
     animation-delay: -5s;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 107, 107, 0.1));
 }
 
 .shape-3 {
@@ -244,6 +264,7 @@ nav ul li a.active {
     bottom: -75px;
     left: 20%;
     animation-delay: -2s;
+    background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.05));
 }
 
 .shape-4 {
@@ -252,6 +273,7 @@ nav ul li a.active {
     top: 20%;
     left: 30%;
     animation-delay: -7s;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 107, 107, 0.1));
 }
 
 .shape-5 {
@@ -260,6 +282,7 @@ nav ul li a.active {
     top: 70%;
     right: 20%;
     animation-delay: -3s;
+    background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.05));
 }
 
 .shape-6 {
@@ -268,6 +291,7 @@ nav ul li a.active {
     top: 30%;
     right: 40%;
     animation-delay: -6s;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 107, 107, 0.1));
 }
 
 .hero-badge {
@@ -283,11 +307,14 @@ nav ul li a.active {
     opacity: 0;
     animation: fadeInUp 0.8s forwards;
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .badge-icon {
     color: #ff6b6b;
     animation: spin 4s infinite linear;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
 }
 
 .hero-text-wrapper {
@@ -310,12 +337,26 @@ nav ul li a.active {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s forwards;
+    position: relative;
+}
+
+.title-line::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: scaleX(0);
+    animation: lineReveal 1s forwards 1s;
 }
 
 .title-line.highlight {
     color: #ff6b6b;
     animation-delay: 0.3s;
     position: relative;
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
 }
 
 .title-decoration {
@@ -327,6 +368,7 @@ nav ul li a.active {
     background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
     transform: scaleX(0);
     animation: lineReveal 1s forwards 0.8s;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
 }
 
 .hero-subtitle {
@@ -339,6 +381,19 @@ nav ul li a.active {
     margin-left: auto;
     margin-right: auto;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.hero-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: lineReveal 1s forwards 1.2s;
 }
 
 .hero-cta {
@@ -392,6 +447,18 @@ nav ul li a.active {
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
 }
 
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite linear;
+}
+
 .btn-secondary {
     background: transparent;
     border: 2px solid #ff6b6b;
@@ -421,11 +488,29 @@ nav ul li a.active {
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.stat-item:hover::before {
+    transform: translateX(100%);
 }
 
 .stat-item:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .stat-decoration {
@@ -448,10 +533,11 @@ nav ul li a.active {
     color: #ff6b6b;
     margin-bottom: 1rem;
     transition: transform 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
 }
 
 .stat-item:hover .stat-icon {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(5deg);
 }
 
 .stat-content {
@@ -466,6 +552,10 @@ nav ul li a.active {
     display: block;
     margin-bottom: 0.5rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #ffffff, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: numberPulse 2s infinite ease-in-out;
 }
 
 .stat-label {
@@ -502,11 +592,24 @@ nav ul li a.active {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scroll-arrow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: arrowShine 2s infinite linear;
 }
 
 .hero-scroll-indicator:hover .scroll-arrow {
     transform: translateY(5px);
     background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .scroll-text {
@@ -514,6 +617,7 @@ nav ul li a.active {
     color: #ffffff;
     opacity: 0.8;
     transition: opacity 0.3s ease;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .hero-scroll-indicator:hover .scroll-text {
@@ -585,6 +689,61 @@ nav ul li a.active {
 
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* New Animations */
+@keyframes overlayPulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shapeShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes buttonShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes arrowShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes numberPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
     }
 }
 
