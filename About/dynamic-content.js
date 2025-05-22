@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Render Core Values
   const valuesGrid = document.querySelector(".values-grid");
   if (valuesGrid) {
+    const currentLang = localStorage.getItem("preferred-language") || "en";
     valuesGrid.innerHTML = siteConfig.coreValues
       .map(
         (value) => `
@@ -66,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="value-icon">
                     <i class="${value.icon}"></i>
                 </div>
-                <h3>${value.title}</h3>
-                <p>${value.description}</p>
+                <h3>${value.title[currentLang]}</h3>
+                <p>${value.description[currentLang]}</p>
             </div>
         `
       )

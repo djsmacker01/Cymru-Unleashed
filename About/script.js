@@ -151,6 +151,24 @@ function updateLanguage(lang) {
 
   // Store language preference
   localStorage.setItem("preferred-language", lang);
+
+  // Re-render core values with new language
+  const valuesGrid = document.querySelector(".values-grid");
+  if (valuesGrid) {
+    valuesGrid.innerHTML = siteConfig.coreValues
+      .map(
+        (value) => `
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="${value.icon}"></i>
+                </div>
+                <h3>${value.title[lang]}</h3>
+                <p>${value.description[lang]}</p>
+            </div>
+        `
+      )
+      .join("");
+  }
 }
 
 languageToggle.forEach((link) => {

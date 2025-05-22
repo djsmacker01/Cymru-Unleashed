@@ -61,27 +61,47 @@ const siteConfig = {
   coreValues: [
     {
       icon: "fas fa-users",
-      title: "Inclusivity",
-      description:
-        "We create spaces where everyone feels welcome and valued, regardless of background, ability, or experience. We actively work to remove barriers to participation.",
+      title: {
+        en: "Inclusivity",
+        cy: "Cynhwysiant",
+      },
+      description: {
+        en: "We create spaces where everyone feels welcome and valued, regardless of background, ability, or experience. We actively work to remove barriers to participation.",
+        cy: "Rydym yn creu lleoedd lle mae pawb yn teimlo'n groesawgar a gwerthfawr, waeth beth yw eu cefndir, gallu, neu brofiad. Rydym yn gweithio'n gyson i ddileu rhwystrau i gyfranogiad.",
+      },
     },
     {
       icon: "fas fa-handshake",
-      title: "Collaboration",
-      description:
-        "We believe in the power of partnership and bringing together diverse perspectives and expertise to create something greater than the sum of its parts.",
+      title: {
+        en: "Collaboration",
+        cy: "Cydweithrediad",
+      },
+      description: {
+        en: "We believe in the power of partnership and bringing together diverse perspectives and expertise to create something greater than the sum of its parts.",
+        cy: "Rydym yn credu mewn grym partneriaeth a dod â safbwyntiau ac arbenigedd amrywiol at ei gilydd i greu rhywbeth mwy na swm ei rannau.",
+      },
     },
     {
       icon: "fas fa-lightbulb",
-      title: "Innovation",
-      description:
-        "We approach challenges with creativity and an open mind, always seeking new ways to engage, inspire, and create meaningful impact.",
+      title: {
+        en: "Innovation",
+        cy: "Arloesi",
+      },
+      description: {
+        en: "We approach challenges with creativity and an open mind, always seeking new ways to engage, inspire, and create meaningful impact.",
+        cy: "Rydym yn mynd i'r afael â heriau gyda chreadigrwydd a meddwl agored, bob amser yn chwilio am ffyrdd newydd o ymgysylltu, ysbrydoli, a chreu effaith ystyrlon.",
+      },
     },
     {
       icon: "fas fa-heart",
-      title: "Authenticity",
-      description:
-        "We honor Welsh culture, language, and heritage while embracing the diversity within our communities. We celebrate genuine expression in all forms.",
+      title: {
+        en: "Authenticity",
+        cy: "Dilysrwydd",
+      },
+      description: {
+        en: "We honor Welsh culture, language, and heritage while embracing the diversity within our communities. We celebrate genuine expression in all forms.",
+        cy: "Rydym yn parchu diwylliant, iaith, a threftadaeth Cymru wrth gofleidio amrywiaeth o fewn ein cymunedau. Rydym yn dathlu mynegiant dilys ym mhob ffurf.",
+      },
     },
   ],
   footer: {
