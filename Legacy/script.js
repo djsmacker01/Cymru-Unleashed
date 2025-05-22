@@ -300,3 +300,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
+
+// Hero Section Animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize stats counter animation
+    const stats = document.querySelectorAll('.stat-number');
+    const observerOptions = {
+        threshold: 0.5
+    };
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const finalValue = parseInt(target.getAttribute('data-value'));
+                animateValue(target, 0, finalValue, 2000);
+                statsObserver.unobserve(target);
+            }
+        });
+    }, observerOptions);
+
+    stats.forEach(stat => {
+        statsObserver.observe(stat);
+    });
+
+    // Smooth scroll functionality
+    const scrollLinks = document.querySelectorAll('a[href^="#"]');
+    scrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Scroll indicator functionality
+    const scrollIndicator = document.querySelector('.hero-scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', function() {
+            const nextSection = document.querySelector('#legacy-pillars');
+            if (nextSection) {
+                const headerOffset = 80;
+                const elementPosition = nextSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Fade out scroll indicator on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 100) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.pointerEvents = 'none';
+            } else {
+                scrollIndicator.style.opacity = '1';
+                scrollIndicator.style.pointerEvents = 'auto';
+            }
+        });
+    }
+});
+
+// Helper function to animate counting
+function animateValue(element, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = value;
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Add parallax effect to shapes
+document.addEventListener('mousemove', function(e) {
+    const shapes = document.querySelectorAll('.shape');
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+
+    shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.1;
+        const x = (mouseX - 0.5) * speed * 100;
+        const y = (mouseY - 0.5) * speed * 100;
+        shape.style.transform = `translate(${x}px, ${y}px)`;
+    });
+});
