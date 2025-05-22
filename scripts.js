@@ -373,7 +373,9 @@ function initializeCarousel() {
   const nextButton = document.querySelector(".carousel-control.next");
 
   function goToSlide(index) {
-    if (isTransitioning || index === currentSlide) return;
+    if (isTransitioning || index === currentSlide) {
+      return;
+    }
     isTransitioning = true;
 
     const slides = document.querySelectorAll(".hero-slide");
