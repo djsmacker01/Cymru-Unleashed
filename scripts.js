@@ -341,6 +341,7 @@ function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
   let currentSlide = 0;
+  let isTransitioning = false;
 
   // Create slides
   carouselSlides.forEach((slide, index) => {
@@ -372,6 +373,9 @@ function initializeCarousel() {
   const nextButton = document.querySelector(".carousel-control.next");
 
   function goToSlide(index) {
+    if (isTransitioning || index === currentSlide) return;
+    isTransitioning = true;
+
     const slides = document.querySelectorAll(".hero-slide");
     const indicators = document.querySelectorAll(".indicator");
 
@@ -382,6 +386,11 @@ function initializeCarousel() {
 
     slides[currentSlide].classList.add("active");
     indicators[currentSlide].classList.add("active");
+
+    // Reset transition flag after animation completes
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 800);
   }
 
   function nextSlide() {
@@ -408,7 +417,81 @@ function initializeCarousel() {
   carousel.addEventListener("mouseleave", () => {
     slideInterval = setInterval(nextSlide, 5000);
   });
+
+  // Initialize particles
+  initializeParticles();
 }
+
+// Particle System
+function initializeParticles() {
+  const particlesContainer = document.querySelector(".hero-particles");
+  const particleCount = 50;
+  const particles = [];
+
+  // Create particles
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.cssText = `
+      position: absolute;
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1});
+      border-radius: 50%;
+      pointer-events: none;
+    `;
+    particlesContainer.appendChild(particle);
+
+    particles.push({
+      element: particle,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: (Math.random() - 0.5) * 0.5,
+    });
+  }
+
+  // Animate particles
+  function animateParticles() {
+    particles.forEach((particle) => {
+      particle.x += particle.speedX;
+      particle.y += particle.speedY;
+
+      // Wrap around screen
+      if (particle.x < 0) {
+        particle.x = window.innerWidth;
+      }
+      if (particle.x > window.innerWidth) {
+        particle.x = 0;
+      }
+      if (particle.y < 0) {
+        particle.y = window.innerHeight;
+      }
+      if (particle.y > window.innerHeight) {
+        particle.y = 0;
+      }
+
+      particle.element.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+    });
+
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
+}
+
+// Scroll Indicator
+document.addEventListener("DOMContentLoaded", function () {
+  const scrollIndicator = document.querySelector(".hero-scroll-indicator");
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener("click", () => {
+      const aboutSection = document.getElementById("about-home");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+});
 
 // Initialize carousel when DOM is loaded
 document.addEventListener("DOMContentLoaded", initializeCarousel);
