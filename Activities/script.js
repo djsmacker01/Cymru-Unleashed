@@ -206,3 +206,87 @@ window.addEventListener("load", () => {
 
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
+
+// Hero Section Animations and Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  // Stats Counter Animation
+  const stats = document.querySelectorAll(".stat-number");
+
+  const animateStats = () => {
+    stats.forEach((stat) => {
+      const target = parseInt(stat.getAttribute("data-count"));
+      const duration = 2000; // 2 seconds
+      const step = target / (duration / 16); // 60fps
+      let current = 0;
+
+      const updateCount = () => {
+        current += step;
+        if (current < target) {
+          stat.textContent = Math.floor(current);
+          requestAnimationFrame(updateCount);
+        } else {
+          stat.textContent = target;
+        }
+      };
+
+      updateCount();
+    });
+  };
+
+  // Intersection Observer for Stats Animation
+  const statsObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateStats();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  const statsSection = document.querySelector(".hero-stats");
+  if (statsSection) {
+    statsObserver.observe(statsSection);
+  }
+
+  // Smooth Scroll for Navigation Links
+  document.querySelectorAll(".scroll-link").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        // Add a small offset to account for the header
+        const headerOffset = 100;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        // If we're on mobile and the menu is open, close it
+        if (nav.classList.contains("active")) {
+          toggleMenu();
+        }
+      }
+    });
+  });
+
+  // Scroll Indicator Animation
+  const scrollIndicator = document.querySelector(".hero-scroll-indicator");
+  if (scrollIndicator) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        scrollIndicator.style.opacity = "0";
+      } else {
+        scrollIndicator.style.opacity = "1";
+      }
+    });
+  }
+});
