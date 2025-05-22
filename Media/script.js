@@ -424,3 +424,49 @@ function completeDownload(downloadItem, fileName) {
 document.addEventListener("DOMContentLoaded", () => {
   initializeDownloads();
 });
+
+// Enhanced Smooth Scroll Functionality
+function initializeSmoothScroll() {
+  const scrollLinks = document.querySelectorAll(".scroll-link");
+
+  scrollLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const targetId = link.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+
+      if (targetSection) {
+        // Add active state to the button
+        link.classList.add("active");
+
+        // Calculate the target position (accounting for header height)
+        const headerHeight = document.getElementById("header").offsetHeight;
+        const targetPosition =
+          targetSection.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight;
+
+        // Smooth scroll to the target
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+
+        // Add highlight effect to the target section
+        targetSection.classList.add("highlight-section");
+
+        // Remove highlight after animation
+        setTimeout(() => {
+          targetSection.classList.remove("highlight-section");
+          link.classList.remove("active");
+        }, 2000);
+      }
+    });
+  });
+}
+
+// Initialize smooth scroll when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  initializeSmoothScroll();
+});

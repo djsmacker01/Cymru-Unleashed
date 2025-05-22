@@ -430,6 +430,25 @@ nav ul li a.active {
 .news-section {
     background-color: var(--grey);
     padding: 80px 0;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.news-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.news-section.highlight-section::before {
+    transform: scaleX(1);
 }
 
 .news-section h2 {
@@ -1488,4 +1507,46 @@ footer {
 .download-btn:hover {
     transform: scale(1.1);
     background: var(--primary);
+}
+
+/* Enhanced Scroll Link Styles */
+.scroll-link {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.scroll-link.active {
+    transform: scale(0.95);
+}
+
+.scroll-link i {
+    transition: transform 0.3s ease;
+}
+
+.scroll-link:hover i {
+    transform: translateY(3px);
+}
+
+.scroll-link.active i {
+    transform: translateY(5px);
+}
+
+/* Section Highlight Animation */
+.highlight-section {
+    animation: highlightSection 2s ease;
+}
+
+@keyframes highlightSection {
+    0% {
+        background-color: rgba(211, 7, 29, 0.1);
+    }
+
+    50% {
+        background-color: rgba(211, 7, 29, 0.2);
+    }
+
+    100% {
+        background-color: transparent;
+    }
 }
