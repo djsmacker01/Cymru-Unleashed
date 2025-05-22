@@ -175,43 +175,81 @@ const translations = {
     "legacy-title": "Our Legacy",
     "legacy-subtitle":
       "Building a lasting impact beyond UEFA Women's Euro 2025",
+    "legacy-intro-title": "Legacy Beyond 2025",
+    "legacy-intro-text":
+      "Cymru Unleashed is not just a project - it's a movement designed to create lasting change in communities across Wales, with a focus on empowering the next generation of Welsh women through sport, art, and culture.",
+    "legacy-quote":
+      "From a single summer to lasting cultural change - by women, for women, in Wales.",
     "permanent-art-title": "Permanent Public Art",
     "permanent-art-desc":
       "A lasting tribute to Welsh women in sport at Cardiff Bay Cultural Hub",
+    "permanent-art-text":
+      "This permanent piece will stand as a visual reminder of the power of women's sport and its cultural significance in Wales.",
     "digital-archive-title": "Digital Archive",
     "digital-archive-desc":
       "Educational resources and VR content for schools across Wales",
+    "digital-archive-text":
+      "This archive will be freely available to schools across Wales, ensuring the project's impact continues in classrooms for years to come.",
     "annual-workshops-title": "Annual Workshops",
     "annual-workshops-desc":
       "Ongoing sports and art programs in partner schools",
-    "impact-title": "Our Impact",
-    "impact-desc":
-      "Measuring success through community engagement and cultural change",
+    "annual-workshops-text-1":
+      "Through signed MOUs with partner schools, we will provide ongoing workshops that combine sports skills with creative expression.",
+    "annual-workshops-text-2":
+      "These annual programs will ensure that the connections between sport, identity, and culture continue to be explored by new generations of young Welsh women.",
     "footer-tagline":
       "Empowering the next generation of Welsh women through sport, art, and culture.",
     "quick-links": "Quick Links",
+    home: "Home",
+    about: "About",
+    activities: "Activities",
+    legacy: "Legacy",
+    media: "Media",
+    "get-involved": "Get Involved",
     contact: "Contact",
+    email: "Email",
+    phone: "Phone",
+    copyright: "© 2025 Cymru Unleashed. All rights reserved.",
   },
   cy: {
     "legacy-title": "Ein Gwaddol",
     "legacy-subtitle":
       "Adeiladu effaith barhaol y tu hwnt i Gemau UEFA Menywod Euro 2025",
+    "legacy-intro-title": "Gwaddol y Tu Hwnt i 2025",
+    "legacy-intro-text":
+      "Nid prosiect yn unig yw Cymru Unleashed - mudiad ydyw wedi'i gynllunio i greu newid parhaol mewn cymunedau ar draws Cymru, gyda ffocws ar rymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+    "legacy-quote":
+      "O haf unig i newid diwylliannol parhaol - gan ferched, i ferched, yng Nghymru.",
     "permanent-art-title": "Celf Gyhoeddus Barhaol",
     "permanent-art-desc":
       "Teyrnged barhaol i fenywod Cymreig mewn chwaraeon yng Nghanolfan Ddiwylliannol Bae Caerdydd",
+    "permanent-art-text":
+      "Bydd y darn parhaol hwn yn sefyll fel atgof gweledol o rym chwaraeon menywod a'i arwyddocâd diwylliannol yng Nghymru.",
     "digital-archive-title": "Archif Digidol",
     "digital-archive-desc":
       "Adnoddau addysgol a chynnwys VR ar gyfer ysgolion ar draws Cymru",
+    "digital-archive-text":
+      "Bydd yr archif hwn ar gael yn rhad ac am ddim i ysgolion ar draws Cymru, gan sicrhau bod effaith y prosiect yn parhau mewn ystafelloedd dosbarth am flynyddoedd i ddod.",
     "annual-workshops-title": "Gweithdai Blynyddol",
     "annual-workshops-desc":
       "Rhaglenni chwaraeon a chelf parhaus mewn ysgolion partner",
-    "impact-title": "Ein Helfaeth",
-    "impact-desc":
-      "Mesur llwyddiant trwy ymgysylltu â'r gymuned a newid diwylliannol",
+    "annual-workshops-text-1":
+      "Trwy MOUs wedi'u llofnodi gydag ysgolion partner, byddwn yn darparu gweithdai parhaus sy'n cyfuno sgiliau chwaraeon gyda mynegiant creadigol.",
+    "annual-workshops-text-2":
+      "Bydd y rhaglenni blynyddol hyn yn sicrhau bod y cysylltiadau rhwng chwaraeon, hunaniaeth, a diwylliant yn parhau i gael eu harchwilio gan genedlaethau newydd o fenywod ifanc Cymreig.",
     "footer-tagline":
       "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
     "quick-links": "Dolenni Cyflym",
+    home: "Hafan",
+    about: "Amdanom",
+    activities: "Gweithgareddau",
+    legacy: "Gwaddol",
+    media: "Cyfryngau",
+    "get-involved": "Ymunwch â Ni",
     contact: "Cysylltu",
+    email: "E-bost",
+    phone: "Rhif ffôn",
+    copyright: "© 2025 Cymru Unleashed. Cedwir pob hawl.",
   },
 };
 
