@@ -251,3 +251,75 @@ document.querySelectorAll(".download-btn").forEach((btn) => {
 
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
+
+// Hero Section Animations and Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  // Animate stats numbers
+  const stats = document.querySelectorAll(".stat-number");
+
+  const animateValue = (element, start, end, duration) => {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const value = Math.floor(progress * (end - start) + start);
+      element.textContent = value;
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  };
+
+  const observerOptions = {
+    threshold: 0.5,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const element = entry.target;
+        const endValue = parseInt(element.getAttribute("data-count"));
+        animateValue(element, 0, endValue, 2000);
+        observer.unobserve(element);
+      }
+    });
+  }, observerOptions);
+
+  stats.forEach((stat) => {
+    observer.observe(stat);
+  });
+
+  // Smooth scroll for the CTA button
+  const scrollLinks = document.querySelectorAll(".scroll-link");
+  scrollLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
+  });
+
+  // Parallax effect for hero shapes
+  const heroSection = document.querySelector(".page-hero");
+  const shapes = document.querySelectorAll(".hero-shapes .shape");
+
+  window.addEventListener("mousemove", (e) => {
+    const { clientX, clientY } = e;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    shapes.forEach((shape, index) => {
+      const speed = 0.05 + index * 0.02;
+      const x = (clientX - centerX) * speed;
+      const y = (clientY - centerY) * speed;
+      shape.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  });
+});
