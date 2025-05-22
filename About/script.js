@@ -72,12 +72,13 @@ const initializeAnimations = () => {
 const initializeLanguageToggle = () => {
   const languageToggle = document.querySelectorAll(".language-toggle a");
 
-  // Set initial active language
-  const currentLang =
-    localStorage.getItem("preferredLanguage") ||
-    behaviorConfig.languages.default;
+  // Set initial active language based on current page
+  const isWelshPage = window.location.pathname.includes(".cy.html");
   languageToggle.forEach((link) => {
-    if (link.textContent.toLowerCase() === currentLang) {
+    if (
+      (isWelshPage && link.textContent === "Cymraeg") ||
+      (!isWelshPage && link.textContent === "English")
+    ) {
       link.classList.add("active");
     }
   });
@@ -92,11 +93,8 @@ const initializeLanguageToggle = () => {
       // Add active class to clicked link
       link.classList.add("active");
 
-      // Store language preference
-      const selectedLang = link.textContent.toLowerCase();
-      localStorage.setItem("preferredLanguage", selectedLang);
-
       // Change language
+      const selectedLang = link.textContent.toLowerCase();
       changeLanguage(selectedLang);
     });
   });
@@ -110,9 +108,11 @@ const changeLanguage = (lang) => {
 
   // Determine the target page based on current page and language
   let targetPage;
-  if (lang === "cy") {
+  if (lang === "cymraeg") {
+    // Convert to Welsh version
     targetPage = currentPage.replace(".html", ".cy.html");
   } else {
+    // Convert to English version
     targetPage = currentPage.replace(".cy.html", ".html");
   }
 
