@@ -286,14 +286,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Scroll Indicator Animation
+  // Scroll Indicator Animation and Functionality
   const scrollIndicator = document.querySelector(".hero-scroll-indicator");
   if (scrollIndicator) {
+    // Add click event to the scroll indicator
+    scrollIndicator.addEventListener("click", () => {
+      const activitiesSection = document.querySelector(".activities-tabs");
+      if (activitiesSection) {
+        const headerOffset = 100;
+        const elementPosition = activitiesSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    });
+
+    // Fade out scroll indicator when scrolling
     window.addEventListener("scroll", () => {
       if (window.scrollY > 100) {
         scrollIndicator.style.opacity = "0";
+        scrollIndicator.style.pointerEvents = "none"; // Disable clicking when hidden
       } else {
         scrollIndicator.style.opacity = "1";
+        scrollIndicator.style.pointerEvents = "auto"; // Enable clicking when visible
       }
     });
   }

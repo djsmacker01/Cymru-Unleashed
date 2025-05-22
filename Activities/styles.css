@@ -315,16 +315,37 @@ nav ul li a.active {
     gap: 0.5rem;
     opacity: 0;
     animation: fadeIn 0.8s forwards 1.5s;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 1rem;
+    border-radius: 50px;
+}
+
+.hero-scroll-indicator:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-50%) translateY(-5px);
 }
 
 .scroll-text {
     font-size: 0.9rem;
     color: #ffffff;
     opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.hero-scroll-indicator:hover .scroll-text {
+    opacity: 1;
 }
 
 .hero-scroll-indicator i {
     animation: bounce 2s infinite;
+    font-size: 1.2rem;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.hero-scroll-indicator:hover i {
+    transform: translateY(5px);
 }
 
 /* Animations */
