@@ -69,30 +69,111 @@ const initializeAnimations = () => {
 };
 
 // Language Toggle
-const initializeLanguageToggle = () => {
-  const languageToggle = document.querySelectorAll(".language-toggle a");
+const languageToggle = document.querySelectorAll(".language-toggle a");
 
-  // Set initial active language based on current page
-  const isWelshPage = window.location.pathname.includes(".cy.html");
-  languageToggle.forEach((link) => {
-    if (
-      (isWelshPage && link.textContent === "Cymraeg") ||
-      (!isWelshPage && link.textContent === "English")
-    ) {
-      link.classList.add("active");
+const translations = {
+  en: {
+    "about-title": "About Us",
+    "hero-subtitle":
+      "Learn more about our women-led initiative celebrating Wales in UEFA Euro 2025",
+    "our-story": "Our Story",
+    "story-text":
+      "Cymru Unleashed was born from a vision to celebrate Wales' historic participation in UEFA Women's Euro 2025 in a meaningful way that creates lasting impact. Founded by a diverse group of Welsh women in sports, arts, and community development, our initiative aims to use this momentous sporting event as a catalyst for positive change.",
+    "what-makes-different": "What Makes Us Different",
+    "different-text":
+      "What sets Cymru Unleashed apart is our unique approach that combines sport, creativity, and innovation to create pathways for young Welsh women and girls. We believe that by connecting these three powerful forces, we can inspire a new generation to take pride in their identity and discover their own potential.",
+    "grassroots-text":
+      "Our grassroots foundation ensures that we remain connected to the communities we serve, with a special focus on underrepresented voices and those with limited access to sport and cultural opportunities.",
+    "our-mission": "Our Mission",
+    "mission-text":
+      "To make sport and culture accessible to all — inspiring a generation of young Welsh girls to lead, play, and dream beyond boundaries.",
+    "our-objectives": "Our Objectives",
+    "objective-1":
+      "Increase sports participation among girls aged 12-18, with a focus on those from underrepresented communities",
+    "objective-2":
+      "Champion equality and inclusion with 50% of participants from marginalized communities",
+    "objective-3":
+      "Promote Wales and Welsh culture through bilingual digital storytelling and immersive content",
+    "objective-4":
+      "Build a lasting legacy via strategic partnerships, public art, and educational resources",
+    "meet-team": "Meet Our Team",
+    "core-values": "Our Core Values",
+    "footer-tagline":
+      "Empowering the next generation of Welsh women through sport, art, and culture.",
+    "quick-links": "Quick Links",
+    contact: "Contact",
+  },
+  cy: {
+    "about-title": "Amdanom Ni",
+    "hero-subtitle":
+      "Dysgwch fwy am ein menter arweinyddiaeth benywaidd yn dathlu Cymru yn UEFA Euro 2025",
+    "our-story": "Ein Stori",
+    "story-text":
+      "Cymru Unleashed a anwyd o weledigaeth i ddathlu cyfranogiad hanesyddol Cymru yn UEFA Euro 2025 Benywaidd mewn ffordd ystyrlon sy'n creu effaith parhaol. Wedi'i sefydlu gan grŵp amrywiol o fenywod Cymreig mewn chwaraeon, celfyddydau, a datblygu cymunedol, mae ein menter yn anelu at ddefnyddio'r digwyddiad chwaraeon pwysig hwn fel catalydd ar gyfer newid cadarnhaol.",
+    "what-makes-different": "Beth Sy'n Ein Gwneud yn Wahanol",
+    "different-text":
+      "Yr hyn sy'n gwneud Cymru Unleashed yn wahanol yw ein dull unigryw sy'n cyfuno chwaraeon, creadigrwydd, ac arloesi i greu llwybrau ar gyfer merched ifanc Cymreig. Rydym yn credu, trwy gysylltu'r tair grym pwerus hyn, y gallwn ysbrydoli cenhedlaeth newydd i ymfalchïo yn eu hunaniaeth a darganfod eu potensial eu hunain.",
+    "grassroots-text":
+      "Mae ein sylfaen gwreiddiol yn sicrhau ein bod yn parhau i fod yn gysylltiedig â'r cymunedau rydym yn eu gwasanaethu, gyda ffocws arbennig ar leisiau sydd heb gynrychiolaeth ddigonol a'r rhai sydd â mynediad cyfyngedig i gyfleoedd chwaraeon a diwylliannol.",
+    "our-mission": "Ein Cenhadaeth",
+    "mission-text":
+      "I wneud chwaraeon a diwylliant yn hygyrch i bawb - yn ysbrydoli cenhedlaeth o ferched ifanc Cymreig i arwain, chwarae, a breuddwydio y tu hwnt i ffiniau.",
+    "our-objectives": "Ein Nodau",
+    "objective-1":
+      "Cynyddu cyfranogiad chwaraeon ymhlith merched 12-18 oed, gyda ffocws ar y rhai o gymunedau sydd heb gynrychiolaeth ddigonol",
+    "objective-2":
+      "Hyrwyddo cydraddoldeb a chynhwysiant gyda 50% o gyfranogwyr o gymunedau ymylol",
+    "objective-3":
+      "Hyrwyddo Cymru a diwylliant Cymreig trwy straeon digidol dwyieithog a chynnwys ymlyniadol",
+    "objective-4":
+      "Adeiladu treftadaeth barhaol trwy bartneriaethau strategol, celf gyhoeddus, ac adnoddau addysgol",
+    "meet-team": "Cyfarfod â'n Tîm",
+    "core-values": "Ein Gwerthoedd Craidd",
+    "footer-tagline":
+      "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+    "quick-links": "Dolenni Cyflym",
+    contact: "Cysylltu",
+  },
+};
+
+function updateLanguage(lang) {
+  // Update all elements with data-translate attribute
+  document.querySelectorAll("[data-translate]").forEach((element) => {
+    const key = element.getAttribute("data-translate");
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
     }
   });
 
-  // Remove click event listeners since we're using direct links now
-  languageToggle.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      // Let the default link behavior handle the navigation
-      // Just ensure the active class is set correctly
-      languageToggle.forEach((l) => l.classList.remove("active"));
-      link.classList.add("active");
-    });
+  // Update document title
+  document.title =
+    lang === "cy" ? "Amdanom | Cymru Unleashed" : "About | Cymru Unleashed";
+
+  // Store language preference
+  localStorage.setItem("preferred-language", lang);
+}
+
+languageToggle.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Remove active class from all links
+    languageToggle.forEach((l) => l.classList.remove("active"));
+
+    // Add active class to clicked link
+    link.classList.add("active");
+
+    // Determine which language to switch to
+    const newLang = link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
+
+    // Update the language
+    updateLanguage(newLang);
   });
-};
+});
+
+// Set initial language based on stored preference or default to English
+const initialLang = localStorage.getItem("preferred-language") || "en";
+updateLanguage(initialLang);
 
 // Handle touch events for mobile
 const initializeTouchEvents = () => {
