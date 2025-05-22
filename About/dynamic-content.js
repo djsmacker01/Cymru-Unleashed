@@ -33,17 +33,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // Render Team Members
   const teamGrid = document.querySelector(".team-grid");
   if (teamGrid) {
+    const currentLang = localStorage.getItem("preferred-language") || "en";
     teamGrid.innerHTML = siteConfig.teamMembers
       .map(
         (member) => `
             <div class="team-member">
                 <div class="member-image">
-                    <img src="${member.image}" alt="${member.name}">
+                    <img src="${member.image}" alt="${member.name[currentLang]}">
                 </div>
                 <div class="member-info">
-                    <h3>${member.name}</h3>
-                    <span>${member.role}</span>
-                    <p>${member.description}</p>
+                    <h3>${member.name[currentLang]}</h3>
+                    <span>${member.role[currentLang]}</span>
+                    <p>${member.description[currentLang]}</p>
                     <div class="member-social">
                         <a href="${member.social.twitter}"><i class="fab fa-twitter"></i></a>
                         <a href="${member.social.linkedin}"><i class="fab fa-linkedin-in"></i></a>

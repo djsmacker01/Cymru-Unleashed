@@ -169,6 +169,32 @@ function updateLanguage(lang) {
       )
       .join("");
   }
+
+  // Re-render team members with new language
+  const teamGrid = document.querySelector(".team-grid");
+  if (teamGrid) {
+    teamGrid.innerHTML = siteConfig.teamMembers
+      .map(
+        (member) => `
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="${member.image}" alt="${member.name[lang]}">
+                </div>
+                <div class="member-info">
+                    <h3>${member.name[lang]}</h3>
+                    <span>${member.role[lang]}</span>
+                    <p>${member.description[lang]}</p>
+                    <div class="member-social">
+                        <a href="${member.social.twitter}"><i class="fab fa-twitter"></i></a>
+                        <a href="${member.social.linkedin}"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="${member.social.instagram}"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        `
+      )
+      .join("");
+  }
 }
 
 languageToggle.forEach((link) => {

@@ -22,11 +22,19 @@ const siteConfig = {
   ],
   teamMembers: [
     {
-      name: "Rhiannon Davies",
-      role: "Founder & Director",
+      name: {
+        en: "Rhiannon Davies",
+        cy: "Rhiannon Davies",
+      },
+      role: {
+        en: "Founder & Director",
+        cy: "Sefydlydd a Chyfarwyddwr",
+      },
       image: "/Images/lady1.jpg",
-      description:
-        "Former Wales international footballer and community coach with over 15 years of experience in sports development.",
+      description: {
+        en: "Former Wales international footballer and community coach with over 15 years of experience in sports development.",
+        cy: "Chwaraewr pêl-droed rhyngwladol Cymru a hyfforddwr cymunedol gyda dros 15 mlynedd o brofiad mewn datblygu chwaraeon.",
+      },
       social: {
         twitter: "#",
         linkedin: "#",
@@ -34,11 +42,19 @@ const siteConfig = {
       },
     },
     {
-      name: "Megan Thomas",
-      role: "Creative Director",
+      name: {
+        en: "Megan Thomas",
+        cy: "Megan Thomas",
+      },
+      role: {
+        en: "Creative Director",
+        cy: "Cyfarwyddwr Creadigol",
+      },
       image: "/Images/Megan.jpg",
-      description:
-        "Artist and educator specialized in community-based art projects and digital media storytelling.",
+      description: {
+        en: "Artist and educator specialized in community-based art projects and digital media storytelling.",
+        cy: "Artist ac addysgwr wedi'i arbenigo mewn prosiectau celf wedi'u seilio ar gymunedau a straeon cyfryngau digidol.",
+      },
       social: {
         twitter: "#",
         linkedin: "#",
@@ -46,11 +62,19 @@ const siteConfig = {
       },
     },
     {
-      name: "Seren Jones",
-      role: "Community Engagement",
+      name: {
+        en: "Seren Jones",
+        cy: "Seren Jones",
+      },
+      role: {
+        en: "Community Engagement",
+        cy: "Ymgysylltu â'r Gymuned",
+      },
       image: "/Images/seran.jpeg",
-      description:
-        "Community organizer with expertise in youth development and social inclusion programs.",
+      description: {
+        en: "Community organizer with expertise in youth development and social inclusion programs.",
+        cy: "Trefnydd cymunedol gydag arbenigedd mewn rhaglenni datblygu ieuenctid a chynhwysiant cymdeithasol.",
+      },
       social: {
         twitter: "#",
         linkedin: "#",
