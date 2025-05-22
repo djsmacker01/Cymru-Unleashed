@@ -83,41 +83,15 @@ const initializeLanguageToggle = () => {
     }
   });
 
+  // Remove click event listeners since we're using direct links now
   languageToggle.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      // Remove active class from all links
+      // Let the default link behavior handle the navigation
+      // Just ensure the active class is set correctly
       languageToggle.forEach((l) => l.classList.remove("active"));
-
-      // Add active class to clicked link
       link.classList.add("active");
-
-      // Change language
-      const selectedLang = link.textContent.toLowerCase();
-      changeLanguage(selectedLang);
     });
   });
-};
-
-// Language Change Function
-const changeLanguage = (lang) => {
-  // Get current page path
-  const currentPath = window.location.pathname;
-  const currentPage = currentPath.split("/").pop();
-
-  // Determine the target page based on current page and language
-  let targetPage;
-  if (lang === "cymraeg") {
-    // Convert to Welsh version
-    targetPage = currentPage.replace(".html", ".cy.html");
-  } else {
-    // Convert to English version
-    targetPage = currentPage.replace(".cy.html", ".html");
-  }
-
-  // Navigate to the new page
-  window.location.href = targetPage;
 };
 
 // Handle touch events for mobile
