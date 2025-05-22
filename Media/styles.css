@@ -1334,3 +1334,74 @@ footer {
         font-size: 2.5rem;
     }
 }
+
+/* Digital Clock Styles */
+.digital-clock {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease forwards 0.9s;
+    opacity: 0;
+}
+
+.clock-display {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(211, 7, 29, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.clock-display span {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 8px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.clock-display .colon {
+    background: none;
+    min-width: auto;
+    animation: blink 1s infinite;
+}
+
+.clock-label {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .clock-display {
+        font-size: 2rem;
+    }
+
+    .clock-display span {
+        min-width: 50px;
+    }
+}
