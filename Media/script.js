@@ -260,7 +260,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const animateValue = (element, start, end, duration) => {
     let startTimestamp = null;
     const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
+      if (!startTimestamp) {
+        startTimestamp = timestamp;
+      }
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
       const value = Math.floor(progress * (end - start) + start);
       element.textContent = value;
