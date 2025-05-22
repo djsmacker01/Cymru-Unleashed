@@ -327,68 +327,26 @@ document.addEventListener("DOMContentLoaded", function () {
     statsObserver.observe(stat);
   });
 
-  // Handle specific button scroll behaviors
-  const exploreLegacyBtn = document.querySelector(".btn-primary");
-  const viewImpactBtn = document.querySelector(".btn-secondary");
+  // Smooth scrolling for hero buttons
+  const exploreLegacyBtn = document.querySelector('a[href="#legacy-pillars"]');
+  const viewImpactBtn = document.querySelector('a[href="#impact-stories"]');
 
   if (exploreLegacyBtn) {
-    exploreLegacyBtn.addEventListener("click", function (e) {
+    exploreLegacyBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      const legacySection = document.querySelector("#legacy-beyond");
+      const legacySection = document.querySelector(".legacy-intro");
       if (legacySection) {
-        const headerOffset = 80;
-        const elementPosition = legacySection.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - headerOffset;
-
-        // Add ripple effect
-        const ripple = document.createElement("span");
-        ripple.classList.add("btn-ripple");
-        this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 1000);
-
-        // Smooth scroll to section
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-
-        // Add highlight animation
-        legacySection.classList.add("section-highlight");
-        setTimeout(() => {
-          legacySection.classList.remove("section-highlight");
-        }, 1500);
+        legacySection.scrollIntoView({ behavior: "smooth" });
       }
     });
   }
 
   if (viewImpactBtn) {
-    viewImpactBtn.addEventListener("click", function (e) {
+    viewImpactBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      const impactSection = document.querySelector("#impact-stories");
+      const impactSection = document.querySelector(".impact-stories");
       if (impactSection) {
-        const headerOffset = 80;
-        const elementPosition = impactSection.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - headerOffset;
-
-        // Add ripple effect
-        const ripple = document.createElement("span");
-        ripple.classList.add("btn-ripple");
-        this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 1000);
-
-        // Smooth scroll to section
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-
-        // Add highlight animation
-        impactSection.classList.add("section-highlight");
-        setTimeout(() => {
-          impactSection.classList.remove("section-highlight");
-        }, 1500);
+        impactSection.scrollIntoView({ behavior: "smooth" });
       }
     });
   }
