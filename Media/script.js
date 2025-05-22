@@ -341,3 +341,86 @@ function updateClock() {
 // Update clock immediately and then every second
 updateClock();
 setInterval(updateClock, 1000);
+
+// Media Kit Download Functionality
+function initializeDownloads() {
+  const downloadButtons = document.querySelectorAll(".download-btn");
+
+  downloadButtons.forEach((button) => {
+    button.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const downloadItem = button.closest(".download-item");
+      const progressBar = downloadItem.querySelector(".progress-bar");
+      const progressContainer =
+        downloadItem.querySelector(".download-progress");
+      const fileName = button.getAttribute("data-file");
+
+      // Start download animation
+      downloadItem.classList.add("downloading");
+      progressContainer.classList.add("active");
+
+      try {
+        // Simulate download progress
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += Math.random() * 10;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            completeDownload(downloadItem, fileName);
+          }
+          progressBar.style.width = `${progress}%`;
+          progressBar.setAttribute("data-progress", progress);
+        }, 200);
+
+        // In a real implementation, you would use fetch to download the file
+        // const response = await fetch(button.href);
+        // const blob = await response.blob();
+        // const url = window.URL.createObjectURL(blob);
+        // const a = document.createElement('a');
+        // a.href = url;
+        // a.download = fileName;
+        // document.body.appendChild(a);
+        // a.click();
+        // window.URL.revokeObjectURL(url);
+        // document.body.removeChild(a);
+      } catch (error) {
+        console.error("Download failed:", error);
+        downloadItem.classList.remove("downloading");
+        progressContainer.classList.remove("active");
+        alert("Download failed. Please try again.");
+      }
+    });
+  });
+}
+
+function completeDownload(downloadItem, fileName) {
+  downloadItem.classList.remove("downloading");
+  downloadItem.classList.add("completed");
+
+  const button = downloadItem.querySelector(".download-btn");
+  const icon = button.querySelector("i");
+
+  // Change icon to checkmark
+  icon.className = "fas fa-check";
+
+  // Show success message
+  const successMessage = document.createElement("div");
+  successMessage.className = "download-success";
+  successMessage.textContent = `${fileName} downloaded successfully!`;
+  downloadItem.appendChild(successMessage);
+
+  // Reset after 3 seconds
+  setTimeout(() => {
+    downloadItem.classList.remove("completed");
+    icon.className = "fas fa-download";
+    successMessage.remove();
+    downloadItem.querySelector(".download-progress").classList.remove("active");
+    downloadItem.querySelector(".progress-bar").style.width = "0%";
+  }, 3000);
+}
+
+// Initialize downloads when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  initializeDownloads();
+});

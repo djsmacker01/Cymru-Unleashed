@@ -1405,3 +1405,87 @@ footer {
         min-width: 50px;
     }
 }
+
+/* Download Progress Styles */
+.download-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+    display: none;
+}
+
+.download-progress.active {
+    display: block;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.download-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.download-item.downloading .download-btn {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.download-item.downloading .download-btn i {
+    animation: spin 1s linear infinite;
+}
+
+.download-item.completed .download-btn {
+    background: var(--secondary);
+}
+
+.download-item.completed .download-btn i {
+    animation: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Enhanced Download Item Styles */
+.download-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.download-info h4 {
+    color: var(--primary);
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.download-info span {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.download-btn {
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary);
+}
