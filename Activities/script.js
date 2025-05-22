@@ -1,122 +1,208 @@
-
 // Mobile Navigation Toggle
-const hamburger = document.getElementById('hamburger');
-const nav = document.getElementById('nav');
-const overlay = document.getElementById('overlay');
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav");
+const overlay = document.getElementById("overlay");
 
 const toggleMenu = () => {
-    nav.classList.toggle('active');
-    hamburger.classList.toggle('active');
-    overlay.classList.toggle('active');
-    hamburger.innerHTML = nav.classList.contains('active') ?
-        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+  nav.classList.toggle("active");
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
+  hamburger.innerHTML = nav.classList.contains("active")
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
 
-    // Toggle body scroll
-    if (nav.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
+  // Toggle body scroll
+  document.body.style.overflow = nav.classList.contains("active")
+    ? "hidden"
+    : "";
 };
 
-hamburger.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', toggleMenu);
+// Initialize navigation event listeners
+const initializeNavigation = () => {
+  hamburger.addEventListener("click", toggleMenu);
+  overlay.addEventListener("click", toggleMenu);
 
-// Close menu when clicking navigation links
-document.querySelectorAll('nav a').forEach(item => {
-    item.addEventListener('click', () => {
-        if (nav.classList.contains('active')) {
-            toggleMenu();
-        }
+  // Close menu when clicking navigation links
+  document.querySelectorAll("nav a").forEach((item) => {
+    item.addEventListener("click", () => {
+      if (nav.classList.contains("active")) {
+        toggleMenu();
+      }
     });
-});
+  });
+};
 
 // Sticky Header on Scroll
-window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
+const initializeStickyHeader = () => {
+  window.addEventListener("scroll", () => {
+    const header = document.getElementById("header");
+    header.classList.toggle("scrolled", window.scrollY > 50);
+  });
+};
 
 // Activity Tabs
-const tabs = document.querySelectorAll('.activity-tab');
-const contents = document.querySelectorAll('.activity-content');
+const tabs = document.querySelectorAll(".activity-tab");
+const contents = document.querySelectorAll(".activity-content");
 
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Remove active class from all tabs and contents
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    // Remove active class from all tabs and contents
+    tabs.forEach((t) => t.classList.remove("active"));
+    contents.forEach((c) => c.classList.remove("active"));
 
-        // Add active class to clicked tab
-        tab.classList.add('active');
+    // Add active class to clicked tab
+    tab.classList.add("active");
 
-        // Show corresponding content
-        const contentId = `${tab.getAttribute('data-tab')}-content`;
-        document.getElementById(contentId).classList.add('active');
+    // Show corresponding content
+    const contentId = `${tab.getAttribute("data-tab")}-content`;
+    document.getElementById(contentId).classList.add("active");
 
-        // Scroll to the top of the content with a slight delay for animation
-        setTimeout(() => {
-            window.scrollTo({
-                top: document.querySelector('.activities-tabs').offsetTop - 100,
-                behavior: 'smooth'
-            });
-        }, 100);
-    });
+    // Scroll to the top of the content with a slight delay for animation
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.querySelector(".activities-tabs").offsetTop - 100,
+        behavior: "smooth",
+      });
+    }, 100);
+  });
 });
 
 // Animation on scroll with Intersection Observer
-const animateElements = document.querySelectorAll('.event-card, .installation-card, .timeline-item');
+const animateElements = document.querySelectorAll(
+  ".event-card, .installation-card, .timeline-item"
+);
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animated');
-            // Stop observing after animation
-            observer.unobserve(entry.target);
-        }
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animated");
+        // Stop observing after animation
+        observer.unobserve(entry.target);
+      }
     });
-}, {
+  },
+  {
     root: null,
     threshold: 0.1,
-    rootMargin: '-50px'
-});
+    rootMargin: "-50px",
+  }
+);
 
-animateElements.forEach(element => {
-    observer.observe(element);
+animateElements.forEach((element) => {
+  observer.observe(element);
 });
 
 // Language Toggle
-const languageToggle = document.querySelectorAll('.language-toggle a');
+const languageToggle = document.querySelectorAll(".language-toggle a");
 
-languageToggle.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
+const translations = {
+  en: {
+    "activities-title": "Our Activities",
+    "activities-subtitle":
+      "Discover how we're empowering young Welsh women through sport, art, and culture",
+    "sports-title": "Sports Workshops",
+    "sports-desc":
+      "Join our skill-building workshops and mini-tournaments across Wales",
+    "art-title": "Art Installations",
+    "art-desc":
+      "Experience our travelling pop-up exhibitions celebrating Welsh women in sport",
+    "digital-title": "Digital Campaign",
+    "digital-desc":
+      "Explore our bilingual content and immersive VR experiences",
+    "upcoming-events": "Upcoming Events",
+    "past-events": "Past Events",
+    "register-interest": "Register Interest",
+    "footer-tagline":
+      "Empowering the next generation of Welsh women through sport, art, and culture.",
+    "quick-links": "Quick Links",
+    contact: "Contact",
+  },
+  cy: {
+    "activities-title": "Ein Gweithgareddau",
+    "activities-subtitle":
+      "Darganfyddwch sut rydym yn grymuso menywod ifanc Cymreig trwy chwaraeon, celf a diwylliant",
+    "sports-title": "Gweithdai Chwaraeon",
+    "sports-desc":
+      "Ymunwch â'n gweithdai adeiladu sgiliau a thwrnamaint bach ar draws Cymru",
+    "art-title": "Gosodiadau Celf",
+    "art-desc":
+      "Profiwch ein arddangosfeydd pop-up teithiol sy'n dathlu menywod Cymreig mewn chwaraeon",
+    "digital-title": "Ymgyrch Ddigidol",
+    "digital-desc":
+      "Archwiliwch ein cynnwys dwyieithog a phrofiadau VR ymlyniadol",
+    "upcoming-events": "Digwyddiadau i Ddod",
+    "past-events": "Digwyddiadau Gorffennol",
+    "register-interest": "Cofrestru Diddordeb",
+    "footer-tagline":
+      "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+    "quick-links": "Dolenni Cyflym",
+    contact: "Cysylltu",
+  },
+};
 
-        // Remove active class from all links
-        languageToggle.forEach(l => l.classList.remove('active'));
+function updateLanguage(lang) {
+  // Update all elements with data-translate attribute
+  document.querySelectorAll("[data-translate]").forEach((element) => {
+    const key = element.getAttribute("data-translate");
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
 
-        // Add active class to clicked link
-        link.classList.add('active');
+  // Update document title
+  document.title =
+    lang === "cy"
+      ? "Gweithgareddau | Cymru Unleashed"
+      : "Activities | Cymru Unleashed";
 
-        // In a real implementation, this would change the language
-        alert(`Language would change to: ${link.textContent}`);
-    });
+  // Store language preference
+  localStorage.setItem("preferred-language", lang);
+}
+
+languageToggle.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Remove active class from all links
+    languageToggle.forEach((l) => l.classList.remove("active"));
+
+    // Add active class to clicked link
+    link.classList.add("active");
+
+    // Determine which language to switch to
+    const newLang = link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
+
+    // Update the language
+    updateLanguage(newLang);
+  });
+});
+
+// Set initial language based on stored preference or default to English
+const initialLang = localStorage.getItem("preferred-language") || "en";
+updateLanguage(initialLang);
+
+// Initialize all functionality
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
+  initializeStickyHeader();
 });
 
 // Check URL hash for direct tab access
-window.addEventListener('load', () => {
-    const hash = window.location.hash.substring(1);
-    const validTabs = ['sports-content', 'art-content', 'digital-content', 'timeline-content'];
+window.addEventListener("load", () => {
+  const hash = window.location.hash.substring(1);
+  const validTabs = [
+    "sports-content",
+    "art-content",
+    "digital-content",
+    "timeline-content",
+  ];
 
-    if (hash && validTabs.includes(hash)) {
-        const tabId = hash.replace('-content', '');
-        document.querySelector(`.activity-tab[data-tab="${tabId}"]`).click();
-    }
+  if (hash && validTabs.includes(hash)) {
+    const tabId = hash.replace("-content", "");
+    document.querySelector(`.activity-tab[data-tab="${tabId}"]`).click();
+  }
 });
 
 // Handle touch events for mobile
-document.addEventListener('touchstart', () => { }, { passive: true });
+document.addEventListener("touchstart", () => {}, { passive: true });
