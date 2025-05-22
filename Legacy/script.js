@@ -48,7 +48,8 @@ const prevBtn = document.getElementById("prev");
 
 let currentIndex = 0;
 const slides = Array.from(track.children);
-let startX, moveX;
+let startX;
+let moveX;
 let isMouseDown = false;
 
 // Set initial position
@@ -94,7 +95,9 @@ track.addEventListener(
 track.addEventListener(
   "touchmove",
   (e) => {
-    if (!isMouseDown) return;
+    if (!isMouseDown) {
+      return;
+    }
     moveX = e.touches[0].clientX;
     const diff = moveX - startX;
     const move = (diff / window.innerWidth) * 100;
@@ -302,105 +305,152 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("touchstart", () => {}, { passive: true });
 
 // Hero Section Animations
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize stats counter animation
-    const stats = document.querySelectorAll('.stat-number');
-    const observerOptions = {
-        threshold: 0.5
-    };
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize stats counter animation
+  const stats = document.querySelectorAll(".stat-number");
+  const observerOptions = {
+    threshold: 0.5,
+  };
 
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const finalValue = parseInt(target.getAttribute('data-value'));
-                animateValue(target, 0, finalValue, 2000);
-                statsObserver.unobserve(target);
-            }
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const target = entry.target;
+        const finalValue = parseInt(target.getAttribute("data-count"));
+        animateValue(target, 0, finalValue, 2000);
+        statsObserver.unobserve(target);
+      }
+    });
+  }, observerOptions);
+
+  stats.forEach((stat) => {
+    statsObserver.observe(stat);
+  });
+
+  // Smooth scroll functionality with enhanced animations
+  const scrollLinks = document.querySelectorAll('a[href^="#"]');
+  scrollLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        const headerOffset = 80;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+
+        // Add ripple effect to button
+        const ripple = document.createElement("span");
+        ripple.classList.add("btn-ripple");
+        this.appendChild(ripple);
+
+        // Remove ripple after animation
+        setTimeout(() => {
+          ripple.remove();
+        }, 1000);
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
         });
-    }, observerOptions);
 
-    stats.forEach(stat => {
-        statsObserver.observe(stat);
+        // Add highlight animation to target section
+        targetElement.classList.add("section-highlight");
+        setTimeout(() => {
+          targetElement.classList.remove("section-highlight");
+        }, 1500);
+      }
+    });
+  });
+
+  // Scroll indicator functionality with enhanced animation
+  const scrollIndicator = document.querySelector(".hero-scroll-indicator");
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener("click", function () {
+      const nextSection = document.querySelector("#legacy-pillars");
+      if (nextSection) {
+        const headerOffset = 80;
+        const elementPosition = nextSection.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+
+        // Add bounce animation to scroll indicator
+        this.classList.add("scroll-bounce");
+        setTimeout(() => {
+          this.classList.remove("scroll-bounce");
+        }, 1000);
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        // Add highlight animation to target section
+        nextSection.classList.add("section-highlight");
+        setTimeout(() => {
+          nextSection.classList.remove("section-highlight");
+        }, 1500);
+      }
     });
 
-    // Smooth scroll functionality
-    const scrollLinks = document.querySelectorAll('a[href^="#"]');
-    scrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const headerOffset = 80;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
+    // Enhanced fade out scroll indicator on scroll
+    window.addEventListener("scroll", function () {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 100) {
+        scrollIndicator.style.opacity = "0";
+        scrollIndicator.style.pointerEvents = "none";
+        scrollIndicator.style.transform = "translateY(20px)";
+      } else {
+        scrollIndicator.style.opacity = "1";
+        scrollIndicator.style.pointerEvents = "auto";
+        scrollIndicator.style.transform = "translateY(0)";
+      }
     });
-
-    // Scroll indicator functionality
-    const scrollIndicator = document.querySelector('.hero-scroll-indicator');
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
-            const nextSection = document.querySelector('#legacy-pillars');
-            if (nextSection) {
-                const headerOffset = 80;
-                const elementPosition = nextSection.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-
-        // Fade out scroll indicator on scroll
-        window.addEventListener('scroll', function() {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition > 100) {
-                scrollIndicator.style.opacity = '0';
-                scrollIndicator.style.pointerEvents = 'none';
-            } else {
-                scrollIndicator.style.opacity = '1';
-                scrollIndicator.style.pointerEvents = 'auto';
-            }
-        });
-    }
+  }
 });
 
-// Helper function to animate counting
+// Enhanced helper function to animate counting with easing
 function animateValue(element, start, end, duration) {
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const value = Math.floor(progress * (end - start) + start);
-        element.textContent = value;
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        }
-    };
-    window.requestAnimationFrame(step);
+  let startTimestamp = null;
+  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+  const step = (timestamp) => {
+    if (!startTimestamp) {
+      startTimestamp = timestamp;
+    }
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const easedProgress = easeOutQuart(progress);
+    const value = Math.floor(easedProgress * (end - start) + start);
+    element.textContent = value;
+
+    // Add pulse animation when value changes
+    element.classList.add("number-pulse");
+    setTimeout(() => {
+      element.classList.remove("number-pulse");
+    }, 200);
+
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
 }
 
-// Add parallax effect to shapes
-document.addEventListener('mousemove', function(e) {
-    const shapes = document.querySelectorAll('.shape');
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
+// Enhanced parallax effect to shapes with smooth transitions
+document.addEventListener("mousemove", function (e) {
+  const shapes = document.querySelectorAll(".shape");
+  const mouseX = e.clientX / window.innerWidth;
+  const mouseY = e.clientY / window.innerHeight;
 
-    shapes.forEach((shape, index) => {
-        const speed = (index + 1) * 0.1;
-        const x = (mouseX - 0.5) * speed * 100;
-        const y = (mouseY - 0.5) * speed * 100;
-        shape.style.transform = `translate(${x}px, ${y}px)`;
-    });
+  shapes.forEach((shape, index) => {
+    const speed = (index + 1) * 0.1;
+    const x = (mouseX - 0.5) * speed * 100;
+    const y = (mouseY - 0.5) * speed * 100;
+
+    // Add smooth transition
+    shape.style.transition = "transform 0.3s ease-out";
+    shape.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.1}deg)`;
+  });
 });
