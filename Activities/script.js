@@ -258,6 +258,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const targetId = this.getAttribute("href");
       const targetElement = document.querySelector(targetId);
 
+      if (targetId === "#art-content") {
+        // Switch to the art tab
+        document.querySelector('.activity-tab[data-tab="art"]').click();
+      } else if (targetId === "#sports-content") {
+        // Switch to the sports tab
+        document.querySelector('.activity-tab[data-tab="sports"]').click();
+      }
+
       if (targetElement) {
         // Add a small offset to account for the header
         const headerOffset = 100;
