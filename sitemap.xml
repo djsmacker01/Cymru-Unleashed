@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
     <!-- Home Page -->
     <url>
-        <loc>https://cymruunleashed.com/</loc>
+        <loc>https://cymruunleashed.netlify.app/</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/cy/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/cy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/"/>
     </url>
-    
+
     <!-- About Page -->
     <url>
-        <loc>https://cymruunleashed.com/About/about.html</loc>
+        <loc>https://cymruunleashed.netlify.app/About/about.html</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/About/about.cy.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/About/about.html"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/About/about.cy.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/About/about.html"/>
     </url>
-    
+
     <!-- Activities Page -->
     <url>
-        <loc>https://cymruunleashed.com/Activities/activities.html</loc>
+        <loc>https://cymruunleashed.netlify.app/Activities/activities.html</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/Activities/activities.cy.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/Activities/activities.html"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/Activities/activities.cy.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/Activities/activities.html"/>
     </url>
-    
+
     <!-- Legacy Page -->
     <url>
-        <loc>https://cymruunleashed.com/Legacy/legacy.html</loc>
+        <loc>https://cymruunleashed.netlify.app/Legacy/legacy.html</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/Legacy/legacy.cy.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/Legacy/legacy.html"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/Legacy/legacy.cy.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/Legacy/legacy.html"/>
     </url>
-    
+
     <!-- Media Page -->
     <url>
-        <loc>https://cymruunleashed.com/Media/media.html</loc>
+        <loc>https://cymruunleashed.netlify.app/Media/media.html</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/Media/media.cy.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/Media/media.html"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/Media/media.cy.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/Media/media.html"/>
     </url>
-    
+
     <!-- Get Involved Page -->
     <url>
-        <loc>https://cymruunleashed.com/getInvolved/get-involved.html</loc>
+        <loc>https://cymruunleashed.netlify.app/getInvolved/get-involved.html</loc>
         <lastmod>2024-03-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
-        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/getInvolved/get-involved.cy.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.com/getInvolved/get-involved.html"/>
+        <xhtml:link rel="alternate" hreflang="cy" href="https://cymruunleashed.netlify.app/getInvolved/get-involved.cy.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://cymruunleashed.netlify.app/getInvolved/get-involved.html"/>
     </url>
-</urlset> 
+
+</urlset>
