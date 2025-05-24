@@ -1,4 +1,4 @@
-# robots.txt for cymruunleashed.com
+# robots.txt for cymruunleashed.netlify.app/
 
 User-agent: *
 Allow: /
@@ -11,7 +11,7 @@ Allow: /getInvolved/
 Allow: /blog/
 
 # Sitemap
-Sitemap: https://cymruunleashed.com/sitemap.xml
+Sitemap: https://cymruunleashed.netlify.app/sitemap.xml
 
 # Disallow admin and system files
 Disallow: /admin/
