@@ -1,0 +1,24 @@
+# Blog-specific robots.txt
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /blog/category/
+Allow: /blog/author/
+Allow: /blog/tag/
+Allow: /blog/archive/
+
+# Disallow admin and private areas
+Disallow: /blog/admin/
+Disallow: /blog/private/
+Disallow: /blog/draft/
+Disallow: /blog/temp/
+
+# Allow image crawling
+Allow: /images/blog/
+Allow: /images/authors/
+
+# Crawl delay for blog content
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://cymruunleashed.com/blog/sitemap.xml 
