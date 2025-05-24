@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>[BLOG_TITLE] - Cymru Unleashed</title>
+    <meta name="title" content="[BLOG_TITLE] - Cymru Unleashed">
+    <meta name="description" content="[BLOG_DESCRIPTION]">
+    <meta name="keywords" content="[BLOG_KEYWORDS]">
+    <meta name="author" content="[AUTHOR_NAME]">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cymruunleashed.com/blog/[BLOG_SLUG]">
+    <meta property="og:title" content="[BLOG_TITLE] - Cymru Unleashed">
+    <meta property="og:description" content="[BLOG_DESCRIPTION]">
+    <meta property="og:image" content="https://cymruunleashed.com/images/blog/[BLOG_IMAGE]">
+    <meta property="article:published_time" content="[PUBLISH_DATE]">
+    <meta property="article:modified_time" content="[MODIFIED_DATE]">
+    <meta property="article:author" content="[AUTHOR_NAME]">
+    <meta property="article:section" content="[BLOG_CATEGORY]">
+    <meta property="article:tag" content="[BLOG_TAGS]">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cymruunleashed.com/blog/[BLOG_SLUG]">
+    <meta property="twitter:title" content="[BLOG_TITLE] - Cymru Unleashed">
+    <meta property="twitter:description" content="[BLOG_DESCRIPTION]">
+    <meta property="twitter:image" content="https://cymruunleashed.com/images/blog/[BLOG_IMAGE]">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cymruunleashed.com/blog/[BLOG_SLUG]">
+
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="en" href="https://cymruunleashed.com/blog/[BLOG_SLUG]">
+    <link rel="alternate" hreflang="cy" href="https://cymruunleashed.com/blog/cy/[BLOG_SLUG]">
+    <link rel="alternate" hreflang="x-default" href="https://cymruunleashed.com/blog/[BLOG_SLUG]">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/blog/styles.css">
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="/images/blog/[BLOG_IMAGE]" as="image">
+    <link rel="preload" href="/styles.css" as="style">
+    <link rel="preload" href="/blog/styles.css" as="style">
+</head>
+
+<body>
+    <article class="blog-post">
+        <header class="blog-header">
+            <nav class="breadcrumb" aria-label="breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                    <li><a href="/blog/category/[CATEGORY_SLUG]">[CATEGORY_NAME]</a></li>
+                    <li aria-current="page">[BLOG_TITLE]</li>
+                </ol>
+            </nav>
+
+            <h1>[BLOG_TITLE]</h1>
+
+            <div class="blog-meta">
+                <span class="author">By <a href="/author/[AUTHOR_SLUG]">[AUTHOR_NAME]</a></span>
+                <time datetime="[PUBLISH_DATE]">[PUBLISH_DATE_FORMATTED]</time>
+                <span class="reading-time">[READING_TIME] min read</span>
+            </div>
+
+            <div class="blog-categories">
+                <a href="/blog/category/[CATEGORY_SLUG]" class="category-tag">[CATEGORY_NAME]</a>
+            </div>
+        </header>
+
+        <figure class="featured-image">
+            <img src="/images/blog/[BLOG_IMAGE]" alt="[IMAGE_ALT_TEXT]" width="1200" height="630" loading="eager"
+                decoding="async">
+            <figcaption>[IMAGE_CAPTION]</figcaption>
+        </figure>
+
+        <div class="blog-content">
+            [BLOG_CONTENT]
+        </div>
+
+        <footer class="blog-footer">
+            <div class="author-bio">
+                <img src="/images/authors/[AUTHOR_IMAGE]" alt="[AUTHOR_NAME]" width="100" height="100" loading="lazy"
+                    decoding="async">
+                <div class="author-info">
+                    <h3>[AUTHOR_NAME]</h3>
+                    <p>[AUTHOR_BIO]</p>
+                    <div class="author-social">
+                        <a href="[AUTHOR_TWITTER]" rel="noopener"
+                            aria-label="Follow [AUTHOR_NAME] on Twitter">Twitter</a>
+                        <a href="[AUTHOR_LINKEDIN]" rel="noopener"
+                            aria-label="Connect with [AUTHOR_NAME] on LinkedIn">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="related-posts">
+                <h2>Related Posts</h2>
+                <div class="related-posts-grid">
+                    [RELATED_POSTS]
+                </div>
+            </div>
+
+            <div class="share-buttons">
+                <h3>Share this post</h3>
+                <div class="social-share">
+                    <a href="https://twitter.com/intent/tweet?url=[BLOG_URL]&text=[BLOG_TITLE]" target="_blank"
+                        rel="noopener" aria-label="Share on Twitter">Twitter</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=[BLOG_URL]" target="_blank" rel="noopener"
+                        aria-label="Share on Facebook">Facebook</a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=[BLOG_URL]&title=[BLOG_TITLE]"
+                        target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
+                </div>
+            </div>
+        </footer>
+    </article>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[BLOG_TITLE]",
+        "description": "[BLOG_DESCRIPTION]",
+        "image": "https://cymruunleashed.com/images/blog/[BLOG_IMAGE]",
+        "datePublished": "[PUBLISH_DATE]",
+        "dateModified": "[MODIFIED_DATE]",
+        "author": {
+            "@type": "Person",
+            "name": "[AUTHOR_NAME]",
+            "url": "https://cymruunleashed.com/author/[AUTHOR_SLUG]"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Cymru Unleashed",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://cymruunleashed.com/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://cymruunleashed.com/blog/[BLOG_SLUG]"
+        },
+        "keywords": "[BLOG_KEYWORDS]",
+        "articleSection": "[BLOG_CATEGORY]",
+        "inLanguage": "en-GB",
+        "isAccessibleForFree": "True",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://cymruunleashed.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": "https://cymruunleashed.com/blog/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "[CATEGORY_NAME]",
+                    "item": "https://cymruunleashed.com/blog/category/[CATEGORY_SLUG]"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "name": "[BLOG_TITLE]",
+                    "item": "https://cymruunleashed.com/blog/[BLOG_SLUG]"
+                }
+            ]
+        }
+    }
+    </script>
+</body>
+
+</html>
