@@ -435,6 +435,92 @@ function initializeCarousel() {
   background.appendChild(overlay);
   background.appendChild(shapes);
 
+  // Create navigation buttons
+  const prevButton = document.createElement("button");
+  prevButton.className = "carousel-nav prev";
+  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  prevButton.setAttribute("aria-label", "Previous slide");
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "carousel-nav next";
+  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+  nextButton.setAttribute("aria-label", "Next slide");
+
+  carouselContainer.appendChild(prevButton);
+  carouselContainer.appendChild(nextButton);
+
+  // Add event listeners for navigation buttons
+  prevButton.addEventListener("click", () => {
+    if (!isTransitioning) {
+      const prevIndex =
+        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+      goToSlide(prevIndex);
+    }
+  });
+
+  nextButton.addEventListener("click", () => {
+    if (!isTransitioning) {
+      const nextIndex = (currentSlide + 1) % carouselSlides.length;
+      goToSlide(nextIndex);
+    }
+  });
+
+  // Add CSS for navigation buttons
+  const navStyle = document.createElement("style");
+  navStyle.textContent = `
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(0, 0, 0, 0.8);
+      opacity: 1;
+    }
+
+    .carousel-nav.prev {
+      left: 20px;
+    }
+
+    .carousel-nav.next {
+      right: 20px;
+    }
+
+    .carousel-nav i {
+      font-size: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-nav {
+        width: 40px;
+        height: 40px;
+      }
+
+      .carousel-nav.prev {
+        left: 10px;
+      }
+
+      .carousel-nav.next {
+        right: 10px;
+      }
+    }
+  `;
+  document.head.appendChild(navStyle);
+
   let currentSlide = 0;
   let isTransitioning = false;
   let touchStartX = 0;
