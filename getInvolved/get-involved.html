@@ -116,6 +116,7 @@
 
     <!-- Existing stylesheets -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/lazy-loading.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- For ICO format -->
@@ -154,26 +155,34 @@
     </header>
 
     <!-- Page Hero -->
-    <section class="page-hero">
+    <section class="page-hero lazy-content">
         <div class="container page-hero-content">
-            <h1 data-translate="get-involved-title">Join the Movement</h1>
-            <p data-translate="get-involved-subtitle">Be part of empowering the next generation of Welsh women</p>
+            <div class="hero-text-wrapper lazy-content">
+                <h1 data-translate="get-involved-title">Join the Movement</h1>
+                <p data-translate="get-involved-subtitle">Be part of empowering the next generation of Welsh women</p>
+            </div>
         </div>
     </section>
 
     <!-- Options Section -->
     <section>
         <div class="container">
-            <div class="options-intro">
+            <div class="options-intro lazy-content">
                 <h2>How You Can Help</h2>
                 <p>There are many ways to get involved with Cymru Unleashed, from volunteering your time to partnering
                     with us as an organization.</p>
             </div>
 
             <div class="get-involved-options">
-                <div class="option-card">
+                <div class="option-card lazy-content">
                     <div class="option-icon">
                         <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="option-image">
+                        <img data-src="Images/volunteer.jpg" 
+                            alt="Volunteers helping at a Cymru Unleashed event" 
+                            class="lazy-loading-placeholder"
+                            width="400" height="300">
                     </div>
                     <h3>Volunteer</h3>
                     <p>Help at workshops or support on-site events across Wales. Be part of creating impact in your
@@ -182,9 +191,15 @@
                             class="fas fa-arrow-right"></i></button>
                 </div>
 
-                <div class="option-card">
+                <div class="option-card lazy-content">
                     <div class="option-icon">
                         <i class="fas fa-school"></i>
+                    </div>
+                    <div class="option-image">
+                        <img data-src="Images/school.jpg" 
+                            alt="Students participating in a Cymru Unleashed workshop" 
+                            class="lazy-loading-placeholder"
+                            width="400" height="300">
                     </div>
                     <h3>School Sign-Up</h3>
                     <p>Host events or request curriculum resources for your school. Connect your students with inspiring
@@ -193,9 +208,15 @@
                             class="fas fa-arrow-right"></i></button>
                 </div>
 
-                <div class="option-card">
+                <div class="option-card lazy-content">
                     <div class="option-icon">
                         <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="option-image">
+                        <img data-src="Images/partner.jpg" 
+                            alt="Partnership meeting with Cymru Unleashed" 
+                            class="lazy-loading-placeholder"
+                            width="400" height="300">
                     </div>
                     <h3>Partner With Us</h3>
                     <p>Organizations, charities, and funders can co-create impact. Let's collaborate to empower young
@@ -762,6 +783,8 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <!-- Add lazy loading script before closing body tag -->
+    <script src="/js/lazy-loading.js"></script>
 </body>
 
 </html>

@@ -112,17 +112,18 @@
     </script>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/lazy-loading.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- For ICO format -->
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="icon" href="Images/android-chrome-192x192.png" type="image/x-icon">
-<link rel="icon" href="Images/android-chrome-512x512.png" type="image/x-icon">
-<link rel="icon" href="Images/apple-touch-icon.png" type="image/x-icon">
+    <!-- For ICO format -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="Images/android-chrome-192x192.png" type="image/x-icon">
+    <link rel="icon" href="Images/android-chrome-512x512.png" type="image/x-icon">
+    <link rel="icon" href="Images/apple-touch-icon.png" type="image/x-icon">
 
-<!-- For PNG format -->
-<link rel="icon" href="Images/favicon-32x32.png" type="image/png">
-<link rel="icon" href="Images/favicon-16x16.png" type="image/png">
+    <!-- For PNG format -->
+    <link rel="icon" href="Images/favicon-32x32.png" type="image/png">
+    <link rel="icon" href="Images/favicon-16x16.png" type="image/png">
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -180,7 +181,7 @@
     </header>
 
     <!-- Page Hero -->
-    <section class="page-hero">
+    <section class="page-hero lazy-content">
         <div class="hero-background">
             <div class="hero-shapes">
                 <div class="shape shape-1"></div>
@@ -188,13 +189,13 @@
                 <div class="shape shape-3"></div>
             </div>
             <div class="hero-illustration">
-                <img src="Images/hero-illustration.svg"
-                    alt="Dynamic media illustration showing press coverage and social media elements" class="floating"
-                    loading="lazy" width="600" height="400">
+                <img data-src="Images/hero-illustration.svg"
+                    alt="Dynamic media illustration showing press coverage and social media elements"
+                    class="floating lazy-loading-placeholder" width="600" height="400">
             </div>
         </div>
         <div class="container page-hero-content">
-            <div class="hero-text-wrapper">
+            <div class="hero-text-wrapper lazy-content">
                 <h1 class="animate-text" data-translate="media-title">Media & Press</h1>
                 <p class="hero-subtitle fade-in" data-translate="media-subtitle">Stay updated with our latest news and
                     coverage</p>
@@ -886,6 +887,7 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script src="/js/lazy-loading.js"></script>
 
 </body>
 
