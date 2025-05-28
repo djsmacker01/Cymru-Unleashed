@@ -370,33 +370,39 @@ const transitionEffects = {
 };
 
 function applyTransitionEffect(slide, effect) {
+  // Reset any existing transitions
   slide.style.transition = "none";
   slide.style.transform = "";
   slide.style.opacity = "";
+  slide.style.filter = "";
 
   // Force reflow
   slide.offsetHeight;
 
   switch (effect) {
     case transitionEffects.fade: {
-      slide.style.transition = "opacity 1s ease";
+      slide.style.transition = "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
       slide.style.opacity = "0";
       break;
     }
     case transitionEffects.slide: {
-      slide.style.transition = "transform 1s ease";
+      slide.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
       slide.style.transform = "translateX(100%)";
       break;
     }
     case transitionEffects.zoom: {
-      slide.style.transition = "transform 1s ease, opacity 1s ease";
+      slide.style.transition =
+        "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
       slide.style.transform = "scale(1.2)";
       slide.style.opacity = "0";
+      slide.style.filter = "blur(10px)";
       break;
     }
     case transitionEffects.flip: {
-      slide.style.transition = "transform 1s ease";
+      slide.style.transition =
+        "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
       slide.style.transform = "rotateY(90deg)";
+      slide.style.opacity = "0";
       break;
     }
   }
@@ -575,6 +581,7 @@ function initializeCarousel() {
     newSlideElement.style.transition = "none";
     newSlideElement.style.transform = "";
     newSlideElement.style.opacity = "0";
+    newSlideElement.style.filter = "";
 
     // Force reflow
     newSlideElement.offsetHeight;
@@ -583,10 +590,36 @@ function initializeCarousel() {
     newSlideElement.classList.add("active");
     indicators[currentSlide].classList.add("active");
 
-    // Apply entrance animation
-    newSlideElement.style.transition = "opacity 1s ease, transform 1s ease";
-    newSlideElement.style.transform = "";
-    newSlideElement.style.opacity = "1";
+    // Apply entrance animation based on the current effect
+    switch (currentEffect) {
+      case transitionEffects.fade: {
+        newSlideElement.style.transition =
+          "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+        newSlideElement.style.opacity = "1";
+        break;
+      }
+      case transitionEffects.slide: {
+        newSlideElement.style.transition =
+          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+        newSlideElement.style.transform = "translateX(0)";
+        break;
+      }
+      case transitionEffects.zoom: {
+        newSlideElement.style.transition =
+          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+        newSlideElement.style.transform = "scale(1)";
+        newSlideElement.style.opacity = "1";
+        newSlideElement.style.filter = "blur(0)";
+        break;
+      }
+      case transitionEffects.flip: {
+        newSlideElement.style.transition =
+          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+        newSlideElement.style.transform = "rotateY(0)";
+        newSlideElement.style.opacity = "1";
+        break;
+      }
+    }
 
     // Update ARIA attributes for new slide
     newSlideElement.setAttribute("aria-hidden", "false");
@@ -598,7 +631,7 @@ function initializeCarousel() {
     // Reset transition flag after animation
     setTimeout(() => {
       isTransitioning = false;
-    }, 1000);
+    }, 800);
   }
 
   // Enhanced touch events with momentum scrolling
@@ -1081,3 +1114,60 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+// Add CSS for transition effects
+const transitionStyle = document.createElement("style");
+transitionStyle.textContent = `
+  .hero-slide {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .transition-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .effect-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .effect-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .effect-btn.active {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .transition-controls {
+      bottom: 10px;
+      right: 10px;
+      padding: 5px;
+    }
+
+    .effect-btn {
+      padding: 6px 12px;
+      font-size: 0.9em;
+    }
+  }
+`;
+document.head.appendChild(transitionStyle);
