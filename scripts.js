@@ -338,10 +338,20 @@ const carouselSlides = [
 
 // Preload carousel images
 function preloadCarouselImages() {
-  carouselSlides.forEach((slide) => {
-    const img = new Image();
-    img.src = slide.image;
-  });
+  return Promise.all(
+    carouselSlides.map((slide) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          resolve(img);
+        };
+        img.onerror = () => {
+          reject(new Error(`Failed to load image: ${slide.image}`));
+        };
+        img.src = slide.image;
+      });
+    })
+  );
 }
 
 // Lazy loading configuration
@@ -404,6 +414,15 @@ function initializeCarousel() {
   let currentEffect = transitionEffects.fade;
   let lastSlideChange = Date.now();
 
+  // Preload all images before initializing carousel
+  preloadCarouselImages()
+    .then(() => {
+      console.log("All carousel images preloaded successfully");
+    })
+    .catch((error) => {
+      console.error("Error preloading carousel images:", error);
+    });
+
   // Create progress bar first
   const progressBar = document.createElement("div");
   progressBar.className = "carousel-progress";
@@ -412,17 +431,31 @@ function initializeCarousel() {
   progressBar.setAttribute("aria-valuemax", "100");
   document.querySelector(".hero-carousel").appendChild(progressBar);
 
-  // Create lazy loading observer once
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
-        img.classList.add("loaded");
-        observer.unobserve(img);
-      }
-    });
-  }, lazyLoadConfig);
+  // Create lazy loading observer with improved configuration
+  const imageObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            // Create a new image to preload
+            const preloadImg = new Image();
+            preloadImg.onload = () => {
+              img.src = img.dataset.src;
+              img.classList.add("loaded");
+              observer.unobserve(img);
+            };
+            preloadImg.src = img.dataset.src;
+          }
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: "100px", // Increased margin to start loading earlier
+      threshold: 0.1,
+    }
+  );
 
   // Create slides with modern styling and lazy loading
   carouselSlides.forEach((slide, index) => {
@@ -448,12 +481,30 @@ function initializeCarousel() {
       </a>
     `;
 
-    // Create image element for lazy loading
+    // Create image element with improved loading handling
     const img = document.createElement("img");
     img.className = "slide-image";
     img.dataset.src = slide.image;
     img.alt = slide.title;
     img.loading = "lazy";
+
+    // Add loading state class
+    img.classList.add("loading");
+
+    // Add error handling
+    img.onerror = () => {
+      img.classList.remove("loading");
+      img.classList.add("error");
+      console.error(`Failed to load image: ${slide.image}`);
+    };
+
+    // Add load event handler
+    img.onload = () => {
+      img.classList.remove("loading");
+      img.classList.add("loaded");
+    };
+
+    // Start observing the image
     imageObserver.observe(img);
 
     // Append elements in correct order
@@ -841,3 +892,26 @@ function smoothScrollToSlide(index) {
     });
   }
 }
+
+// Add CSS classes for image loading states
+const style = document.createElement("style");
+style.textContent = `
+  .slide-image {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .slide-image.loading {
+    opacity: 0;
+  }
+  
+  .slide-image.loaded {
+    opacity: 1;
+  }
+  
+  .slide-image.error {
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+`;
+document.head.appendChild(style);
