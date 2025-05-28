@@ -296,7 +296,7 @@ window.addEventListener("load", () => {
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-// Hero Carousel Configuration
+// Modern Carousel Configuration
 const carouselSlides = [
   {
     image: "/Images/cymru_team.jpg",
@@ -336,63 +336,69 @@ const carouselSlides = [
   },
 ];
 
-// Initialize Carousel
+// Initialize Modern Carousel
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
   let currentSlide = 0;
   let isTransitioning = false;
+  let touchStartX = 0;
+  let touchEndX = 0;
 
-  // Create slides
+  // Create slides with modern styling
   carouselSlides.forEach((slide, index) => {
     const slideElement = document.createElement("div");
     slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
-    slideElement.style.background = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${slide.image}') center/cover no-repeat`;
+    slideElement.style.backgroundImage = `url('${slide.image}')`;
 
     slideElement.innerHTML = `
-            <div class="container hero-content">
-                <h1 data-translate="hero-title">${slide.title}</h1>
-                <p data-translate="hero-subtitle">${slide.subtitle}</p>
-                <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
-                <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">${slide.buttonText}</a>
-            </div>
-        `;
+      <div class="hero-content">
+        <h1 data-translate="hero-title">${slide.title}</h1>
+        <p data-translate="hero-subtitle">${slide.subtitle}</p>
+        <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
+        <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
+          ${slide.buttonText}
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    `;
 
     heroSlides.appendChild(slideElement);
 
-    // Create indicator
+    // Create modern indicator
     const indicator = document.createElement("button");
-    indicator.className = `indicator ${index === 0 ? "active" : ""}`;
+    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
     indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
     indicator.addEventListener("click", () => goToSlide(index));
     carouselIndicators.appendChild(indicator);
   });
 
-  // Carousel Controls
+  // Modern Carousel Controls
   const prevButton = document.querySelector(".carousel-control.prev");
   const nextButton = document.querySelector(".carousel-control.next");
 
   function goToSlide(index) {
-    if (isTransitioning || index === currentSlide) {
-      return;
-    }
+    if (isTransitioning || index === currentSlide) return;
     isTransitioning = true;
 
     const slides = document.querySelectorAll(".hero-slide");
-    const indicators = document.querySelectorAll(".indicator");
+    const indicators = document.querySelectorAll(".carousel-indicator");
 
+    // Remove active class from current slide
     slides[currentSlide].classList.remove("active");
     indicators[currentSlide].classList.remove("active");
 
+    // Update current slide index
     currentSlide = index;
 
+    // Add active class to new slide
     slides[currentSlide].classList.add("active");
     indicators[currentSlide].classList.add("active");
 
-    // Reset transition flag after animation completes
+    // Reset transition flag after animation
     setTimeout(() => {
       isTransitioning = false;
-    }, 800);
+    }, 1000);
   }
 
   function nextSlide() {
@@ -406,21 +412,78 @@ function initializeCarousel() {
     goToSlide(prevIndex);
   }
 
-  // Event Listeners
-  prevButton.addEventListener("click", prevSlide);
-  nextButton.addEventListener("click", nextSlide);
+  // Event Listeners with modern interactions
+  prevButton.addEventListener("click", () => {
+    if (!isTransitioning) prevSlide();
+  });
 
-  // Auto-advance slides every 5 seconds
+  nextButton.addEventListener("click", () => {
+    if (!isTransitioning) nextSlide();
+  });
+
+  // Touch events for mobile
+  heroSlides.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartX = e.touches[0].clientX;
+    },
+    { passive: true }
+  );
+
+  heroSlides.addEventListener(
+    "touchend",
+    (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+    },
+    { passive: true }
+  );
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") prevSlide();
+    if (e.key === "ArrowRight") nextSlide();
+  });
+
+  // Auto-advance with pause on hover
   let slideInterval = setInterval(nextSlide, 5000);
-
-  // Pause auto-advance on hover
   const carousel = document.querySelector(".hero-carousel");
-  carousel.addEventListener("mouseenter", () => clearInterval(slideInterval));
+
+  carousel.addEventListener("mouseenter", () => {
+    clearInterval(slideInterval);
+  });
+
   carousel.addEventListener("mouseleave", () => {
     slideInterval = setInterval(nextSlide, 5000);
   });
 
-  // Initialize particles
+  // Progress bar for auto-advance
+  const progressBar = document.createElement("div");
+  progressBar.className = "carousel-progress";
+  carousel.appendChild(progressBar);
+
+  function updateProgressBar() {
+    const progress = ((Date.now() - lastSlideChange) / 5000) * 100;
+    progressBar.style.width = `${progress}%`;
+  }
+
+  let lastSlideChange = Date.now();
+  setInterval(updateProgressBar, 10);
+
+  // Initialize particles with modern effects
   initializeParticles();
 }
 
