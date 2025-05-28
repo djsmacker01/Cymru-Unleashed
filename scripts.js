@@ -531,29 +531,41 @@ function initializeCarousel() {
   let touchEndY = 0;
   let isScrolling = false;
 
-  heroSlides.addEventListener("touchstart", function(e) {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-    touchStartTime = Date.now();
-    isScrolling = false;
-  }, { passive: true });
+  heroSlides.addEventListener(
+    "touchstart",
+    function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      isScrolling = false;
+    },
+    { passive: true }
+  );
 
-  heroSlides.addEventListener("touchmove", function(e) {
-    if (!isScrolling) {
-      const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
-      const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
-      isScrolling = deltaY > deltaX;
-    }
-  }, { passive: true });
+  heroSlides.addEventListener(
+    "touchmove",
+    function (e) {
+      if (!isScrolling) {
+        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+        isScrolling = deltaY > deltaX;
+      }
+    },
+    { passive: true }
+  );
 
-  heroSlides.addEventListener("touchend", function(e) {
-    if (!isScrolling) {
-      touchEndX = e.changedTouches[0].clientX;
-      touchEndY = e.changedTouches[0].clientY;
-      touchEndTime = Date.now();
-      handleSwipe();
-    }
-  }, { passive: true });
+  heroSlides.addEventListener(
+    "touchend",
+    function (e) {
+      if (!isScrolling) {
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+        touchEndTime = Date.now();
+        handleSwipe();
+      }
+    },
+    { passive: true }
+  );
 
   function handleSwipe() {
     const swipeThreshold = 50;
@@ -577,7 +589,8 @@ function initializeCarousel() {
   }
 
   function prevSlide() {
-    const prevIndex = (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    const prevIndex =
+      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
     goToSlide(prevIndex);
   }
 
@@ -585,12 +598,12 @@ function initializeCarousel() {
   let slideInterval = setInterval(nextSlide, 5000);
   const carousel = document.querySelector(".hero-carousel");
 
-  carousel.addEventListener("mouseenter", function() {
+  carousel.addEventListener("mouseenter", function () {
     clearInterval(slideInterval);
     progressBar.style.animationPlayState = "paused";
   });
 
-  carousel.addEventListener("mouseleave", function() {
+  carousel.addEventListener("mouseleave", function () {
     slideInterval = setInterval(nextSlide, 5000);
     progressBar.style.animationPlayState = "running";
   });
