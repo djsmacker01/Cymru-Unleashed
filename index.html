@@ -1040,6 +1040,7 @@
                 const slideElements = document.querySelectorAll('.hero-slide');
                 slideElements.forEach((slide, index) => {
                     slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+                    slide.classList.toggle('active', index === currentSlide);
                 });
             }
 
