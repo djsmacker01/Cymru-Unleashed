@@ -378,7 +378,9 @@ function initializeCarousel() {
   const nextButton = document.querySelector(".carousel-control.next");
 
   function goToSlide(index) {
-    if (isTransitioning || index === currentSlide) return;
+    if (isTransitioning || index === currentSlide) {
+      return;
+    }
     isTransitioning = true;
 
     const slides = document.querySelectorAll(".hero-slide");
@@ -414,17 +416,21 @@ function initializeCarousel() {
 
   // Event Listeners with modern interactions
   prevButton.addEventListener("click", () => {
-    if (!isTransitioning) prevSlide();
+    if (!isTransitioning) {
+      prevSlide();
+    }
   });
 
   nextButton.addEventListener("click", () => {
-    if (!isTransitioning) nextSlide();
+    if (!isTransitioning) {
+      nextSlide();
+    }
   });
 
   // Touch events for mobile
   heroSlides.addEventListener(
     "touchstart",
-    (e) => {
+    function (e) {
       touchStartX = e.touches[0].clientX;
     },
     { passive: true }
@@ -432,7 +438,7 @@ function initializeCarousel() {
 
   heroSlides.addEventListener(
     "touchend",
-    (e) => {
+    function (e) {
       touchEndX = e.changedTouches[0].clientX;
       handleSwipe();
     },
@@ -453,20 +459,24 @@ function initializeCarousel() {
   }
 
   // Keyboard navigation
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") prevSlide();
-    if (e.key === "ArrowRight") nextSlide();
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") {
+      prevSlide();
+    }
+    if (e.key === "ArrowRight") {
+      nextSlide();
+    }
   });
 
   // Auto-advance with pause on hover
   let slideInterval = setInterval(nextSlide, 5000);
   const carousel = document.querySelector(".hero-carousel");
 
-  carousel.addEventListener("mouseenter", () => {
+  carousel.addEventListener("mouseenter", function () {
     clearInterval(slideInterval);
   });
 
-  carousel.addEventListener("mouseleave", () => {
+  carousel.addEventListener("mouseleave", function () {
     slideInterval = setInterval(nextSlide, 5000);
   });
 
