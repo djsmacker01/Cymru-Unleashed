@@ -336,265 +336,126 @@ const carouselSlides = [
   },
 ];
 
-// Preload carousel images
-function preloadCarouselImages() {
-  return Promise.all(
-    carouselSlides.map((slide) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          resolve(img);
-        };
-        img.onerror = () => {
-          reject(new Error(`Failed to load image: ${slide.image}`));
-        };
-        img.src = slide.image;
-      });
-    })
-  );
-}
-
-// Lazy loading configuration
-const lazyLoadConfig = {
-  root: null,
-  rootMargin: "50px",
-  threshold: 0.1,
-};
-
-// Advanced transition effects
-const transitionEffects = {
-  fade: "fade",
-  slide: "slide",
-  zoom: "zoom",
-  flip: "flip",
-};
-
-function applyTransitionEffect(slide, effect) {
-  // Reset any existing transitions
-  slide.style.transition = "none";
-  slide.style.transform = "";
-  slide.style.opacity = "";
-  slide.style.filter = "";
-
-  // Force reflow
-  slide.offsetHeight;
-
-  switch (effect) {
-    case transitionEffects.fade: {
-      slide.style.transition = "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-      slide.style.opacity = "0";
-      break;
-    }
-    case transitionEffects.slide: {
-      slide.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-      slide.style.transform = "translateX(100%)";
-      break;
-    }
-    case transitionEffects.zoom: {
-      slide.style.transition =
-        "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-      slide.style.transform = "scale(1.2)";
-      slide.style.opacity = "0";
-      slide.style.filter = "blur(10px)";
-      break;
-    }
-    case transitionEffects.flip: {
-      slide.style.transition =
-        "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-      slide.style.transform = "rotateY(90deg)";
-      slide.style.opacity = "0";
-      break;
-    }
-  }
-}
-
 function initializeCarousel() {
+  const carouselContainer = document.querySelector(".hero-carousel");
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
 
-  // Create background elements
-  const background = document.createElement("div");
-  background.className = "hero-background";
-
-  const overlay = document.createElement("div");
-  overlay.className = "hero-overlay";
-
-  const shapes = document.createElement("div");
-  shapes.className = "hero-shapes";
-
-  // Create animated shapes
-  for (let i = 1; i <= 4; i++) {
-    const shape = document.createElement("div");
-    shape.className = `shape shape-${i}`;
-    shapes.appendChild(shape);
-  }
-
-  // Add background elements to carousel
-  const carouselContainer = document.querySelector(".hero-carousel");
-  carouselContainer.insertBefore(background, carouselContainer.firstChild);
-  background.appendChild(overlay);
-  background.appendChild(shapes);
-
   let currentSlide = 0;
-  let isTransitioning = false;
   let autoAdvanceInterval;
 
-  // Function to start auto-advance
+  // Clear any existing content
+  heroSlides.innerHTML = "";
+  carouselIndicators.innerHTML = "";
+
+  // Create slides
+  carouselSlides.forEach((slide, index) => {
+    // Create slide element
+    const slideElement = document.createElement("div");
+    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+
+    // Create and set up image
+    const img = document.createElement("img");
+    img.src = slide.image;
+    img.alt = slide.title;
+    img.className = "slide-image";
+
+    // Create content
+    const content = document.createElement("div");
+    content.className = "hero-content";
+    content.innerHTML = `
+      <h1>${slide.title}</h1>
+      <p>${slide.subtitle}</p>
+      <p>${slide.subtitle2}</p>
+      <a href="${slide.buttonLink}" class="btn">${slide.buttonText}</a>
+    `;
+
+    // Add elements to slide
+    slideElement.appendChild(img);
+    slideElement.appendChild(content);
+    heroSlides.appendChild(slideElement);
+
+    // Create indicator
+    const indicator = document.createElement("button");
+    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
+    indicator.addEventListener("click", () => goToSlide(index));
+    carouselIndicators.appendChild(indicator);
+  });
+
+  // Navigation buttons
+  const prevButton = document.createElement("button");
+  prevButton.className = "carousel-nav prev";
+  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  prevButton.addEventListener("click", () => {
+    const prevIndex =
+      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    goToSlide(prevIndex);
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "carousel-nav next";
+  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+  nextButton.addEventListener("click", () => {
+    const nextIndex = (currentSlide + 1) % carouselSlides.length;
+    goToSlide(nextIndex);
+  });
+
+  carouselContainer.appendChild(prevButton);
+  carouselContainer.appendChild(nextButton);
+
+  function goToSlide(index) {
+    // Remove active class from current slide and indicator
+    document
+      .querySelectorAll(".hero-slide")
+      [currentSlide].classList.remove("active");
+    document
+      .querySelectorAll(".carousel-indicator")
+      [currentSlide].classList.remove("active");
+
+    // Add active class to new slide and indicator
+    document.querySelectorAll(".hero-slide")[index].classList.add("active");
+    document
+      .querySelectorAll(".carousel-indicator")
+      [index].classList.add("active");
+
+    currentSlide = index;
+  }
+
   function startAutoAdvance() {
-    if (autoAdvanceInterval) {
-      clearInterval(autoAdvanceInterval);
-    }
+    stopAutoAdvance(); // Clear any existing interval
     autoAdvanceInterval = setInterval(() => {
-      if (!isTransitioning) {
-        const nextIndex = (currentSlide + 1) % carouselSlides.length;
-        goToSlide(nextIndex);
-      }
+      const nextIndex = (currentSlide + 1) % carouselSlides.length;
+      goToSlide(nextIndex);
     }, 5000);
   }
 
-  // Function to stop auto-advance
   function stopAutoAdvance() {
     if (autoAdvanceInterval) {
       clearInterval(autoAdvanceInterval);
     }
   }
 
-  // Create slides
-  carouselSlides.forEach((slide, index) => {
-    const slideElement = document.createElement("div");
-    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
-    slideElement.setAttribute("role", "group");
-    slideElement.setAttribute("aria-roledescription", "slide");
-    slideElement.setAttribute(
-      "aria-label",
-      `${index + 1} of ${carouselSlides.length}`
-    );
-
-    // Create image element
-    const img = document.createElement("img");
-    img.className = "slide-image";
-    img.src = slide.image;
-    img.alt = slide.title;
-    img.style.display = "block"; // Ensure image is visible
-    img.style.width = "100%";
-    img.style.height = "100%";
-    img.style.objectFit = "cover";
-    img.style.position = "absolute";
-    img.style.top = "0";
-    img.style.left = "0";
-
-    // Create content container
-    const contentContainer = document.createElement("div");
-    contentContainer.className = "hero-content";
-    contentContainer.innerHTML = `
-      <h1 data-translate="hero-title">${slide.title}</h1>
-      <p data-translate="hero-subtitle">${slide.subtitle}</p>
-      <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
-      <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
-        ${slide.buttonText}
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    `;
-
-    // Append elements
-    slideElement.appendChild(img);
-    slideElement.appendChild(contentContainer);
-    heroSlides.appendChild(slideElement);
-
-    // Create indicator
-    const indicator = document.createElement("button");
-    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
-    indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
-    indicator.setAttribute("aria-current", index === 0 ? "true" : "false");
-    indicator.addEventListener("click", () => {
-      stopAutoAdvance();
-      goToSlide(index);
-      startAutoAdvance();
-    });
-    carouselIndicators.appendChild(indicator);
-  });
-
-  function goToSlide(index) {
-    if (isTransitioning || index === currentSlide) {
-      return;
-    }
-    isTransitioning = true;
-
-    const slides = document.querySelectorAll(".hero-slide");
-    const indicators = document.querySelectorAll(".carousel-indicator");
-
-    // Hide current slide
-    slides[currentSlide].classList.remove("active");
-    indicators[currentSlide].classList.remove("active");
-    slides[currentSlide].style.opacity = "0";
-    slides[currentSlide].style.zIndex = "1";
-
-    // Show new slide
-    currentSlide = index;
-    slides[currentSlide].classList.add("active");
-    indicators[currentSlide].classList.add("active");
-    slides[currentSlide].style.opacity = "1";
-    slides[currentSlide].style.zIndex = "2";
-
-    // Reset transition flag
-    setTimeout(() => {
-      isTransitioning = false;
-    }, 800);
-  }
-
-  // Create navigation buttons
-  const prevButton = document.createElement("button");
-  prevButton.className = "carousel-nav prev";
-  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
-  prevButton.setAttribute("aria-label", "Previous slide");
-
-  const nextButton = document.createElement("button");
-  nextButton.className = "carousel-nav next";
-  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-  nextButton.setAttribute("aria-label", "Next slide");
-
-  carouselContainer.appendChild(prevButton);
-  carouselContainer.appendChild(nextButton);
-
-  // Add event listeners for navigation buttons
-  prevButton.addEventListener("click", () => {
-    if (!isTransitioning) {
-      stopAutoAdvance();
-      const prevIndex =
-        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-      goToSlide(prevIndex);
-      startAutoAdvance();
-    }
-  });
-
-  nextButton.addEventListener("click", () => {
-    if (!isTransitioning) {
-      stopAutoAdvance();
-      const nextIndex = (currentSlide + 1) % carouselSlides.length;
-      goToSlide(nextIndex);
-      startAutoAdvance();
-    }
-  });
-
-  // Pause auto-advance on hover
-  carouselContainer.addEventListener("mouseenter", stopAutoAdvance);
-  carouselContainer.addEventListener("mouseleave", startAutoAdvance);
-
   // Start auto-advance
   startAutoAdvance();
 
-  // Cleanup function
-  function cleanup() {
-    stopAutoAdvance();
-  }
+  // Pause on hover
+  carouselContainer.addEventListener("mouseenter", stopAutoAdvance);
+  carouselContainer.addEventListener("mouseleave", startAutoAdvance);
 
-  // Add cleanup on page unload
-  window.addEventListener("unload", cleanup);
+  // Cleanup on page unload
+  window.addEventListener("unload", stopAutoAdvance);
 }
 
-// Add CSS for slide transitions
-const slideStyle = document.createElement("style");
-slideStyle.textContent = `
+// Add essential carousel styles
+const carouselStyles = document.createElement("style");
+carouselStyles.textContent = `
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
   .hero-slide {
     position: absolute;
     top: 0;
@@ -602,13 +463,13 @@ slideStyle.textContent = `
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.8s ease;
-    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
+    display: none;
   }
 
   .hero-slide.active {
     opacity: 1;
-    z-index: 2;
+    display: block;
   }
 
   .slide-image {
@@ -619,8 +480,60 @@ slideStyle.textContent = `
     top: 0;
     left: 0;
   }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .carousel-nav.prev {
+    left: 1rem;
+  }
+
+  .carousel-nav.next {
+    right: 1rem;
+  }
+
+  .carousel-indicator {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .carousel-indicator.active {
+    background: white;
+  }
 `;
-document.head.appendChild(slideStyle);
+document.head.appendChild(carouselStyles);
+
+// Initialize carousel when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeCarousel);
 
 // Particle System
 function initializeParticles() {
@@ -692,9 +605,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-// Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeCarousel);
 
 // Lazy Loading Implementation
 const lazyLoadOptions = {
