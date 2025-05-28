@@ -336,6 +336,26 @@ const carouselSlides = [
   },
 ];
 
+// Preload all carousel images
+function preloadCarouselImages() {
+  return Promise.all(
+    carouselSlides.map((slide) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          console.log(`Loaded image: ${slide.image}`);
+          resolve(img);
+        };
+        img.onerror = () => {
+          console.error(`Failed to load image: ${slide.image}`);
+          reject(new Error(`Failed to load image: ${slide.image}`));
+        };
+        img.src = slide.image;
+      });
+    })
+  );
+}
+
 function initializeCarousel() {
   const carouselContainer = document.querySelector(".hero-carousel");
   const heroSlides = document.getElementById("heroSlides");
@@ -348,60 +368,77 @@ function initializeCarousel() {
   heroSlides.innerHTML = "";
   carouselIndicators.innerHTML = "";
 
-  // Create slides
-  carouselSlides.forEach((slide, index) => {
-    // Create slide element
-    const slideElement = document.createElement("div");
-    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+  // Preload images before creating slides
+  preloadCarouselImages()
+    .then(() => {
+      console.log("All images loaded successfully");
+      createSlides();
+    })
+    .catch((error) => {
+      console.error("Error loading images:", error);
+      // Continue with slides even if some images fail to load
+      createSlides();
+    });
 
-    // Create and set up image
-    const img = document.createElement("img");
-    img.src = slide.image;
-    img.alt = slide.title;
-    img.className = "slide-image";
+  function createSlides() {
+    // Create slides
+    carouselSlides.forEach((slide, index) => {
+      // Create slide element
+      const slideElement = document.createElement("div");
+      slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
 
-    // Create content
-    const content = document.createElement("div");
-    content.className = "hero-content";
-    content.innerHTML = `
-      <h1>${slide.title}</h1>
-      <p>${slide.subtitle}</p>
-      <p>${slide.subtitle2}</p>
-      <a href="${slide.buttonLink}" class="btn">${slide.buttonText}</a>
-    `;
+      // Create and set up image
+      const img = document.createElement("img");
+      img.src = slide.image;
+      img.alt = slide.title;
+      img.className = "slide-image";
 
-    // Add elements to slide
-    slideElement.appendChild(img);
-    slideElement.appendChild(content);
-    heroSlides.appendChild(slideElement);
+      // Create content
+      const content = document.createElement("div");
+      content.className = "hero-content";
+      content.innerHTML = `
+        <h1>${slide.title}</h1>
+        <p>${slide.subtitle}</p>
+        <p>${slide.subtitle2}</p>
+        <a href="${slide.buttonLink}" class="btn">${slide.buttonText}</a>
+      `;
 
-    // Create indicator
-    const indicator = document.createElement("button");
-    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
-    indicator.addEventListener("click", () => goToSlide(index));
-    carouselIndicators.appendChild(indicator);
-  });
+      // Add elements to slide
+      slideElement.appendChild(img);
+      slideElement.appendChild(content);
+      heroSlides.appendChild(slideElement);
 
-  // Navigation buttons
-  const prevButton = document.createElement("button");
-  prevButton.className = "carousel-nav prev";
-  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
-  prevButton.addEventListener("click", () => {
-    const prevIndex =
-      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-    goToSlide(prevIndex);
-  });
+      // Create indicator
+      const indicator = document.createElement("button");
+      indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
+      indicator.addEventListener("click", () => goToSlide(index));
+      carouselIndicators.appendChild(indicator);
+    });
 
-  const nextButton = document.createElement("button");
-  nextButton.className = "carousel-nav next";
-  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-  nextButton.addEventListener("click", () => {
-    const nextIndex = (currentSlide + 1) % carouselSlides.length;
-    goToSlide(nextIndex);
-  });
+    // Navigation buttons
+    const prevButton = document.createElement("button");
+    prevButton.className = "carousel-nav prev";
+    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    prevButton.addEventListener("click", () => {
+      const prevIndex =
+        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+      goToSlide(prevIndex);
+    });
 
-  carouselContainer.appendChild(prevButton);
-  carouselContainer.appendChild(nextButton);
+    const nextButton = document.createElement("button");
+    nextButton.className = "carousel-nav next";
+    nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nextButton.addEventListener("click", () => {
+      const nextIndex = (currentSlide + 1) % carouselSlides.length;
+      goToSlide(nextIndex);
+    });
+
+    carouselContainer.appendChild(prevButton);
+    carouselContainer.appendChild(nextButton);
+
+    // Start auto-advance after slides are created
+    startAutoAdvance();
+  }
 
   function goToSlide(index) {
     // Remove active class from current slide and indicator
@@ -434,9 +471,6 @@ function initializeCarousel() {
       clearInterval(autoAdvanceInterval);
     }
   }
-
-  // Start auto-advance
-  startAutoAdvance();
 
   // Pause on hover
   carouselContainer.addEventListener("mouseenter", stopAutoAdvance);
