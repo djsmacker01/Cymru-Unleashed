@@ -435,6 +435,74 @@ function initializeCarousel() {
   background.appendChild(overlay);
   background.appendChild(shapes);
 
+  let currentSlide = 0;
+  let isTransitioning = false;
+  let autoAdvanceInterval;
+
+  // Function to start auto-advance
+  function startAutoAdvance() {
+    autoAdvanceInterval = setInterval(() => {
+      if (!isTransitioning) {
+        const nextIndex = (currentSlide + 1) % carouselSlides.length;
+        goToSlide(nextIndex);
+      }
+    }, 5000); // 5 seconds
+  }
+
+  // Function to stop auto-advance
+  function stopAutoAdvance() {
+    clearInterval(autoAdvanceInterval);
+  }
+
+  // Create slides
+  carouselSlides.forEach((slide, index) => {
+    const slideElement = document.createElement("div");
+    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+    slideElement.setAttribute("role", "group");
+    slideElement.setAttribute("aria-roledescription", "slide");
+    slideElement.setAttribute(
+      "aria-label",
+      `${index + 1} of ${carouselSlides.length}`
+    );
+
+    // Create image element
+    const img = document.createElement("img");
+    img.className = "slide-image";
+    img.src = slide.image;
+    img.alt = slide.title;
+    img.loading = "lazy";
+
+    // Create content container
+    const contentContainer = document.createElement("div");
+    contentContainer.className = "hero-content";
+    contentContainer.innerHTML = `
+      <h1 data-translate="hero-title">${slide.title}</h1>
+      <p data-translate="hero-subtitle">${slide.subtitle}</p>
+      <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
+      <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
+        ${slide.buttonText}
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    `;
+
+    // Append elements
+    slideElement.appendChild(img);
+    slideElement.appendChild(contentContainer);
+    heroSlides.appendChild(slideElement);
+
+    // Create indicator
+    const indicator = document.createElement("button");
+    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
+    indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
+    indicator.setAttribute("aria-current", index === 0 ? "true" : "false");
+    indicator.addEventListener("click", () => {
+      stopAutoAdvance();
+      goToSlide(index);
+      startAutoAdvance();
+    });
+    carouselIndicators.appendChild(indicator);
+  });
+
   // Create navigation buttons
   const prevButton = document.createElement("button");
   prevButton.className = "carousel-nav prev";
@@ -452,399 +520,33 @@ function initializeCarousel() {
   // Add event listeners for navigation buttons
   prevButton.addEventListener("click", () => {
     if (!isTransitioning) {
+      stopAutoAdvance();
       const prevIndex =
         (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
       goToSlide(prevIndex);
+      startAutoAdvance();
     }
   });
 
   nextButton.addEventListener("click", () => {
     if (!isTransitioning) {
+      stopAutoAdvance();
       const nextIndex = (currentSlide + 1) % carouselSlides.length;
       goToSlide(nextIndex);
+      startAutoAdvance();
     }
   });
 
-  // Add CSS for navigation buttons
-  const navStyle = document.createElement("style");
-  navStyle.textContent = `
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      opacity: 0.7;
-    }
+  // Pause auto-advance on hover
+  carouselContainer.addEventListener("mouseenter", stopAutoAdvance);
+  carouselContainer.addEventListener("mouseleave", startAutoAdvance);
 
-    .carousel-nav:hover {
-      background: rgba(0, 0, 0, 0.8);
-      opacity: 1;
-    }
-
-    .carousel-nav.prev {
-      left: 20px;
-    }
-
-    .carousel-nav.next {
-      right: 20px;
-    }
-
-    .carousel-nav i {
-      font-size: 1.2em;
-    }
-
-    @media (max-width: 768px) {
-      .carousel-nav {
-        width: 40px;
-        height: 40px;
-      }
-
-      .carousel-nav.prev {
-        left: 10px;
-      }
-
-      .carousel-nav.next {
-        right: 10px;
-      }
-    }
-  `;
-  document.head.appendChild(navStyle);
-
-  let currentSlide = 0;
-  let isTransitioning = false;
-  let touchStartX = 0;
-  let touchEndX = 0;
-  let touchStartTime = 0;
-  let touchEndTime = 0;
-  let currentEffect = transitionEffects.fade;
-  let lastSlideChange = Date.now();
-
-  // Preload all images before initializing carousel
-  preloadCarouselImages()
-    .then(() => {
-      console.log("All carousel images preloaded successfully");
-    })
-    .catch((error) => {
-      console.error("Error preloading carousel images:", error);
-    });
-
-  // Create progress bar first
-  const progressBar = document.createElement("div");
-  progressBar.className = "carousel-progress";
-  progressBar.setAttribute("role", "progressbar");
-  progressBar.setAttribute("aria-valuemin", "0");
-  progressBar.setAttribute("aria-valuemax", "100");
-  document.querySelector(".hero-carousel").appendChild(progressBar);
-
-  // Create lazy loading observer with improved configuration
-  const imageObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            // Create a new image to preload
-            const preloadImg = new Image();
-            preloadImg.onload = () => {
-              img.src = img.dataset.src;
-              img.classList.add("loaded");
-              observer.unobserve(img);
-            };
-            preloadImg.src = img.dataset.src;
-          }
-        }
-      });
-    },
-    {
-      root: null,
-      rootMargin: "100px", // Increased margin to start loading earlier
-      threshold: 0.1,
-    }
-  );
-
-  // Create slides with modern styling and lazy loading
-  carouselSlides.forEach((slide, index) => {
-    const slideElement = document.createElement("div");
-    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
-    slideElement.setAttribute("role", "group");
-    slideElement.setAttribute("aria-roledescription", "slide");
-    slideElement.setAttribute(
-      "aria-label",
-      `${index + 1} of ${carouselSlides.length}`
-    );
-
-    // Create content container
-    const contentContainer = document.createElement("div");
-    contentContainer.className = "hero-content";
-    contentContainer.innerHTML = `
-      <h1 data-translate="hero-title">${slide.title}</h1>
-      <p data-translate="hero-subtitle">${slide.subtitle}</p>
-      <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
-      <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
-        ${slide.buttonText}
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    `;
-
-    // Create image element with improved loading handling
-    const img = document.createElement("img");
-    img.className = "slide-image";
-    img.dataset.src = slide.image;
-    img.alt = slide.title;
-    img.loading = "lazy";
-
-    // Add loading state class
-    img.classList.add("loading");
-
-    // Add error handling
-    img.onerror = () => {
-      img.classList.remove("loading");
-      img.classList.add("error");
-      console.error(`Failed to load image: ${slide.image}`);
-    };
-
-    // Add load event handler
-    img.onload = () => {
-      img.classList.remove("loading");
-      img.classList.add("loaded");
-    };
-
-    // Start observing the image
-    imageObserver.observe(img);
-
-    // Append elements in correct order
-    slideElement.appendChild(img);
-    slideElement.appendChild(contentContainer);
-    heroSlides.appendChild(slideElement);
-
-    // Create modern indicator with animation
-    const indicator = document.createElement("button");
-    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
-    indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
-    indicator.setAttribute("aria-current", index === 0 ? "true" : "false");
-    indicator.style.animationDelay = `${index * 0.1}s`;
-    indicator.addEventListener("click", () => goToSlide(index));
-    carouselIndicators.appendChild(indicator);
-  });
-
-  function goToSlide(index) {
-    if (isTransitioning || index === currentSlide) {
-      return;
-    }
-    isTransitioning = true;
-
-    const slides = document.querySelectorAll(".hero-slide");
-    const indicators = document.querySelectorAll(".carousel-indicator");
-
-    // Apply exit animation to current slide
-    const currentSlideElement = slides[currentSlide];
-    applyTransitionEffect(currentSlideElement, currentEffect);
-
-    // Update ARIA attributes
-    currentSlideElement.setAttribute("aria-hidden", "true");
-    indicators[currentSlide].setAttribute("aria-current", "false");
-
-    // Remove active class from current slide
-    currentSlideElement.classList.remove("active");
-    indicators[currentSlide].classList.remove("active");
-
-    // Update current slide index
-    currentSlide = index;
-
-    // Prepare new slide for entrance
-    const newSlideElement = slides[currentSlide];
-    newSlideElement.style.transition = "none";
-    newSlideElement.style.transform = "";
-    newSlideElement.style.opacity = "0";
-    newSlideElement.style.filter = "";
-
-    // Force reflow
-    newSlideElement.offsetHeight;
-
-    // Add active class to new slide
-    newSlideElement.classList.add("active");
-    indicators[currentSlide].classList.add("active");
-
-    // Apply entrance animation based on the current effect
-    switch (currentEffect) {
-      case transitionEffects.fade: {
-        newSlideElement.style.transition =
-          "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-        newSlideElement.style.opacity = "1";
-        break;
-      }
-      case transitionEffects.slide: {
-        newSlideElement.style.transition =
-          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-        newSlideElement.style.transform = "translateX(0)";
-        break;
-      }
-      case transitionEffects.zoom: {
-        newSlideElement.style.transition =
-          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-        newSlideElement.style.transform = "scale(1)";
-        newSlideElement.style.opacity = "1";
-        newSlideElement.style.filter = "blur(0)";
-        break;
-      }
-      case transitionEffects.flip: {
-        newSlideElement.style.transition =
-          "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-        newSlideElement.style.transform = "rotateY(0)";
-        newSlideElement.style.opacity = "1";
-        break;
-      }
-    }
-
-    // Update ARIA attributes for new slide
-    newSlideElement.setAttribute("aria-hidden", "false");
-    indicators[currentSlide].setAttribute("aria-current", "true");
-
-    // Update last slide change time for progress bar
-    lastSlideChange = Date.now();
-
-    // Reset transition flag after animation
-    setTimeout(() => {
-      isTransitioning = false;
-    }, 800);
-  }
-
-  // Enhanced touch events with momentum scrolling
-  let touchStartY = 0;
-  let touchEndY = 0;
-  let isScrolling = false;
-
-  heroSlides.addEventListener(
-    "touchstart",
-    function (e) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-      isScrolling = false;
-    },
-    { passive: true }
-  );
-
-  heroSlides.addEventListener(
-    "touchmove",
-    function (e) {
-      if (!isScrolling) {
-        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
-        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
-        isScrolling = deltaY > deltaX;
-      }
-    },
-    { passive: true }
-  );
-
-  heroSlides.addEventListener(
-    "touchend",
-    function (e) {
-      if (!isScrolling) {
-        touchEndX = e.changedTouches[0].clientX;
-        touchEndY = e.changedTouches[0].clientY;
-        touchEndTime = Date.now();
-        handleSwipe();
-      }
-    },
-    { passive: true }
-  );
-
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    const timeDiff = touchEndTime - touchStartTime;
-    const velocity = Math.abs(diff) / timeDiff;
-
-    // Use velocity and distance to determine if swipe should trigger
-    if (Math.abs(diff) > swipeThreshold || velocity > 0.5) {
-      if (diff > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-  }
-
-  function nextSlide() {
-    const nextIndex = (currentSlide + 1) % carouselSlides.length;
-    goToSlide(nextIndex);
-  }
-
-  function prevSlide() {
-    const prevIndex =
-      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-    goToSlide(prevIndex);
-  }
-
-  // Enhanced auto-advance with pause on hover
-  let slideInterval = setInterval(nextSlide, 5000);
-  const carousel = document.querySelector(".hero-carousel");
-
-  carousel.addEventListener("mouseenter", function () {
-    clearInterval(slideInterval);
-    progressBar.style.animationPlayState = "paused";
-  });
-
-  carousel.addEventListener("mouseleave", function () {
-    slideInterval = setInterval(nextSlide, 5000);
-    progressBar.style.animationPlayState = "running";
-  });
-
-  function updateProgressBar() {
-    const progress = ((Date.now() - lastSlideChange) / 5000) * 100;
-    progressBar.style.width = `${progress}%`;
-    progressBar.setAttribute("aria-valuenow", Math.round(progress));
-  }
-
-  const progressInterval = setInterval(updateProgressBar, 10);
-
-  // Add transition effect controls
-  const effectControls = document.createElement("div");
-  effectControls.className = "transition-controls";
-  effectControls.innerHTML = `
-    <button class="effect-btn active" data-effect="fade">Fade</button>
-    <button class="effect-btn" data-effect="slide">Slide</button>
-    <button class="effect-btn" data-effect="zoom">Zoom</button>
-    <button class="effect-btn" data-effect="flip">Flip</button>
-  `;
-  carousel.appendChild(effectControls);
-
-  // Handle effect selection
-  effectControls.addEventListener("click", (e) => {
-    if (e.target.classList.contains("effect-btn")) {
-      effectControls.querySelectorAll(".effect-btn").forEach((btn) => {
-        btn.classList.remove("active");
-      });
-      e.target.classList.add("active");
-      currentEffect = e.target.dataset.effect;
-    }
-  });
-
-  // Add keyboard navigation
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
-      prevSlide();
-    } else if (e.key === "ArrowRight") {
-      nextSlide();
-    }
-  });
+  // Start auto-advance
+  startAutoAdvance();
 
   // Cleanup function
   function cleanup() {
-    clearInterval(slideInterval);
-    clearInterval(progressInterval);
+    stopAutoAdvance();
     imageObserver.disconnect();
   }
 
