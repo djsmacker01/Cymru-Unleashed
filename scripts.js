@@ -441,17 +441,22 @@ function initializeCarousel() {
 
   // Function to start auto-advance
   function startAutoAdvance() {
+    if (autoAdvanceInterval) {
+      clearInterval(autoAdvanceInterval);
+    }
     autoAdvanceInterval = setInterval(() => {
       if (!isTransitioning) {
         const nextIndex = (currentSlide + 1) % carouselSlides.length;
         goToSlide(nextIndex);
       }
-    }, 5000); // 5 seconds
+    }, 5000);
   }
 
   // Function to stop auto-advance
   function stopAutoAdvance() {
-    clearInterval(autoAdvanceInterval);
+    if (autoAdvanceInterval) {
+      clearInterval(autoAdvanceInterval);
+    }
   }
 
   // Create slides
@@ -470,7 +475,13 @@ function initializeCarousel() {
     img.className = "slide-image";
     img.src = slide.image;
     img.alt = slide.title;
-    img.loading = "lazy";
+    img.style.display = "block"; // Ensure image is visible
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    img.style.position = "absolute";
+    img.style.top = "0";
+    img.style.left = "0";
 
     // Create content container
     const contentContainer = document.createElement("div");
@@ -502,6 +513,34 @@ function initializeCarousel() {
     });
     carouselIndicators.appendChild(indicator);
   });
+
+  function goToSlide(index) {
+    if (isTransitioning || index === currentSlide) {
+      return;
+    }
+    isTransitioning = true;
+
+    const slides = document.querySelectorAll(".hero-slide");
+    const indicators = document.querySelectorAll(".carousel-indicator");
+
+    // Hide current slide
+    slides[currentSlide].classList.remove("active");
+    indicators[currentSlide].classList.remove("active");
+    slides[currentSlide].style.opacity = "0";
+    slides[currentSlide].style.zIndex = "1";
+
+    // Show new slide
+    currentSlide = index;
+    slides[currentSlide].classList.add("active");
+    indicators[currentSlide].classList.add("active");
+    slides[currentSlide].style.opacity = "1";
+    slides[currentSlide].style.zIndex = "2";
+
+    // Reset transition flag
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 800);
+  }
 
   // Create navigation buttons
   const prevButton = document.createElement("button");
@@ -547,15 +586,41 @@ function initializeCarousel() {
   // Cleanup function
   function cleanup() {
     stopAutoAdvance();
-    imageObserver.disconnect();
   }
 
   // Add cleanup on page unload
   window.addEventListener("unload", cleanup);
-
-  // Initialize particles with modern effects
-  initializeParticles();
 }
+
+// Add CSS for slide transitions
+const slideStyle = document.createElement("style");
+slideStyle.textContent = `
+  .hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 1;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+`;
+document.head.appendChild(slideStyle);
 
 // Particle System
 function initializeParticles() {
