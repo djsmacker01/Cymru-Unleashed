@@ -122,6 +122,7 @@
 
     <!-- Existing stylesheets -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/lazy-loading.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- For ICO format -->
@@ -129,7 +130,7 @@
     <link rel="icon" href="Images/android-chrome-192x192.png" type="image/x-icon">
     <link rel="icon" href="Images/android-chrome-512x512.png" type="image/x-icon">
     <link rel="icon" href="Images/apple-touch-icon.png" type="image/x-icon">
-    
+
     <!-- For PNG format -->
     <link rel="icon" href="Images/favicon-32x32.png" type="image/png">
     <link rel="icon" href="Images/favicon-16x16.png" type="image/png">
@@ -160,7 +161,7 @@
     </header>
 
     <!-- Page Hero -->
-    <section class="page-hero">
+    <section class="page-hero lazy-content">
         <div class="hero-background">
             <div class="hero-overlay"></div>
             <div class="hero-particles"></div>
@@ -175,7 +176,7 @@
             <div class="hero-glow"></div>
         </div>
         <div class="container page-hero-content">
-            <div class="hero-text-wrapper">
+            <div class="hero-text-wrapper lazy-content">
                 <div class="hero-badge" data-translate="hero-badge">
                     <span class="badge-icon"><i class="fas fa-monument"></i></span>
                     Our Vision
@@ -572,6 +573,7 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script src="/js/lazy-loading.js"></script>
 </body>
 
 </html>

@@ -89,6 +89,7 @@
     </script>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/lazy-loading.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- For ICO format -->
@@ -121,7 +122,7 @@
     </header>
 
     <!-- Page Hero -->
-    <section class="page-hero">
+    <section class="page-hero lazy-content">
         <div class="container page-hero-content">
             <h1 data-translate="about-title">About Us</h1>
             <p class="hero-subtitle" data-translate="hero-subtitle">Learn more about our women-led initiative
@@ -135,7 +136,7 @@
     <!-- About Page Content -->
     <section>
         <div class="container">
-            <div class="about-page-content">
+            <div class="about-page-content lazy-content">
                 <div class="about-page-text">
                     <h2 data-translate="our-story">Our Story</h2>
                     <p data-translate="story-text"><em>Cymru Unleashed</em> was born from a vision to celebrate Wales'
@@ -157,17 +158,19 @@
                         opportunities.</p>
                 </div>
                 <div class="about-page-image">
-                    <img src="/Images/cymru_team.jpg"
-                        alt="The Cymru Unleashed team working together on community initiatives in Wales" loading="lazy"
-                        width="600" height="400">
+                    <img data-src="/Images/cymru_team.jpg"
+                        alt="The Cymru Unleashed team working together on community initiatives in Wales"
+                        width="600" height="400"
+                        class="lazy-loading-placeholder">
                 </div>
             </div>
 
-            <div class="about-page-content">
+            <div class="about-page-content lazy-content">
                 <div class="about-page-image">
-                    <img src="/Images/1mg12.jpg"
-                        alt="Young participants engaging in a Cymru Unleashed community workshop" loading="lazy"
-                        width="600" height="400">
+                    <img data-src="/Images/1mg12.jpg"
+                        alt="Young participants engaging in a Cymru Unleashed community workshop"
+                        width="600" height="400"
+                        class="lazy-loading-placeholder">
                 </div>
                 <div class="about-page-text">
                     <h2 data-translate="our-mission">Our Mission</h2>
@@ -272,6 +275,7 @@
     <script src="behavior-config.js"></script>
     <script src="dynamic-content.js"></script>
     <script src="script.js"></script>
+    <script src="/js/lazy-loading.js"></script>
 </body>
 
 </html>
