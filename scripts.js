@@ -299,17 +299,17 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 // Modern Carousel Configuration
 const carouselSlides = [
   {
-    image: "Images/hero1.jpg",
+    image: "/Images/hero1.jpg",
     title: "Welcome to Cymru Unleashed",
     description: "Empowering Welsh Communities Through Sports and Culture",
   },
   {
-    image: "Images/hero2.jpg",
+    image: "/Images/hero2.jpg",
     title: "Join Our Movement",
     description: "Be part of something special in Wales",
   },
   {
-    image: "Images/hero3.jpg",
+    image: "/Images/hero3.jpg",
     title: "Celebrate Welsh Heritage",
     description: "Discover the rich culture and traditions of Wales",
   },
@@ -318,6 +318,12 @@ const carouselSlides = [
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
+
+  if (!heroSlides || !indicators) {
+    console.error("Carousel elements not found");
+    return;
+  }
+
   let currentSlide = 0;
 
   // Create slides
@@ -346,25 +352,26 @@ function initializeCarousel() {
   updateIndicators();
 
   // Add event listeners for controls
-  document
-    .querySelector(".carousel-control.prev")
-    .addEventListener("click", () => {
+  const prevButton = document.querySelector(".carousel-control.prev");
+  const nextButton = document.querySelector(".carousel-control.next");
+
+  if (prevButton && nextButton) {
+    prevButton.addEventListener("click", () => {
       currentSlide =
         (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
       updateSlides();
       updateIndicators();
     });
 
-  document
-    .querySelector(".carousel-control.next")
-    .addEventListener("click", () => {
+    nextButton.addEventListener("click", () => {
       currentSlide = (currentSlide + 1) % carouselSlides.length;
       updateSlides();
       updateIndicators();
     });
+  }
 
   // Auto-advance slides every 5 seconds
-  setInterval(() => {
+  const interval = setInterval(() => {
     currentSlide = (currentSlide + 1) % carouselSlides.length;
     updateSlides();
     updateIndicators();
@@ -389,6 +396,11 @@ function initializeCarousel() {
     updateSlides();
     updateIndicators();
   }
+
+  // Cleanup on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(interval);
+  });
 }
 
 // Initialize carousel when DOM is loaded
