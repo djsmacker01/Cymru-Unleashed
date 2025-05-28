@@ -959,3 +959,157 @@ transitionStyle.textContent = `
   }
 `;
 document.head.appendChild(transitionStyle);
+
+// Add CSS for football field background
+const fieldStyle = document.createElement("style");
+fieldStyle.textContent = `
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 50px,
+        rgba(255, 255, 255, 0.1) 50px,
+        rgba(255, 255, 255, 0.1) 100px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 50px,
+        rgba(255, 255, 255, 0.1) 50px,
+        rgba(255, 255, 255, 0.1) 100px
+      );
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%),
+      linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+    z-index: 1;
+  }
+
+  .hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out;
+  }
+
+  .shape-1 {
+    width: 300px;
+    height: 300px;
+    top: 20%;
+    left: 10%;
+    background: linear-gradient(45deg, #ffd700, transparent);
+    animation-delay: 0s;
+  }
+
+  .shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    right: 10%;
+    background: linear-gradient(45deg, #ff6b6b, transparent);
+    animation-delay: -5s;
+  }
+
+  .shape-3 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    background: linear-gradient(45deg, #4ecdc4, transparent);
+    animation-delay: -10s;
+  }
+
+  .shape-4 {
+    width: 150px;
+    height: 150px;
+    top: 30%;
+    right: 20%;
+    background: linear-gradient(45deg, #6c5ce7, transparent);
+    animation-delay: -15s;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 4;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .hero-content .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-content .btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+    }
+  }
+`;
+document.head.appendChild(fieldStyle);
