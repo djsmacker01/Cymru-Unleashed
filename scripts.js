@@ -336,26 +336,6 @@ const carouselSlides = [
   },
 ];
 
-// Preload all carousel images
-function preloadCarouselImages() {
-  return Promise.all(
-    carouselSlides.map((slide) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          console.log(`Loaded image: ${slide.image}`);
-          resolve(img);
-        };
-        img.onerror = () => {
-          console.error(`Failed to load image: ${slide.image}`);
-          reject(new Error(`Failed to load image: ${slide.image}`));
-        };
-        img.src = slide.image;
-      });
-    })
-  );
-}
-
 function initializeCarousel() {
   const carouselContainer = document.querySelector(".hero-carousel");
   const heroSlides = document.getElementById("heroSlides");
@@ -368,76 +348,81 @@ function initializeCarousel() {
   heroSlides.innerHTML = "";
   carouselIndicators.innerHTML = "";
 
-  // Preload images before creating slides
-  preloadCarouselImages()
-    .then(() => {
-      console.log("All images loaded successfully");
-      createSlides();
-    })
-    .catch((error) => {
-      console.error("Error loading images:", error);
-      createSlides();
-    });
+  // Create background elements
+  const background = document.createElement("div");
+  background.className = "hero-background";
 
-  function createSlides() {
-    // Create slides
-    carouselSlides.forEach((slide, index) => {
-      // Create slide element
-      const slideElement = document.createElement("div");
-      slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+  const overlay = document.createElement("div");
+  overlay.className = "hero-overlay";
 
-      // Create and set up image
-      const img = document.createElement("img");
-      img.src = slide.image;
-      img.alt = slide.title;
-      img.className = "slide-image";
+  const shapes = document.createElement("div");
+  shapes.className = "hero-shapes";
 
-      // Create content
-      const content = document.createElement("div");
-      content.className = "hero-content";
-      content.innerHTML = `
-        <h1>${slide.title}</h1>
-        <p>${slide.subtitle}</p>
-        <p>${slide.subtitle2}</p>
-        <a href="${slide.buttonLink}" class="btn">${slide.buttonText}</a>
-      `;
-
-      // Add elements to slide
-      slideElement.appendChild(img);
-      slideElement.appendChild(content);
-      heroSlides.appendChild(slideElement);
-
-      // Create indicator
-      const indicator = document.createElement("button");
-      indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
-      indicator.addEventListener("click", () => goToSlide(index));
-      carouselIndicators.appendChild(indicator);
-    });
-
-    // Navigation buttons
-    const prevButton = document.createElement("button");
-    prevButton.className = "carousel-nav prev";
-    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
-    prevButton.addEventListener("click", () => {
-      const prevIndex =
-        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-      goToSlide(prevIndex);
-    });
-
-    const nextButton = document.createElement("button");
-    nextButton.className = "carousel-nav next";
-    nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-    nextButton.addEventListener("click", () => {
-      const nextIndex = (currentSlide + 1) % carouselSlides.length;
-      goToSlide(nextIndex);
-    });
-
-    carouselContainer.appendChild(prevButton);
-    carouselContainer.appendChild(nextButton);
-
-    // Start auto-advance after slides are created
-    startAutoAdvance();
+  // Create shapes
+  for (let i = 1; i <= 4; i++) {
+    const shape = document.createElement("div");
+    shape.className = `shape shape-${i}`;
+    shapes.appendChild(shape);
   }
+
+  background.appendChild(overlay);
+  background.appendChild(shapes);
+  carouselContainer.insertBefore(background, heroSlides);
+
+  // Create slides
+  carouselSlides.forEach((slide, index) => {
+    // Create slide element
+    const slideElement = document.createElement("div");
+    slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
+
+    // Create and set up image
+    const img = document.createElement("img");
+    img.src = slide.image;
+    img.alt = slide.title;
+    img.className = "slide-image";
+
+    // Create content
+    const content = document.createElement("div");
+    content.className = "hero-content";
+    content.innerHTML = `
+      <h1>${slide.title}</h1>
+      <p>${slide.subtitle}</p>
+      <p>${slide.subtitle2}</p>
+      <a href="${slide.buttonLink}" class="btn">${slide.buttonText}</a>
+    `;
+
+    // Add elements to slide
+    slideElement.appendChild(img);
+    slideElement.appendChild(content);
+    heroSlides.appendChild(slideElement);
+
+    // Create indicator
+    const indicator = document.createElement("button");
+    indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
+    indicator.addEventListener("click", () => goToSlide(index));
+    carouselIndicators.appendChild(indicator);
+  });
+
+  // Navigation buttons
+  const prevButton = document.createElement("button");
+  prevButton.className = "carousel-nav prev";
+  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  prevButton.addEventListener("click", () => {
+    const prevIndex =
+      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    goToSlide(prevIndex);
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "carousel-nav next";
+  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+  nextButton.addEventListener("click", () => {
+    const nextIndex = (currentSlide + 1) % carouselSlides.length;
+    goToSlide(nextIndex);
+  });
+
+  carouselContainer.appendChild(prevButton);
+  carouselContainer.appendChild(nextButton);
 
   function goToSlide(index) {
     // Remove active class from current slide and indicator
@@ -471,6 +456,9 @@ function initializeCarousel() {
     }
   }
 
+  // Start auto-advance
+  startAutoAdvance();
+
   // Pause on hover
   carouselContainer.addEventListener("mouseenter", stopAutoAdvance);
   carouselContainer.addEventListener("mouseleave", startAutoAdvance);
@@ -487,6 +475,95 @@ carouselStyles.textContent = `
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+    z-index: 1;
+  }
+
+  .hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out;
+  }
+
+  .shape-1 {
+    width: 300px;
+    height: 300px;
+    top: 20%;
+    left: 10%;
+    background: linear-gradient(45deg, #ff6b6b, transparent);
+    animation-delay: 0s;
+  }
+
+  .shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    right: 10%;
+    background: linear-gradient(45deg, #4ecdc4, transparent);
+    animation-delay: -5s;
+  }
+
+  .shape-3 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    background: linear-gradient(45deg, #ffd93d, transparent);
+    animation-delay: -10s;
+  }
+
+  .shape-4 {
+    width: 150px;
+    height: 150px;
+    top: 30%;
+    right: 20%;
+    background: linear-gradient(45deg, #6c5ce7, transparent);
+    animation-delay: -15s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(50px, -50px) rotate(5deg);
+    }
+    50% {
+      transform: translate(0, -100px) rotate(0deg);
+    }
+    75% {
+      transform: translate(-50px, -50px) rotate(-5deg);
+    }
   }
 
   .hero-slide {
