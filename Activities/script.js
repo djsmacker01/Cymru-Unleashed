@@ -198,9 +198,11 @@ window.addEventListener("load", () => {
     "timeline-content",
   ];
 
-  if (hash && validTabs.includes(hash)) {
-    const tabId = hash.replace("-content", "");
-    document.querySelector(`.activity-tab[data-tab="${tabId}"]`).click();
+  if (validTabs.includes(hash)) {
+    const tab = document.querySelector(`[data-tab="${hash.split('-')[0]}"]`);
+    if (tab) {
+      tab.click();
+    }
   }
 });
 

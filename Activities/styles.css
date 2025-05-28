@@ -1462,3 +1462,37 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Remove lazy loading related styles */
+.lazy-content {
+    opacity: 1;
+    transform: none;
+}
+
+.lazy-loading-placeholder {
+    opacity: 1;
+    transform: none;
+}
+
+/* Remove any transition effects related to lazy loading */
+img {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* Update image styles to ensure immediate visibility */
+.event-image img,
+.installation-image img,
+.campaign-image img,
+.vr-image img {
+    opacity: 1;
+    transform: none;
+    transition: transform 0.5s ease;
+}
+
+/* Keep hover effects but remove lazy loading transitions */
+.event-card:hover .event-image img,
+.installation-card:hover .installation-image img {
+    transform: scale(1.1);
+}
