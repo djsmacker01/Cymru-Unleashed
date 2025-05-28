@@ -923,6 +923,13 @@ style.textContent = `
   .slide-image {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   
   .slide-image.loading {
@@ -936,6 +943,25 @@ style.textContent = `
   .slide-image.error {
     opacity: 0.5;
     filter: grayscale(100%);
+  }
+
+  .hero-slide {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 4;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .hero-carousel {
@@ -1042,6 +1068,16 @@ style.textContent = `
   .hero-content {
     position: relative;
     z-index: 4;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      padding: 1rem;
+    }
+    
+    .slide-image {
+      object-position: center center;
+    }
   }
 `;
 document.head.appendChild(style);
