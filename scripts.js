@@ -405,6 +405,30 @@ function applyTransitionEffect(slide, effect) {
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
+
+  // Create background elements
+  const background = document.createElement("div");
+  background.className = "hero-background";
+
+  const overlay = document.createElement("div");
+  overlay.className = "hero-overlay";
+
+  const shapes = document.createElement("div");
+  shapes.className = "hero-shapes";
+
+  // Create animated shapes
+  for (let i = 1; i <= 4; i++) {
+    const shape = document.createElement("div");
+    shape.className = `shape shape-${i}`;
+    shapes.appendChild(shape);
+  }
+
+  // Add background elements to carousel
+  const carouselContainer = document.querySelector(".hero-carousel");
+  carouselContainer.insertBefore(background, carouselContainer.firstChild);
+  background.appendChild(overlay);
+  background.appendChild(shapes);
+
   let currentSlide = 0;
   let isTransitioning = false;
   let touchStartX = 0;
@@ -912,6 +936,112 @@ style.textContent = `
   .slide-image.error {
     opacity: 0.5;
     filter: grayscale(100%);
+  }
+
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+    z-index: 1;
+  }
+
+  .hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out;
+  }
+
+  .shape-1 {
+    width: 300px;
+    height: 300px;
+    top: 20%;
+    left: 10%;
+    background: linear-gradient(45deg, #ff6b6b, transparent);
+    animation-delay: 0s;
+  }
+
+  .shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    right: 10%;
+    background: linear-gradient(45deg, #4ecdc4, transparent);
+    animation-delay: -5s;
+  }
+
+  .shape-3 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    background: linear-gradient(45deg, #ffd93d, transparent);
+    animation-delay: -10s;
+  }
+
+  .shape-4 {
+    width: 150px;
+    height: 150px;
+    top: 30%;
+    right: 20%;
+    background: linear-gradient(45deg, #6c5ce7, transparent);
+    animation-delay: -15s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(50px, -50px) rotate(5deg);
+    }
+    50% {
+      transform: translate(0, -100px) rotate(0deg);
+    }
+    75% {
+      transform: translate(-50px, -50px) rotate(-5deg);
+    }
+  }
+
+  .hero-slide {
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 4;
   }
 `;
 document.head.appendChild(style);
