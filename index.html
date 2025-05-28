@@ -128,28 +128,6 @@
             line-height: 1.6;
         }
 
-        .hero-content .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid white;
-            color: white;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .hero-content .btn:hover {
-            background: white;
-            color: black;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
         .carousel-control {
             position: absolute;
             top: 50%;
@@ -198,26 +176,14 @@
             height: 12px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 0;
         }
 
         .carousel-indicator.active {
             background: white;
             transform: scale(1.2);
-        }
-
-        .carousel-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.3);
-            width: 0;
-            transition: width 0.1s linear;
-            z-index: 10;
         }
 
         .hero-scroll-indicator {
@@ -560,19 +526,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-carousel">
-            <div class="hero-background">
-                <div class="hero-overlay"></div>
-                <div class="hero-particles"></div>
-                <div class="hero-shapes">
-                    <div class="shape shape-1"></div>
-                    <div class="shape shape-2"></div>
-                    <div class="shape shape-3"></div>
-                    <div class="shape shape-4"></div>
-                    <div class="shape shape-5"></div>
-                    <div class="shape shape-6"></div>
-                </div>
-                <div class="hero-glow"></div>
-            </div>
             <div class="hero-slides" id="heroSlides">
                 <!-- Slides will be dynamically inserted here -->
             </div>
@@ -584,12 +537,6 @@
             </button>
             <div class="carousel-indicators" id="carouselIndicators">
                 <!-- Indicators will be dynamically inserted here -->
-            </div>
-            <div class="hero-scroll-indicator">
-                <span class="scroll-text" data-translate="scroll-down">Scroll Down</span>
-                <div class="scroll-arrow">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
             </div>
         </div>
     </section>
