@@ -71,6 +71,7 @@
             transition: opacity 1s ease, transform 1.5s ease;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,6 +80,7 @@
         .hero-slide.active {
             opacity: 1;
             transform: scale(1);
+            z-index: 1;
         }
 
         .hero-slide::before {
@@ -970,22 +972,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             const slides = [
                 {
-                    image: 'Images/hero1.jpg',
+                    image: './Images/hero1.jpg',
                     title: 'Welcome to Cymru Unleashed',
                     description: 'Empowering Welsh Communities Through Sports and Culture'
                 },
                 {
-                    image: 'Images/hero2.jpg',
+                    image: './Images/hero2.jpg',
                     title: 'Join Our Movement',
                     description: 'Be part of something special in Wales'
                 },
                 {
-                    image: 'Images/hero3.jpg',
+                    image: './Images/hero3.jpg',
                     title: 'Celebrate Welsh Heritage',
                     description: 'Discover the rich culture and traditions of Wales'
                 },
                 {
-                    image: 'Images/cymru_team.jpg',
+                    image: './Images/cymru_team.jpg',
                     title: 'Team Wales',
                     description: 'Supporting Welsh Women in Football'
                 }
@@ -995,11 +997,18 @@
             const indicators = document.getElementById('carouselIndicators');
             let currentSlide = 0;
 
+            // Preload images
+            slides.forEach(slide => {
+                const img = new Image();
+                img.src = slide.image;
+                img.onerror = () => console.error(`Failed to load image: ${slide.image}`);
+            });
+
             // Create slides
             slides.forEach((slide, index) => {
                 const slideElement = document.createElement('div');
                 slideElement.className = 'hero-slide';
-                slideElement.style.backgroundImage = `url(${slide.image})`;
+                slideElement.style.backgroundImage = `url('${slide.image}')`;
                 slideElement.innerHTML = `
                     <div class="hero-content">
                         <h1>${slide.title}</h1>
