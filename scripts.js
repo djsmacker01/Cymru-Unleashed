@@ -336,7 +336,14 @@ const carouselSlides = [
   },
 ];
 
-// Initialize Modern Carousel
+// Preload carousel images
+function preloadCarouselImages() {
+  carouselSlides.forEach((slide) => {
+    const img = new Image();
+    img.src = slide.image;
+  });
+}
+
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
@@ -344,12 +351,23 @@ function initializeCarousel() {
   let isTransitioning = false;
   let touchStartX = 0;
   let touchEndX = 0;
+  let touchStartTime = 0;
+  let touchEndTime = 0;
+
+  // Preload images
+  preloadCarouselImages();
 
   // Create slides with modern styling
   carouselSlides.forEach((slide, index) => {
     const slideElement = document.createElement("div");
     slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
     slideElement.style.backgroundImage = `url('${slide.image}')`;
+    slideElement.setAttribute("role", "group");
+    slideElement.setAttribute("aria-roledescription", "slide");
+    slideElement.setAttribute(
+      "aria-label",
+      `${index + 1} of ${carouselSlides.length}`
+    );
 
     slideElement.innerHTML = `
       <div class="hero-content">
@@ -369,6 +387,7 @@ function initializeCarousel() {
     const indicator = document.createElement("button");
     indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
     indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
+    indicator.setAttribute("aria-current", index === 0 ? "true" : "false");
     indicator.addEventListener("click", () => goToSlide(index));
     carouselIndicators.appendChild(indicator);
   });
@@ -386,16 +405,27 @@ function initializeCarousel() {
     const slides = document.querySelectorAll(".hero-slide");
     const indicators = document.querySelectorAll(".carousel-indicator");
 
-    // Remove active class from current slide
+    // Update ARIA attributes
+    slides[currentSlide].setAttribute("aria-hidden", "true");
+    indicators[currentSlide].setAttribute("aria-current", "false");
+
+    // Remove active class from current slide with transition
     slides[currentSlide].classList.remove("active");
     indicators[currentSlide].classList.remove("active");
 
     // Update current slide index
     currentSlide = index;
 
-    // Add active class to new slide
+    // Add active class to new slide with transition
     slides[currentSlide].classList.add("active");
     indicators[currentSlide].classList.add("active");
+
+    // Update ARIA attributes for new slide
+    slides[currentSlide].setAttribute("aria-hidden", "false");
+    indicators[currentSlide].setAttribute("aria-current", "true");
+
+    // Update last slide change time for progress bar
+    lastSlideChange = Date.now();
 
     // Reset transition flag after animation
     setTimeout(() => {
@@ -414,24 +444,12 @@ function initializeCarousel() {
     goToSlide(prevIndex);
   }
 
-  // Event Listeners with modern interactions
-  prevButton.addEventListener("click", () => {
-    if (!isTransitioning) {
-      prevSlide();
-    }
-  });
-
-  nextButton.addEventListener("click", () => {
-    if (!isTransitioning) {
-      nextSlide();
-    }
-  });
-
-  // Touch events for mobile
+  // Enhanced touch events for mobile
   heroSlides.addEventListener(
     "touchstart",
     function (e) {
       touchStartX = e.touches[0].clientX;
+      touchStartTime = Date.now();
     },
     { passive: true }
   );
@@ -440,6 +458,7 @@ function initializeCarousel() {
     "touchend",
     function (e) {
       touchEndX = e.changedTouches[0].clientX;
+      touchEndTime = Date.now();
       handleSwipe();
     },
     { passive: true }
@@ -448,8 +467,11 @@ function initializeCarousel() {
   function handleSwipe() {
     const swipeThreshold = 50;
     const diff = touchStartX - touchEndX;
+    const timeDiff = touchEndTime - touchStartTime;
+    const velocity = Math.abs(diff) / timeDiff;
 
-    if (Math.abs(diff) > swipeThreshold) {
+    // Use velocity to determine if swipe should trigger
+    if (Math.abs(diff) > swipeThreshold || velocity > 0.5) {
       if (diff > 0) {
         nextSlide();
       } else {
@@ -468,30 +490,47 @@ function initializeCarousel() {
     }
   });
 
-  // Auto-advance with pause on hover
+  // Enhanced auto-advance with pause on hover
   let slideInterval = setInterval(nextSlide, 5000);
   const carousel = document.querySelector(".hero-carousel");
 
   carousel.addEventListener("mouseenter", function () {
     clearInterval(slideInterval);
+    // Pause progress bar animation
+    progressBar.style.animationPlayState = "paused";
   });
 
   carousel.addEventListener("mouseleave", function () {
     slideInterval = setInterval(nextSlide, 5000);
+    // Resume progress bar animation
+    progressBar.style.animationPlayState = "running";
   });
 
-  // Progress bar for auto-advance
+  // Enhanced progress bar
   const progressBar = document.createElement("div");
   progressBar.className = "carousel-progress";
+  progressBar.setAttribute("role", "progressbar");
+  progressBar.setAttribute("aria-valuemin", "0");
+  progressBar.setAttribute("aria-valuemax", "100");
   carousel.appendChild(progressBar);
 
   function updateProgressBar() {
     const progress = ((Date.now() - lastSlideChange) / 5000) * 100;
     progressBar.style.width = `${progress}%`;
+    progressBar.setAttribute("aria-valuenow", Math.round(progress));
   }
 
   let lastSlideChange = Date.now();
-  setInterval(updateProgressBar, 10);
+  const progressInterval = setInterval(updateProgressBar, 10);
+
+  // Cleanup function
+  function cleanup() {
+    clearInterval(slideInterval);
+    clearInterval(progressInterval);
+  }
+
+  // Add cleanup on page unload
+  window.addEventListener("unload", cleanup);
 
   // Initialize particles with modern effects
   initializeParticles();
