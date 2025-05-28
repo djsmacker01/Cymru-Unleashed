@@ -376,7 +376,6 @@ function initializeCarousel() {
     })
     .catch((error) => {
       console.error("Error loading images:", error);
-      // Continue with slides even if some images fail to load
       createSlides();
     });
 
@@ -523,6 +522,7 @@ carouselStyles.textContent = `
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .carousel-nav {
