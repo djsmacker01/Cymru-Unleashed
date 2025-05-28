@@ -497,3 +497,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Initialize carousel when DOM is loaded
 document.addEventListener("DOMContentLoaded", initializeCarousel);
+
+// Lazy Loading Implementation
+const lazyLoadOptions = {
+  root: null,
+  rootMargin: "50px",
+  threshold: 0.1,
+};
+
+const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const element = entry.target;
+
+      // Handle lazy-loaded images
+      if (element.tagName === "IMG" && element.dataset.src) {
+        element.src = element.dataset.src;
+        element.removeAttribute("data-src");
+      }
+
+      // Handle lazy-loaded content sections
+      if (element.classList.contains("lazy-content")) {
+        element.classList.add("loaded");
+      }
+
+      // Stop observing the element once it's loaded
+      observer.unobserve(element);
+    }
+  });
+}, lazyLoadOptions);
+
+// Initialize lazy loading for all images and content sections
+document.addEventListener("DOMContentLoaded", () => {
+  // Lazy load images
+  document.querySelectorAll("img[data-src]").forEach((img) => {
+    lazyLoadObserver.observe(img);
+  });
+
+  // Lazy load content sections
+  document.querySelectorAll(".lazy-content").forEach((section) => {
+    lazyLoadObserver.observe(section);
+  });
+});

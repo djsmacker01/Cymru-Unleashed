@@ -1289,3 +1289,30 @@ footer {
         font-size: 1rem;
     }
 }
+
+/* Lazy Loading Styles */
+.lazy-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.lazy-content.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+img[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+img[src] {
+    opacity: 1;
+}
+
+/* Add a loading placeholder for images */
+img[data-src] {
+    background: #f0f0f0;
+    min-height: 100px;
+}
