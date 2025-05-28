@@ -359,6 +359,39 @@ const transitionEffects = {
   flip: "flip",
 };
 
+function applyTransitionEffect(slide, effect) {
+  slide.style.transition = "none";
+  slide.style.transform = "";
+  slide.style.opacity = "";
+
+  // Force reflow
+  slide.offsetHeight;
+
+  switch (effect) {
+    case transitionEffects.fade: {
+      slide.style.transition = "opacity 1s ease";
+      slide.style.opacity = "0";
+      break;
+    }
+    case transitionEffects.slide: {
+      slide.style.transition = "transform 1s ease";
+      slide.style.transform = "translateX(100%)";
+      break;
+    }
+    case transitionEffects.zoom: {
+      slide.style.transition = "transform 1s ease, opacity 1s ease";
+      slide.style.transform = "scale(1.2)";
+      slide.style.opacity = "0";
+      break;
+    }
+    case transitionEffects.flip: {
+      slide.style.transition = "transform 1s ease";
+      slide.style.transform = "rotateY(90deg)";
+      break;
+    }
+  }
+}
+
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
@@ -369,6 +402,15 @@ function initializeCarousel() {
   let touchStartTime = 0;
   let touchEndTime = 0;
   let currentEffect = transitionEffects.fade;
+  let lastSlideChange = Date.now();
+
+  // Create progress bar first
+  const progressBar = document.createElement("div");
+  progressBar.className = "carousel-progress";
+  progressBar.setAttribute("role", "progressbar");
+  progressBar.setAttribute("aria-valuemin", "0");
+  progressBar.setAttribute("aria-valuemax", "100");
+  document.querySelector(".hero-carousel").appendChild(progressBar);
 
   // Create lazy loading observer once
   const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -489,41 +531,29 @@ function initializeCarousel() {
   let touchEndY = 0;
   let isScrolling = false;
 
-  heroSlides.addEventListener(
-    "touchstart",
-    function (e) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-      isScrolling = false;
-    },
-    { passive: true }
-  );
+  heroSlides.addEventListener("touchstart", function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+    isScrolling = false;
+  }, { passive: true });
 
-  heroSlides.addEventListener(
-    "touchmove",
-    function (e) {
-      if (!isScrolling) {
-        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
-        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
-        isScrolling = deltaY > deltaX;
-      }
-    },
-    { passive: true }
-  );
+  heroSlides.addEventListener("touchmove", function(e) {
+    if (!isScrolling) {
+      const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+      const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+      isScrolling = deltaY > deltaX;
+    }
+  }, { passive: true });
 
-  heroSlides.addEventListener(
-    "touchend",
-    function (e) {
-      if (!isScrolling) {
-        touchEndX = e.changedTouches[0].clientX;
-        touchEndY = e.changedTouches[0].clientY;
-        touchEndTime = Date.now();
-        handleSwipe();
-      }
-    },
-    { passive: true }
-  );
+  heroSlides.addEventListener("touchend", function(e) {
+    if (!isScrolling) {
+      touchEndX = e.changedTouches[0].clientX;
+      touchEndY = e.changedTouches[0].clientY;
+      touchEndTime = Date.now();
+      handleSwipe();
+    }
+  }, { passive: true });
 
   function handleSwipe() {
     const swipeThreshold = 50;
@@ -547,8 +577,7 @@ function initializeCarousel() {
   }
 
   function prevSlide() {
-    const prevIndex =
-      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    const prevIndex = (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
     goToSlide(prevIndex);
   }
 
@@ -556,25 +585,15 @@ function initializeCarousel() {
   let slideInterval = setInterval(nextSlide, 5000);
   const carousel = document.querySelector(".hero-carousel");
 
-  carousel.addEventListener("mouseenter", function () {
+  carousel.addEventListener("mouseenter", function() {
     clearInterval(slideInterval);
-    // Pause progress bar animation
     progressBar.style.animationPlayState = "paused";
   });
 
-  carousel.addEventListener("mouseleave", function () {
+  carousel.addEventListener("mouseleave", function() {
     slideInterval = setInterval(nextSlide, 5000);
-    // Resume progress bar animation
     progressBar.style.animationPlayState = "running";
   });
-
-  // Enhanced progress bar
-  const progressBar = document.createElement("div");
-  progressBar.className = "carousel-progress";
-  progressBar.setAttribute("role", "progressbar");
-  progressBar.setAttribute("aria-valuemin", "0");
-  progressBar.setAttribute("aria-valuemax", "100");
-  carousel.appendChild(progressBar);
 
   function updateProgressBar() {
     const progress = ((Date.now() - lastSlideChange) / 5000) * 100;
@@ -582,7 +601,6 @@ function initializeCarousel() {
     progressBar.setAttribute("aria-valuenow", Math.round(progress));
   }
 
-  let lastSlideChange = Date.now();
   const progressInterval = setInterval(updateProgressBar, 10);
 
   // Add transition effect controls
@@ -604,6 +622,15 @@ function initializeCarousel() {
       });
       e.target.classList.add("active");
       currentEffect = e.target.dataset.effect;
+    }
+  });
+
+  // Add keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      prevSlide();
+    } else if (e.key === "ArrowRight") {
+      nextSlide();
     }
   });
 
