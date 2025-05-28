@@ -344,6 +344,21 @@ function preloadCarouselImages() {
   });
 }
 
+// Lazy loading configuration
+const lazyLoadConfig = {
+  root: null,
+  rootMargin: "50px",
+  threshold: 0.1,
+};
+
+// Advanced transition effects
+const transitionEffects = {
+  fade: "fade",
+  slide: "slide",
+  zoom: "zoom",
+  flip: "flip",
+};
+
 function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const carouselIndicators = document.getElementById("carouselIndicators");
@@ -353,15 +368,24 @@ function initializeCarousel() {
   let touchEndX = 0;
   let touchStartTime = 0;
   let touchEndTime = 0;
+  let currentEffect = transitionEffects.fade;
 
-  // Preload images
-  preloadCarouselImages();
+  // Create lazy loading observer once
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add("loaded");
+        observer.unobserve(img);
+      }
+    });
+  }, lazyLoadConfig);
 
-  // Create slides with modern styling
+  // Create slides with modern styling and lazy loading
   carouselSlides.forEach((slide, index) => {
     const slideElement = document.createElement("div");
     slideElement.className = `hero-slide ${index === 0 ? "active" : ""}`;
-    slideElement.style.backgroundImage = `url('${slide.image}')`;
     slideElement.setAttribute("role", "group");
     slideElement.setAttribute("aria-roledescription", "slide");
     slideElement.setAttribute(
@@ -369,32 +393,41 @@ function initializeCarousel() {
       `${index + 1} of ${carouselSlides.length}`
     );
 
-    slideElement.innerHTML = `
-      <div class="hero-content">
-        <h1 data-translate="hero-title">${slide.title}</h1>
-        <p data-translate="hero-subtitle">${slide.subtitle}</p>
-        <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
-        <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
-          ${slide.buttonText}
-          <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
+    // Create content container
+    const contentContainer = document.createElement("div");
+    contentContainer.className = "hero-content";
+    contentContainer.innerHTML = `
+      <h1 data-translate="hero-title">${slide.title}</h1>
+      <p data-translate="hero-subtitle">${slide.subtitle}</p>
+      <p data-translate="hero-subtitle2">${slide.subtitle2}</p>
+      <a href="${slide.buttonLink}" class="btn" data-translate="${slide.buttonTranslate}">
+        ${slide.buttonText}
+        <i class="fas fa-arrow-right"></i>
+      </a>
     `;
 
+    // Create image element for lazy loading
+    const img = document.createElement("img");
+    img.className = "slide-image";
+    img.dataset.src = slide.image;
+    img.alt = slide.title;
+    img.loading = "lazy";
+    imageObserver.observe(img);
+
+    // Append elements in correct order
+    slideElement.appendChild(img);
+    slideElement.appendChild(contentContainer);
     heroSlides.appendChild(slideElement);
 
-    // Create modern indicator
+    // Create modern indicator with animation
     const indicator = document.createElement("button");
     indicator.className = `carousel-indicator ${index === 0 ? "active" : ""}`;
     indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
     indicator.setAttribute("aria-current", index === 0 ? "true" : "false");
+    indicator.style.animationDelay = `${index * 0.1}s`;
     indicator.addEventListener("click", () => goToSlide(index));
     carouselIndicators.appendChild(indicator);
   });
-
-  // Modern Carousel Controls
-  const prevButton = document.querySelector(".carousel-control.prev");
-  const nextButton = document.querySelector(".carousel-control.next");
 
   function goToSlide(index) {
     if (isTransitioning || index === currentSlide) {
@@ -405,23 +438,41 @@ function initializeCarousel() {
     const slides = document.querySelectorAll(".hero-slide");
     const indicators = document.querySelectorAll(".carousel-indicator");
 
+    // Apply exit animation to current slide
+    const currentSlideElement = slides[currentSlide];
+    applyTransitionEffect(currentSlideElement, currentEffect);
+
     // Update ARIA attributes
-    slides[currentSlide].setAttribute("aria-hidden", "true");
+    currentSlideElement.setAttribute("aria-hidden", "true");
     indicators[currentSlide].setAttribute("aria-current", "false");
 
-    // Remove active class from current slide with transition
-    slides[currentSlide].classList.remove("active");
+    // Remove active class from current slide
+    currentSlideElement.classList.remove("active");
     indicators[currentSlide].classList.remove("active");
 
     // Update current slide index
     currentSlide = index;
 
-    // Add active class to new slide with transition
-    slides[currentSlide].classList.add("active");
+    // Prepare new slide for entrance
+    const newSlideElement = slides[currentSlide];
+    newSlideElement.style.transition = "none";
+    newSlideElement.style.transform = "";
+    newSlideElement.style.opacity = "0";
+
+    // Force reflow
+    newSlideElement.offsetHeight;
+
+    // Add active class to new slide
+    newSlideElement.classList.add("active");
     indicators[currentSlide].classList.add("active");
 
+    // Apply entrance animation
+    newSlideElement.style.transition = "opacity 1s ease, transform 1s ease";
+    newSlideElement.style.transform = "";
+    newSlideElement.style.opacity = "1";
+
     // Update ARIA attributes for new slide
-    slides[currentSlide].setAttribute("aria-hidden", "false");
+    newSlideElement.setAttribute("aria-hidden", "false");
     indicators[currentSlide].setAttribute("aria-current", "true");
 
     // Update last slide change time for progress bar
@@ -431,6 +482,63 @@ function initializeCarousel() {
     setTimeout(() => {
       isTransitioning = false;
     }, 1000);
+  }
+
+  // Enhanced touch events with momentum scrolling
+  let touchStartY = 0;
+  let touchEndY = 0;
+  let isScrolling = false;
+
+  heroSlides.addEventListener(
+    "touchstart",
+    function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      isScrolling = false;
+    },
+    { passive: true }
+  );
+
+  heroSlides.addEventListener(
+    "touchmove",
+    function (e) {
+      if (!isScrolling) {
+        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+        isScrolling = deltaY > deltaX;
+      }
+    },
+    { passive: true }
+  );
+
+  heroSlides.addEventListener(
+    "touchend",
+    function (e) {
+      if (!isScrolling) {
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+        touchEndTime = Date.now();
+        handleSwipe();
+      }
+    },
+    { passive: true }
+  );
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    const timeDiff = touchEndTime - touchStartTime;
+    const velocity = Math.abs(diff) / timeDiff;
+
+    // Use velocity and distance to determine if swipe should trigger
+    if (Math.abs(diff) > swipeThreshold || velocity > 0.5) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
   }
 
   function nextSlide() {
@@ -443,52 +551,6 @@ function initializeCarousel() {
       (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
     goToSlide(prevIndex);
   }
-
-  // Enhanced touch events for mobile
-  heroSlides.addEventListener(
-    "touchstart",
-    function (e) {
-      touchStartX = e.touches[0].clientX;
-      touchStartTime = Date.now();
-    },
-    { passive: true }
-  );
-
-  heroSlides.addEventListener(
-    "touchend",
-    function (e) {
-      touchEndX = e.changedTouches[0].clientX;
-      touchEndTime = Date.now();
-      handleSwipe();
-    },
-    { passive: true }
-  );
-
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    const timeDiff = touchEndTime - touchStartTime;
-    const velocity = Math.abs(diff) / timeDiff;
-
-    // Use velocity to determine if swipe should trigger
-    if (Math.abs(diff) > swipeThreshold || velocity > 0.5) {
-      if (diff > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-  }
-
-  // Keyboard navigation
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowLeft") {
-      prevSlide();
-    }
-    if (e.key === "ArrowRight") {
-      nextSlide();
-    }
-  });
 
   // Enhanced auto-advance with pause on hover
   let slideInterval = setInterval(nextSlide, 5000);
@@ -523,10 +585,33 @@ function initializeCarousel() {
   let lastSlideChange = Date.now();
   const progressInterval = setInterval(updateProgressBar, 10);
 
+  // Add transition effect controls
+  const effectControls = document.createElement("div");
+  effectControls.className = "transition-controls";
+  effectControls.innerHTML = `
+    <button class="effect-btn active" data-effect="fade">Fade</button>
+    <button class="effect-btn" data-effect="slide">Slide</button>
+    <button class="effect-btn" data-effect="zoom">Zoom</button>
+    <button class="effect-btn" data-effect="flip">Flip</button>
+  `;
+  carousel.appendChild(effectControls);
+
+  // Handle effect selection
+  effectControls.addEventListener("click", (e) => {
+    if (e.target.classList.contains("effect-btn")) {
+      effectControls.querySelectorAll(".effect-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      e.target.classList.add("active");
+      currentEffect = e.target.dataset.effect;
+    }
+  });
+
   // Cleanup function
   function cleanup() {
     clearInterval(slideInterval);
     clearInterval(progressInterval);
+    imageObserver.disconnect();
   }
 
   // Add cleanup on page unload
@@ -703,3 +788,16 @@ window.addEventListener("load", function () {
   initializeCarousel();
   initializeParticles();
 });
+
+// Add smooth scrolling for carousel navigation
+function smoothScrollToSlide(index) {
+  const slides = document.querySelectorAll(".hero-slide");
+  const targetSlide = slides[index];
+
+  if (targetSlide) {
+    targetSlide.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }
+}
