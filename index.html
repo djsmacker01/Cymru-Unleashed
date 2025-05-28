@@ -45,6 +45,118 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"
         media="print" onload="this.media='all'">
 
+    <!-- Carousel Styles -->
+    <style>
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-control:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-control.prev {
+            left: 20px;
+        }
+
+        .carousel-control.next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-indicator.active {
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .carousel-control {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Cymru Unleashed">
     <meta property="og:type" content="website">
@@ -778,6 +890,98 @@
     </script>
 
     <script src="scripts.js" defer></script>
+
+    <!-- Carousel Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = [
+                {
+                    image: 'Images/hero1.jpg',
+                    title: 'Welcome to Cymru Unleashed',
+                    description: 'Empowering Welsh Communities Through Sports and Culture'
+                },
+                {
+                    image: 'Images/hero2.jpg',
+                    title: 'Join Our Movement',
+                    description: 'Be part of something special in Wales'
+                },
+                {
+                    image: 'Images/hero3.jpg',
+                    title: 'Celebrate Welsh Heritage',
+                    description: 'Discover the rich culture and traditions of Wales'
+                }
+            ];
+
+            const heroSlides = document.getElementById('heroSlides');
+            const indicators = document.getElementById('carouselIndicators');
+            let currentSlide = 0;
+
+            // Create slides
+            slides.forEach((slide, index) => {
+                const slideElement = document.createElement('div');
+                slideElement.className = 'hero-slide';
+                slideElement.style.backgroundImage = `url(${slide.image})`;
+                slideElement.innerHTML = `
+                    <div class="hero-content">
+                        <h1>${slide.title}</h1>
+                        <p>${slide.description}</p>
+                    </div>
+                `;
+                heroSlides.appendChild(slideElement);
+
+                // Create indicator
+                const indicator = document.createElement('button');
+                indicator.className = 'carousel-indicator';
+                indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicators.appendChild(indicator);
+            });
+
+            // Set initial state
+            updateSlides();
+            updateIndicators();
+
+            // Add event listeners for controls
+            document.querySelector('.carousel-control.prev').addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlides();
+                updateIndicators();
+            });
+
+            document.querySelector('.carousel-control.next').addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlides();
+                updateIndicators();
+            });
+
+            // Auto-advance slides every 5 seconds
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlides();
+                updateIndicators();
+            }, 5000);
+
+            function updateSlides() {
+                const slideElements = document.querySelectorAll('.hero-slide');
+                slideElements.forEach((slide, index) => {
+                    slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+                });
+            }
+
+            function updateIndicators() {
+                const indicatorElements = document.querySelectorAll('.carousel-indicator');
+                indicatorElements.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateSlides();
+                updateIndicators();
+            }
+        });
+    </script>
 </body>
 
 </html>
