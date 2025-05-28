@@ -32,6 +32,19 @@
     <meta name="language" content="English">
     <meta name="revisit-after" content="7 days">
 
+    <!-- Preload critical assets -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+        as="style">
+
+    <!-- Load critical CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Defer non-critical CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"
+        media="print" onload="this.media='all'">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Cymru Unleashed">
     <meta property="og:type" content="website">
@@ -227,22 +240,6 @@
         }
     }
     </script>
-
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- For ICO format -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="Images/android-chrome-192x192.png" type="image/x-icon">
-    <link rel="icon" href="Images/android-chrome-512x512.png" type="image/x-icon">
-    <link rel="icon" href="Images/apple-touch-icon.png" type="image/x-icon">
-
-    <!-- For PNG format -->
-    <link rel="icon" href="Images/favicon-32x32.png" type="image/png">
-    <link rel="icon" href="Images/favicon-16x16.png" type="image/png">
-
-    <!-- For SVG (scalable) -->
-    <!-- <link rel="icon" href="images/favicon.svg" type="image/svg+xml"> -->
 
     <!-- Breadcrumbs Schema -->
     <script type="application/ld+json">
@@ -780,7 +777,7 @@
         });
     </script>
 
-    <script src="scripts.js"></script>
+    <script src="scripts.js" defer></script>
 </body>
 
 </html>

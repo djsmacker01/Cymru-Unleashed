@@ -539,3 +539,55 @@ document.addEventListener("DOMContentLoaded", () => {
     lazyLoadObserver.observe(section);
   });
 });
+
+// Lazy loading for images
+document.addEventListener("DOMContentLoaded", function () {
+  const lazyImages = document.querySelectorAll("img[data-src]");
+
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute("data-src");
+        observer.unobserve(img);
+      }
+    });
+  });
+
+  lazyImages.forEach((img) => imageObserver.observe(img));
+});
+
+// Defer non-critical animations
+const deferAnimations = () => {
+  const animateElements = document.querySelectorAll(
+    ".activity-home-card, .about-home-image, .legacy-home-image"
+  );
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animated");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "-50px",
+    }
+  );
+
+  animateElements.forEach((element) => {
+    observer.observe(element);
+  });
+};
+
+// Initialize non-critical features after page load
+window.addEventListener("load", function () {
+  deferAnimations();
+  initializeCarousel();
+  initializeParticles();
+});
