@@ -296,22 +296,27 @@ window.addEventListener("load", () => {
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-// Modern Carousel Configuration
+// Carousel Configuration
 const carouselSlides = [
   {
-    image: "Images/hero1.jpg",
+    image: "./Images/hero1.jpg",
     title: "Welcome to Cymru Unleashed",
     description: "Empowering Welsh Communities Through Sports and Culture",
   },
   {
-    image: "Images/hero2.jpg",
+    image: "./Images/hero2.jpg",
     title: "Join Our Movement",
     description: "Be part of something special in Wales",
   },
   {
-    image: "Images/hero3.jpg",
+    image: "./Images/hero3.jpg",
     title: "Celebrate Welsh Heritage",
     description: "Discover the rich culture and traditions of Wales",
+  },
+  {
+    image: "./Images/cymru_team.jpg",
+    title: "Team Wales",
+    description: "Supporting Welsh Women in Football",
   },
 ];
 
@@ -319,61 +324,59 @@ function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
   let currentSlide = 0;
+  let autoSlideInterval;
 
-  // Create slides
-  carouselSlides.forEach((slide, index) => {
-    const slideElement = document.createElement("div");
-    slideElement.className = "hero-slide";
-    slideElement.style.backgroundImage = `url(${slide.image})`;
-    slideElement.innerHTML = `
-      <div class="hero-content">
-        <h1>${slide.title}</h1>
-        <p>${slide.description}</p>
-      </div>
-    `;
-    heroSlides.appendChild(slideElement);
+  // Preload images first
+  function preloadImages() {
+    return Promise.all(
+      carouselSlides.map((slide) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(slide);
+          img.onerror = () => {
+            console.error(`Failed to load image: ${slide.image}`);
+            reject(new Error(`Failed to load image: ${slide.image}`));
+          };
+          img.src = slide.image;
+        });
+      })
+    );
+  }
 
-    // Create indicator
-    const indicator = document.createElement("button");
-    indicator.className = "carousel-indicator";
-    indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
-    indicator.addEventListener("click", () => goToSlide(index));
-    indicators.appendChild(indicator);
-  });
+  function startAutoSlide() {
+    stopAutoSlide(); // Clear any existing interval
+    autoSlideInterval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+  }
 
-  // Set initial state
-  updateSlides();
-  updateIndicators();
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+    }
+  }
 
-  // Add event listeners for controls
-  document
-    .querySelector(".carousel-control.prev")
-    .addEventListener("click", () => {
-      currentSlide =
-        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-      updateSlides();
-      updateIndicators();
-    });
-
-  document
-    .querySelector(".carousel-control.next")
-    .addEventListener("click", () => {
-      currentSlide = (currentSlide + 1) % carouselSlides.length;
-      updateSlides();
-      updateIndicators();
-    });
-
-  // Auto-advance slides every 5 seconds
-  setInterval(() => {
+  function nextSlide() {
     currentSlide = (currentSlide + 1) % carouselSlides.length;
     updateSlides();
     updateIndicators();
-  }, 5000);
+  }
+
+  function prevSlide() {
+    currentSlide =
+      (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    updateSlides();
+    updateIndicators();
+  }
 
   function updateSlides() {
     const slideElements = document.querySelectorAll(".hero-slide");
     slideElements.forEach((slide, index) => {
-      slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+      if (index === currentSlide) {
+        slide.classList.add("active");
+      } else {
+        slide.classList.remove("active");
+      }
     });
   }
 
@@ -384,11 +387,73 @@ function initializeCarousel() {
     });
   }
 
-  function goToSlide(index) {
-    currentSlide = index;
-    updateSlides();
-    updateIndicators();
-  }
+  // Initialize carousel after images are loaded
+  preloadImages()
+    .then((loadedSlides) => {
+      // Clear existing slides
+      heroSlides.innerHTML = "";
+      indicators.innerHTML = "";
+
+      // Create slides
+      loadedSlides.forEach((slide, index) => {
+        const slideElement = document.createElement("div");
+        slideElement.className = "hero-slide";
+        slideElement.style.backgroundImage = `url('${slide.image}')`;
+        slideElement.innerHTML = `
+                    <div class="hero-content">
+                        <h1>${slide.title}</h1>
+                        <p>${slide.description}</p>
+                    </div>
+                `;
+        heroSlides.appendChild(slideElement);
+
+        // Create indicator
+        const indicator = document.createElement("button");
+        indicator.className = "carousel-indicator";
+        indicator.setAttribute("aria-label", `Go to slide ${index + 1}`);
+        indicator.addEventListener("click", () => {
+          currentSlide = index;
+          updateSlides();
+          updateIndicators();
+          startAutoSlide(); // Reset auto-slide timer
+        });
+        indicators.appendChild(indicator);
+      });
+
+      // Set initial state
+      updateSlides();
+      updateIndicators();
+
+      // Add event listeners for controls
+      const prevButton = document.querySelector(".carousel-control.prev");
+      const nextButton = document.querySelector(".carousel-control.next");
+
+      if (prevButton) {
+        prevButton.addEventListener("click", () => {
+          prevSlide();
+          startAutoSlide(); // Reset auto-slide timer
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener("click", () => {
+          nextSlide();
+          startAutoSlide(); // Reset auto-slide timer
+        });
+      }
+
+      // Start auto-sliding
+      startAutoSlide();
+
+      // Pause auto-slide when hovering over carousel
+      heroSlides.addEventListener("mouseenter", stopAutoSlide);
+      heroSlides.addEventListener("mouseleave", startAutoSlide);
+    })
+    .catch((error) => {
+      console.error("Error loading carousel images:", error);
+      heroSlides.innerHTML =
+        '<div class="hero-slide active"><div class="hero-content"><h1>Welcome to Cymru Unleashed</h1><p>Empowering Welsh Communities Through Sports and Culture</p></div></div>';
+    });
 }
 
 // Initialize carousel when DOM is loaded
