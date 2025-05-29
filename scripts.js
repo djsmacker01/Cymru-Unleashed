@@ -298,26 +298,26 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 
 // Carousel Configuration
 const carouselSlides = [
-  {
-    image: "./Images/hero1.jpg",
-    title: "Welcome to Cymru Unleashed",
-    description: "Empowering Welsh Communities Through Sports and Culture",
-  },
-  {
-    image: "./Images/hero2.jpg",
-    title: "Join Our Movement",
-    description: "Be part of something special in Wales",
-  },
-  {
-    image: "./Images/hero3.jpg",
-    title: "Celebrate Welsh Heritage",
-    description: "Discover the rich culture and traditions of Wales",
-  },
+  // {
+  //   image: "./Images/hero1.jpg",
+  //   title: "Welcome to Cymru Unleashed",
+  //   description: "Empowering Welsh Communities Through Sports and Culture",
+  // },
+  // {
+  //   image: "./Images/hero2.jpg",
+  //   title: "Join Our Movement",
+  //   description: "Be part of something special in Wales",
+  // },
+  // {
+  //   image: "./Images/hero3.jpg",
+  //   title: "Celebrate Welsh Heritage",
+  //   description: "Discover the rich culture and traditions of Wales",
+  // },
   {
     image: "./Images/cymru_team.jpg",
     title: "Team Wales",
     description: "Supporting Welsh Women in Football",
-  },
+  }
 ];
 
 function initializeCarousel() {
