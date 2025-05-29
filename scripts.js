@@ -637,7 +637,11 @@ const deferAnimations = () => {
 // Initialize non-critical features after page load
 window.addEventListener("load", function () {
   deferAnimations();
-  initializeParticles();
+  // Only initialize particles if the container exists
+  const particlesContainer = document.querySelector(".hero-particles");
+  if (particlesContainer) {
+    initializeParticles();
+  }
 });
 
 // Add smooth scrolling for carousel navigation
