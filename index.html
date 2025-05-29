@@ -573,7 +573,7 @@
             <div class="activities-home-grid">
                 <div class="activity-home-card">
                     <div class="activity-home-image">
-                        <img src="Images/sports-workshop.jpg" alt="Sports Workshops">
+                        <img src="Images/sportworkshop.jpg" alt="Sports Workshops">
                     </div>
                     <div class="activity-home-content">
                         <h3 data-translate="sports-workshops">Sports Workshops</h3>
@@ -586,7 +586,7 @@
                 </div>
                 <div class="activity-home-card">
                     <div class="activity-home-image">
-                        <img src="Images/art-installation.jpg" alt="Art Installations">
+                        <img src="Images/Art_installation.jpg" alt="Art Installations">
                     </div>
                     <div class="activity-home-content">
                         <h3 data-translate="art-installations">Art Installations</h3>
@@ -599,7 +599,7 @@
                 </div>
                 <div class="activity-home-card">
                     <div class="activity-home-image">
-                        <img src="Images/digital-campaign.jpg" alt="Digital Campaign">
+                        <img src="Images/digital_campaign" alt="Digital Campaign">
                     </div>
                     <div class="activity-home-content">
                         <h3 data-translate="digital-campaign">Digital Campaign</h3>
@@ -628,7 +628,7 @@
                     </div>
                 </div>
                 <div class="legacy-home-image">
-                    <img src="Images/legacy-home.jpg" alt="Legacy Beyond 2025">
+                    <img src="Images/legacy.png" alt="Legacy Beyond 2025">
                 </div>
             </div>
         </div>
@@ -639,10 +639,10 @@
         <div class="container">
             <h2 data-translate="media-press">Media & Press</h2>
             <div class="press-home-logos">
-                <img src="Images/press-logo1.png" alt="Press Logo 1" class="press-home-logo">
-                <img src="Images/press-logo2.png" alt="Press Logo 2" class="press-home-logo">
-                <img src="Images/press-logo3.png" alt="Press Logo 3" class="press-home-logo">
-                <img src="Images/press-logo4.png" alt="Press Logo 4" class="press-home-logo">
+                <img src="Images/BBC_Cymru_Wales_2022.png" alt="Press Logo 1" class="press-home-logo">
+                <img src="Images/S4C_logo_2014.png" alt="Press Logo 2" class="press-home-logo">
+                <img src="Images/BBC_Cymru_Wales_logo.png" alt="Press Logo 3" class="press-home-logo">
+                <img src="Images/NativeRadio.png" alt="Press Logo 4" class="press-home-logo">
             </div>
         </div>
     </section>
@@ -998,50 +998,78 @@
             const indicators = document.getElementById('carouselIndicators');
             let currentSlide = 0;
 
-            // Create slides
-            slides.forEach((slide, index) => {
-                const slideElement = document.createElement('div');
-                slideElement.className = 'hero-slide';
-                slideElement.style.backgroundImage = `url('${slide.image}')`;
-                slideElement.innerHTML = `
-                    <div class="hero-content">
-                        <h1>${slide.title}</h1>
-                        <p>${slide.description}</p>
-                    </div>
-                `;
-                heroSlides.appendChild(slideElement);
+            // Preload images first
+            function preloadImages() {
+                return Promise.all(slides.map(slide => {
+                    return new Promise((resolve, reject) => {
+                        const img = new Image();
+                        img.onload = () => resolve(slide);
+                        img.onerror = () => {
+                            console.error(`Failed to load image: ${slide.image}`);
+                            reject(new Error(`Failed to load image: ${slide.image}`));
+                        };
+                        img.src = slide.image;
+                    });
+                }));
+            }
 
-                // Create indicator
-                const indicator = document.createElement('button');
-                indicator.className = 'carousel-indicator';
-                indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                indicator.addEventListener('click', () => goToSlide(index));
-                indicators.appendChild(indicator);
-            });
+            // Initialize carousel after images are loaded
+            preloadImages()
+                .then(loadedSlides => {
+                    // Clear existing slides
+                    heroSlides.innerHTML = '';
+                    indicators.innerHTML = '';
 
-            // Set initial state
-            updateSlides();
-            updateIndicators();
+                    // Create slides
+                    loadedSlides.forEach((slide, index) => {
+                        const slideElement = document.createElement('div');
+                        slideElement.className = 'hero-slide';
+                        slideElement.style.backgroundImage = `url('${slide.image}')`;
+                        slideElement.innerHTML = `
+                            <div class="hero-content">
+                                <h1>${slide.title}</h1>
+                                <p>${slide.description}</p>
+                            </div>
+                        `;
+                        heroSlides.appendChild(slideElement);
 
-            // Add event listeners for controls
-            document.querySelector('.carousel-control.prev').addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                updateSlides();
-                updateIndicators();
-            });
+                        // Create indicator
+                        const indicator = document.createElement('button');
+                        indicator.className = 'carousel-indicator';
+                        indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                        indicator.addEventListener('click', () => goToSlide(index));
+                        indicators.appendChild(indicator);
+                    });
 
-            document.querySelector('.carousel-control.next').addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateSlides();
-                updateIndicators();
-            });
+                    // Set initial state
+                    updateSlides();
+                    updateIndicators();
 
-            // Auto-advance slides every 5 seconds
-            setInterval(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateSlides();
-                updateIndicators();
-            }, 5000);
+                    // Add event listeners for controls
+                    document.querySelector('.carousel-control.prev').addEventListener('click', () => {
+                        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                        updateSlides();
+                        updateIndicators();
+                    });
+
+                    document.querySelector('.carousel-control.next').addEventListener('click', () => {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        updateSlides();
+                        updateIndicators();
+                    });
+
+                    // Auto-advance slides every 5 seconds
+                    setInterval(() => {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        updateSlides();
+                        updateIndicators();
+                    }, 5000);
+                })
+                .catch(error => {
+                    console.error('Error loading carousel images:', error);
+                    // Show a fallback message or image
+                    heroSlides.innerHTML = '<div class="hero-slide active"><div class="hero-content"><h1>Welcome to Cymru Unleashed</h1><p>Empowering Welsh Communities Through Sports and Culture</p></div></div>';
+                });
 
             function updateSlides() {
                 const slideElements = document.querySelectorAll('.hero-slide');
