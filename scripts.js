@@ -1,3 +1,27 @@
+// Carousel Configuration
+const carouselSlides = [
+  {
+    image: "./Images/hero1.jpg",
+    title: "Welcome to Cymru Unleashed",
+    description: "Empowering Welsh Communities Through Sports and Culture",
+  },
+  {
+    image: "./Images/hero2.jpg",
+    title: "Join Our Movement",
+    description: "Be part of something special in Wales",
+  },
+  {
+    image: "./Images/hero3.jpg",
+    title: "Celebrate Welsh Heritage",
+    description: "Discover the rich culture and traditions of Wales",
+  },
+  {
+    image: "./Images/cymru_team.jpg",
+    title: "Team Wales",
+    description: "Supporting Welsh Women in Football",
+  },
+];
+
 // Mobile Navigation Toggle
 const hamburger = document.getElementById("hamburger");
 const nav = document.getElementById("nav");
@@ -296,31 +320,8 @@ window.addEventListener("load", () => {
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-// Carousel Configuration
-const carouselSlides = [
-  // {
-  //   image: "./Images/hero1.jpg",
-  //   title: "Welcome to Cymru Unleashed",
-  //   description: "Empowering Welsh Communities Through Sports and Culture",
-  // },
-  // {
-  //   image: "./Images/hero2.jpg",
-  //   title: "Join Our Movement",
-  //   description: "Be part of something special in Wales",
-  // },
-  // {
-  //   image: "./Images/hero3.jpg",
-  //   title: "Celebrate Welsh Heritage",
-  //   description: "Discover the rich culture and traditions of Wales",
-  // },
-  // {
-  //   image: "./Images/cymru_team.jpg",
-  //   title: "Team Wales",
-  //   description: "Supporting Welsh Women in Football",
-  // }
-];
-
 function initializeCarousel() {
+  console.log("Initializing carousel...");
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
   let currentSlide = 0;
@@ -390,6 +391,7 @@ function initializeCarousel() {
   // Initialize carousel after images are loaded
   preloadImages()
     .then((loadedSlides) => {
+      console.log("Images loaded successfully");
       // Clear existing slides
       heroSlides.innerHTML = "";
       indicators.innerHTML = "";
@@ -451,13 +453,22 @@ function initializeCarousel() {
     })
     .catch((error) => {
       console.error("Error loading carousel images:", error);
-      heroSlides.innerHTML =
-        '<div class="hero-slide active"><div class="hero-content"><h1>Welcome to Cymru Unleashed</h1><p>Empowering Welsh Communities Through Sports and Culture</p></div></div>';
+      heroSlides.innerHTML = `
+                <div class="hero-slide active">
+                    <div class="hero-content">
+                        <h1>Welcome to Cymru Unleashed</h1>
+                        <p>Empowering Welsh Communities Through Sports and Culture</p>
+                    </div>
+                </div>
+            `;
     });
 }
 
 // Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeCarousel);
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded, initializing carousel...");
+  initializeCarousel();
+});
 
 // Particle System
 function initializeParticles() {
