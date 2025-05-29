@@ -320,6 +320,22 @@ window.addEventListener("load", () => {
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
+// Initialize carousel when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded, initializing carousel...");
+
+  // Initialize carousel controls first
+  const prevButton = document.querySelector(".carousel-control.prev");
+  const nextButton = document.querySelector(".carousel-control.next");
+
+  if (prevButton && nextButton) {
+    console.log("Carousel controls found");
+    initializeCarousel();
+  } else {
+    console.error("Carousel controls not found");
+  }
+});
+
 function initializeCarousel() {
   console.log("Initializing carousel...");
   const heroSlides = document.getElementById("heroSlides");
@@ -402,11 +418,11 @@ function initializeCarousel() {
         slideElement.className = "hero-slide";
         slideElement.style.backgroundImage = `url('${slide.image}')`;
         slideElement.innerHTML = `
-                    <div class="hero-content">
-                        <h1>${slide.title}</h1>
-                        <p>${slide.description}</p>
-                    </div>
-                `;
+          <div class="hero-content">
+            <h1>${slide.title}</h1>
+            <p>${slide.description}</p>
+          </div>
+        `;
         heroSlides.appendChild(slideElement);
 
         // Create indicator
@@ -454,21 +470,15 @@ function initializeCarousel() {
     .catch((error) => {
       console.error("Error loading carousel images:", error);
       heroSlides.innerHTML = `
-                <div class="hero-slide active">
-                    <div class="hero-content">
-                        <h1>Welcome to Cymru Unleashed</h1>
-                        <p>Empowering Welsh Communities Through Sports and Culture</p>
-                    </div>
-                </div>
-            `;
+        <div class="hero-slide active">
+          <div class="hero-content">
+            <h1>Welcome to Cymru Unleashed</h1>
+            <p>Empowering Welsh Communities Through Sports and Culture</p>
+          </div>
+        </div>
+      `;
     });
 }
-
-// Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM loaded, initializing carousel...");
-  initializeCarousel();
-});
 
 // Particle System
 function initializeParticles() {
