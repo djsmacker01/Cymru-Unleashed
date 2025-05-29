@@ -997,6 +997,7 @@
             const heroSlides = document.getElementById('heroSlides');
             const indicators = document.getElementById('carouselIndicators');
             let currentSlide = 0;
+            let autoSlideInterval;
 
             // Preload images first
             function preloadImages() {
@@ -1011,6 +1012,31 @@
                         img.src = slide.image;
                     });
                 }));
+            }
+
+            function startAutoSlide() {
+                stopAutoSlide(); // Clear any existing interval
+                autoSlideInterval = setInterval(() => {
+                    nextSlide();
+                }, 5000);
+            }
+
+            function stopAutoSlide() {
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                }
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlides();
+                updateIndicators();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlides();
+                updateIndicators();
             }
 
             // Initialize carousel after images are loaded
@@ -1037,7 +1063,12 @@
                         const indicator = document.createElement('button');
                         indicator.className = 'carousel-indicator';
                         indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                        indicator.addEventListener('click', () => goToSlide(index));
+                        indicator.addEventListener('click', () => {
+                            currentSlide = index;
+                            updateSlides();
+                            updateIndicators();
+                            startAutoSlide(); // Reset auto-slide timer
+                        });
                         indicators.appendChild(indicator);
                     });
 
@@ -1046,28 +1077,32 @@
                     updateIndicators();
 
                     // Add event listeners for controls
-                    document.querySelector('.carousel-control.prev').addEventListener('click', () => {
-                        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                        updateSlides();
-                        updateIndicators();
-                    });
+                    const prevButton = document.querySelector('.carousel-control.prev');
+                    const nextButton = document.querySelector('.carousel-control.next');
 
-                    document.querySelector('.carousel-control.next').addEventListener('click', () => {
-                        currentSlide = (currentSlide + 1) % slides.length;
-                        updateSlides();
-                        updateIndicators();
-                    });
+                    if (prevButton) {
+                        prevButton.addEventListener('click', () => {
+                            prevSlide();
+                            startAutoSlide(); // Reset auto-slide timer
+                        });
+                    }
 
-                    // Auto-advance slides every 5 seconds
-                    setInterval(() => {
-                        currentSlide = (currentSlide + 1) % slides.length;
-                        updateSlides();
-                        updateIndicators();
-                    }, 5000);
+                    if (nextButton) {
+                        nextButton.addEventListener('click', () => {
+                            nextSlide();
+                            startAutoSlide(); // Reset auto-slide timer
+                        });
+                    }
+
+                    // Start auto-sliding
+                    startAutoSlide();
+
+                    // Pause auto-slide when hovering over carousel
+                    heroSlides.addEventListener('mouseenter', stopAutoSlide);
+                    heroSlides.addEventListener('mouseleave', startAutoSlide);
                 })
                 .catch(error => {
                     console.error('Error loading carousel images:', error);
-                    // Show a fallback message or image
                     heroSlides.innerHTML = '<div class="hero-slide active"><div class="hero-content"><h1>Welcome to Cymru Unleashed</h1><p>Empowering Welsh Communities Through Sports and Culture</p></div></div>';
                 });
 
@@ -1087,12 +1122,6 @@
                 indicatorElements.forEach((indicator, index) => {
                     indicator.classList.toggle('active', index === currentSlide);
                 });
-            }
-
-            function goToSlide(index) {
-                currentSlide = index;
-                updateSlides();
-                updateIndicators();
             }
         });
     </script>
