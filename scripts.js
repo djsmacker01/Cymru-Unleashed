@@ -878,7 +878,7 @@ fieldStyle.textContent = `
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);
+    background: transparent;
   }
 
   .hero-background {
@@ -889,21 +889,7 @@ fieldStyle.textContent = `
     height: 100%;
     z-index: 0;
     background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 50px,
-        rgba(255, 255, 255, 0.1) 50px,
-        rgba(255, 255, 255, 0.1) 100px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 50px,
-        rgba(255, 255, 255, 0.1) 50px,
-        rgba(255, 255, 255, 0.1) 100px
-      );
+      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
   }
 
   .hero-overlay {
@@ -912,9 +898,7 @@ fieldStyle.textContent = `
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-      radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%),
-      linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
     z-index: 1;
   }
 
@@ -941,7 +925,7 @@ fieldStyle.textContent = `
     height: 300px;
     top: 20%;
     left: 10%;
-    background: linear-gradient(45deg, #ffd700, transparent);
+    background: linear-gradient(45deg, #ff6b6b, transparent);
     animation-delay: 0s;
   }
 
@@ -950,7 +934,7 @@ fieldStyle.textContent = `
     height: 200px;
     bottom: 20%;
     right: 10%;
-    background: linear-gradient(45deg, #ff6b6b, transparent);
+    background: linear-gradient(45deg, #4ecdc4, transparent);
     animation-delay: -5s;
   }
 
@@ -959,7 +943,7 @@ fieldStyle.textContent = `
     height: 250px;
     top: 50%;
     left: 50%;
-    background: linear-gradient(45deg, #4ecdc4, transparent);
+    background: linear-gradient(45deg, #ffd93d, transparent);
     animation-delay: -10s;
   }
 
