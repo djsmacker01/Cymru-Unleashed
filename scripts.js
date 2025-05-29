@@ -43,13 +43,18 @@ const toggleMenu = () => {
   }
 };
 
-hamburger.addEventListener("click", toggleMenu);
-overlay.addEventListener("click", toggleMenu);
+if (hamburger) {
+  hamburger.addEventListener("click", toggleMenu);
+}
+
+if (overlay) {
+  overlay.addEventListener("click", toggleMenu);
+}
 
 // Close menu when clicking navigation links
 document.querySelectorAll("nav a").forEach((item) => {
   item.addEventListener("click", () => {
-    if (nav.classList.contains("active")) {
+    if (nav && nav.classList.contains("active")) {
       toggleMenu();
     }
   });
@@ -58,10 +63,12 @@ document.querySelectorAll("nav a").forEach((item) => {
 // Sticky Header on Scroll
 window.addEventListener("scroll", () => {
   const header = document.getElementById("header");
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
+  if (header) {
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
   }
 });
 
@@ -89,7 +96,6 @@ const observer = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("animated");
-        // Stop observing after animation
         observer.unobserve(entry.target);
       }
     });
@@ -119,15 +125,22 @@ const updateCountdown = () => {
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  document.getElementById("days").innerText = days;
-  document.getElementById("hours").innerText = hours;
-  document.getElementById("minutes").innerText = minutes;
-  document.getElementById("seconds").innerText = seconds;
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+
+  if (daysEl) daysEl.innerText = days;
+  if (hoursEl) hoursEl.innerText = hours;
+  if (minutesEl) minutesEl.innerText = minutes;
+  if (secondsEl) secondsEl.innerText = seconds;
 
   if (distance < 0) {
     clearInterval(countdownInterval);
-    document.getElementById("countdown").innerHTML =
-      "<h3>UEFA Women's Euro 2025 Has Begun!</h3>";
+    const countdownEl = document.getElementById("countdown");
+    if (countdownEl) {
+      countdownEl.innerHTML = "<h3>UEFA Women's Euro 2025 Has Begun!</h3>";
+    }
   }
 };
 
@@ -306,36 +319,20 @@ languageToggle.forEach((link) => {
 const initialLang = localStorage.getItem("preferred-language") || "en";
 updateLanguage(initialLang);
 
-// Preload images for better performance
-window.addEventListener("load", () => {
-  const imagesToPreload = document.querySelectorAll("img[data-src]");
-  imagesToPreload.forEach((img) => {
-    img.src = img.getAttribute("data-src");
-    img.onload = () => {
-      img.removeAttribute("data-src");
-    };
-  });
-});
-
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-// Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  const heroSlides = document.getElementById("heroSlides");
-  const indicators = document.getElementById("carouselIndicators");
-
-  if (heroSlides && indicators) {
-    initializeCarousel();
-  } else {
-    console.error("Carousel elements not found");
-  }
-});
-
+// Carousel functionality
 function initializeCarousel() {
   console.log("Initializing carousel...");
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
+
+  if (!heroSlides || !indicators) {
+    console.error("Carousel elements not found");
+    return;
+  }
+
   let currentSlide = 0;
   let autoSlideInterval;
 
@@ -345,10 +342,14 @@ function initializeCarousel() {
       carouselSlides.map((slide) => {
         return new Promise((resolve, reject) => {
           const img = new Image();
-          img.onload = () => resolve(slide);
+          img.onload = () => {
+            console.log(`Image loaded: ${slide.image}`);
+            resolve(slide);
+          };
           img.onerror = () => {
             console.error(`Failed to load image: ${slide.image}`);
-            reject(new Error(`Failed to load image: ${slide.image}`));
+            // Still resolve to continue with other images
+            resolve(slide);
           };
           img.src = slide.image;
         });
@@ -357,7 +358,7 @@ function initializeCarousel() {
   }
 
   function startAutoSlide() {
-    stopAutoSlide(); // Clear any existing interval
+    stopAutoSlide();
     autoSlideInterval = setInterval(() => {
       nextSlide();
     }, 5000);
@@ -403,13 +404,15 @@ function initializeCarousel() {
   // Initialize carousel after images are loaded
   preloadImages()
     .then((loadedSlides) => {
-      console.log("Images loaded successfully");
-      // Clear existing slides
+      console.log("Images preloaded, creating slides...");
+
+      // Clear existing content
       heroSlides.innerHTML = "";
       indicators.innerHTML = "";
 
       // Create slides
       loadedSlides.forEach((slide, index) => {
+        // Create slide element
         const slideElement = document.createElement("div");
         slideElement.className = "hero-slide";
         slideElement.style.backgroundImage = `url('${slide.image}')`;
@@ -429,7 +432,7 @@ function initializeCarousel() {
           currentSlide = index;
           updateSlides();
           updateIndicators();
-          startAutoSlide(); // Reset auto-slide timer
+          startAutoSlide();
         });
         indicators.appendChild(indicator);
       });
@@ -445,14 +448,14 @@ function initializeCarousel() {
       if (prevButton) {
         prevButton.addEventListener("click", () => {
           prevSlide();
-          startAutoSlide(); // Reset auto-slide timer
+          startAutoSlide();
         });
       }
 
       if (nextButton) {
         nextButton.addEventListener("click", () => {
           nextSlide();
-          startAutoSlide(); // Reset auto-slide timer
+          startAutoSlide();
         });
       }
 
@@ -460,13 +463,19 @@ function initializeCarousel() {
       startAutoSlide();
 
       // Pause auto-slide when hovering over carousel
-      heroSlides.addEventListener("mouseenter", stopAutoSlide);
-      heroSlides.addEventListener("mouseleave", startAutoSlide);
+      const carousel = document.querySelector(".hero-carousel");
+      if (carousel) {
+        carousel.addEventListener("mouseenter", stopAutoSlide);
+        carousel.addEventListener("mouseleave", startAutoSlide);
+      }
+
+      console.log("Carousel initialized successfully!");
     })
     .catch((error) => {
-      console.error("Error loading carousel images:", error);
+      console.error("Error initializing carousel:", error);
+      // Create fallback slide
       heroSlides.innerHTML = `
-        <div class="hero-slide active">
+        <div class="hero-slide active" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
           <div class="hero-content">
             <h1>Welcome to Cymru Unleashed</h1>
             <p>Empowering Welsh Communities Through Sports and Culture</p>
@@ -476,75 +485,10 @@ function initializeCarousel() {
     });
 }
 
-// Particle System
-function initializeParticles() {
-  const particlesContainer = document.querySelector(".hero-particles");
-  const particleCount = 50;
-  const particles = [];
-
-  // Create particles
-  for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement("div");
-    particle.className = "particle";
-    particle.style.cssText = `
-      position: absolute;
-      width: ${Math.random() * 3 + 1}px;
-      height: ${Math.random() * 3 + 1}px;
-      background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1});
-      border-radius: 50%;
-      pointer-events: none;
-    `;
-    particlesContainer.appendChild(particle);
-
-    particles.push({
-      element: particle,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      speedX: (Math.random() - 0.5) * 0.5,
-      speedY: (Math.random() - 0.5) * 0.5,
-    });
-  }
-
-  // Animate particles
-  function animateParticles() {
-    particles.forEach((particle) => {
-      particle.x += particle.speedX;
-      particle.y += particle.speedY;
-
-      // Wrap around screen
-      if (particle.x < 0) {
-        particle.x = window.innerWidth;
-      }
-      if (particle.x > window.innerWidth) {
-        particle.x = 0;
-      }
-      if (particle.y < 0) {
-        particle.y = window.innerHeight;
-      }
-      if (particle.y > window.innerHeight) {
-        particle.y = 0;
-      }
-
-      particle.element.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
-    });
-
-    requestAnimationFrame(animateParticles);
-  }
-
-  animateParticles();
-}
-
-// Scroll Indicator
-document.addEventListener("DOMContentLoaded", function () {
-  const scrollIndicator = document.querySelector(".hero-scroll-indicator");
-  if (scrollIndicator) {
-    scrollIndicator.addEventListener("click", () => {
-      const aboutSection = document.getElementById("about-home");
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
+// Initialize carousel when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded, initializing carousel...");
+  initializeCarousel();
 });
 
 // Lazy Loading Implementation
@@ -589,430 +533,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Lazy loading for images
-document.addEventListener("DOMContentLoaded", function () {
-  const lazyImages = document.querySelectorAll("img[data-src]");
-
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
+// Preload images for better performance
+window.addEventListener("load", () => {
+  const imagesToPreload = document.querySelectorAll("img[data-src]");
+  imagesToPreload.forEach((img) => {
+    if (img.getAttribute("data-src")) {
+      img.src = img.getAttribute("data-src");
+      img.onload = () => {
         img.removeAttribute("data-src");
-        observer.unobserve(img);
-      }
-    });
+      };
+    }
   });
-
-  lazyImages.forEach((img) => imageObserver.observe(img));
 });
-
-// Defer non-critical animations
-const deferAnimations = () => {
-  const animateElements = document.querySelectorAll(
-    ".activity-home-card, .about-home-image, .legacy-home-image"
-  );
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animated");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      root: null,
-      threshold: 0.1,
-      rootMargin: "-50px",
-    }
-  );
-
-  animateElements.forEach((element) => {
-    observer.observe(element);
-  });
-};
-
-// Initialize non-critical features after page load
-window.addEventListener("load", function () {
-  deferAnimations();
-  // Only initialize particles if the container exists
-  const particlesContainer = document.querySelector(".hero-particles");
-  if (particlesContainer) {
-    initializeParticles();
-  }
-});
-
-// Add smooth scrolling for carousel navigation
-function smoothScrollToSlide(index) {
-  const slides = document.querySelectorAll(".hero-slide");
-  const targetSlide = slides[index];
-
-  if (targetSlide) {
-    targetSlide.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
-  }
-}
-
-// Add CSS classes for image loading states
-const style = document.createElement("style");
-style.textContent = `
-  .slide-image {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .slide-image.loading {
-    opacity: 0;
-  }
-  
-  .slide-image.loaded {
-    opacity: 1;
-  }
-  
-  .slide-image.error {
-    opacity: 0.5;
-    filter: grayscale(100%);
-  }
-
-  .hero-slide {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 4;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .hero-carousel {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  }
-
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
-    z-index: 1;
-  }
-
-  .hero-shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .shape {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.5;
-    animation: float 20s infinite ease-in-out;
-  }
-
-  .shape-1 {
-    width: 300px;
-    height: 300px;
-    top: 20%;
-    left: 10%;
-    background: linear-gradient(45deg, #ff6b6b, transparent);
-    animation-delay: 0s;
-  }
-
-  .shape-2 {
-    width: 200px;
-    height: 200px;
-    bottom: 20%;
-    right: 10%;
-    background: linear-gradient(45deg, #4ecdc4, transparent);
-    animation-delay: -5s;
-  }
-
-  .shape-3 {
-    width: 250px;
-    height: 250px;
-    top: 50%;
-    left: 50%;
-    background: linear-gradient(45deg, #ffd93d, transparent);
-    animation-delay: -10s;
-  }
-
-  .shape-4 {
-    width: 150px;
-    height: 150px;
-    top: 30%;
-    right: 20%;
-    background: linear-gradient(45deg, #6c5ce7, transparent);
-    animation-delay: -15s;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    25% {
-      transform: translate(50px, -50px) rotate(5deg);
-    }
-    50% {
-      transform: translate(0, -100px) rotate(0deg);
-    }
-    75% {
-      transform: translate(-50px, -50px) rotate(-5deg);
-    }
-  }
-
-  .hero-slide {
-    position: relative;
-    z-index: 3;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 4;
-  }
-
-  @media (max-width: 768px) {
-    .hero-content {
-      padding: 1rem;
-    }
-    
-    .slide-image {
-      object-position: center center;
-    }
-  }
-`;
-document.head.appendChild(style);
-
-// Add CSS for transition effects
-const transitionStyle = document.createElement("style");
-transitionStyle.textContent = `
-  .hero-slide {
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    backface-visibility: hidden;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-  }
-
-  .transition-controls {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 10;
-    display: flex;
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-  }
-
-  .effect-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .effect-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .effect-btn.active {
-    background: rgba(255, 255, 255, 0.4);
-  }
-
-  @media (max-width: 768px) {
-    .transition-controls {
-      bottom: 10px;
-      right: 10px;
-      padding: 5px;
-    }
-
-    .effect-btn {
-      padding: 6px 12px;
-      font-size: 0.9em;
-    }
-  }
-`;
-document.head.appendChild(transitionStyle);
-
-// Add CSS for football field background
-const fieldStyle = document.createElement("style");
-fieldStyle.textContent = `
-  .hero-carousel {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: transparent;
-  }
-
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
-    z-index: 1;
-  }
-
-  .hero-shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .shape {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.5;
-    animation: float 20s infinite ease-in-out;
-  }
-
-  .shape-1 {
-    width: 300px;
-    height: 300px;
-    top: 20%;
-    left: 10%;
-    background: linear-gradient(45deg, #ff6b6b, transparent);
-    animation-delay: 0s;
-  }
-
-  .shape-2 {
-    width: 200px;
-    height: 200px;
-    bottom: 20%;
-    right: 10%;
-    background: linear-gradient(45deg, #4ecdc4, transparent);
-    animation-delay: -5s;
-  }
-
-  .shape-3 {
-    width: 250px;
-    height: 250px;
-    top: 50%;
-    left: 50%;
-    background: linear-gradient(45deg, #ffd93d, transparent);
-    animation-delay: -10s;
-  }
-
-  .shape-4 {
-    width: 150px;
-    height: 150px;
-    top: 30%;
-    right: 20%;
-    background: linear-gradient(45deg, #6c5ce7, transparent);
-    animation-delay: -15s;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 4;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  .hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    opacity: 0.9;
-  }
-
-  .hero-content .btn {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .hero-content .btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 768px) {
-    .hero-content h1 {
-      font-size: 2.5rem;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-    }
-  }
-`;
-document.head.appendChild(fieldStyle);

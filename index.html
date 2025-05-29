@@ -45,174 +45,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"
         media="print" onload="this.media='all'">
 
-    <!-- Modern Carousel Styles -->
-    <style>
-        .hero-carousel {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .hero-slides {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 1s ease, transform 1.5s ease;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            transform: scale(1);
-            z-index: 2;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom,
-                    rgba(0, 0, 0, 0.3) 0%,
-                    rgba(0, 0, 0, 0.2) 50%,
-                    rgba(0, 0, 0, 0.3) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            padding: 2rem;
-            text-align: center;
-            color: white;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
-        }
-
-        .hero-slide.active .hero-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            line-height: 1.6;
-        }
-
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-control:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-control.prev {
-            left: 30px;
-        }
-
-        .carousel-control.next {
-            right: 30px;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 10;
-        }
-
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .carousel-indicator.active {
-            background: white;
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .carousel-control {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-control.prev {
-                left: 15px;
-            }
-
-            .carousel-control.next {
-                right: 15px;
-            }
-        }
-    </style>
-
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Cymru Unleashed">
     <meta property="og:type" content="website">
@@ -244,17 +76,10 @@
     <link rel="alternate" hreflang="x-default" href="https://cymruunleashed.com/">
 
     <!-- Favicons -->
-    <!-- For ICO format -->
     <link rel="icon" href="/Media/favicon.ico" type="image/x-icon">
-
-    <!-- For PNG format -->
     <link rel="icon" href="/Media/Images/favicon-16x16.png" type="image/png" sizes="16x16">
     <link rel="icon" href="/Media/Images/favicon-32x32.png" type="image/png" sizes="32x32">
-
-    <!-- For Apple devices -->
     <link rel="apple-touch-icon" href="/Media/Images/apple-touch-icon.png" sizes="180x180">
-
-    <!-- For Android devices -->
     <link rel="icon" href="/Media/Images/android-chrome-192x192.png" type="image/png" sizes="192x192">
     <link rel="icon" href="/Media/Images/android-chrome-512x512.png" type="image/png" sizes="512x512">
 
@@ -306,153 +131,10 @@
                 "isPartOf": {"@id": "https://cymruunleashed.com/#website"},
                 "about": {"@id": "https://cymruunleashed.com/#organization"},
                 "description": "Join Cymru Unleashed in celebrating Welsh culture through sports, community events, and cultural activities. Discover our mission to empower communities and preserve Welsh heritage."
-            },
-            {
-                "@type": "BreadcrumbList",
-                "@id": "https://cymruunleashed.com/#breadcrumb",
-                "itemListElement": [{
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://cymruunleashed.com/"
-                }]
-            },
-            {
-                "@type": "FAQPage",
-                "@id": "https://cymruunleashed.com/#faq",
-                "mainEntity": [{
-                    "@type": "Question",
-                    "name": "What is Cymru Unleashed?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Cymru Unleashed is a community organization dedicated to empowering Welsh communities through sports and cultural activities, promoting Welsh heritage and fostering community development."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "How can I get involved with Cymru Unleashed?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "You can get involved by participating in our community events, volunteering, or supporting our initiatives. Visit our Get Involved page for more information."
-                    }
-                }]
             }
         ]
     }
     </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SportsEvent",
-        "name": "UEFA Women's Euro 2025",
-        "startDate": "2025-07-02",
-        "endDate": "2025-07-27",
-        "location": {
-            "@type": "Place",
-            "name": "Wales",
-            "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "GB",
-                "addressRegion": "Wales"
-            }
-        },
-        "organizer": {
-            "@type": "Organization",
-            "name": "Cymru Unleashed",
-            "url": "https://cymruunleashed.com"
-        },
-        "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "price": "0",
-            "priceCurrency": "GBP",
-            "url": "https://cymruunleashed.com/getInvolved/get-involved.html"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Cymru Unleashed",
-        "image": "https://cymruunleashed.com/Images/new_logo.jpg",
-        "priceRange": "Free",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Cardiff Bay",
-            "addressLocality": "Cardiff",
-            "addressRegion": "Wales",
-            "postalCode": "CF10 4JY",
-            "addressCountry": "GB"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "51.4645",
-            "longitude": "-3.1645"
-        },
-        "url": "https://cymruunleashed.com",
-        "telephone": "+44-7455683291",
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday"
-            ],
-            "opens": "09:00",
-            "closes": "17:00"
-        }
-    }
-    </script>
-
-    <!-- Breadcrumbs Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://cymruunleashed.com/"
-        }]
-    }
-    </script>
-
-    <!-- FAQ Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-            "@type": "Question",
-            "name": "What is Cymru Unleashed?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Cymru Unleashed is a women-led initiative celebrating Wales' UEFA Women's Euro 2025 participation. We empower girls through sport, art, and digital storytelling in Wales."
-            }
-        }, {
-            "@type": "Question",
-            "name": "How can I get involved with Cymru Unleashed?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "You can get involved by participating in our sports workshops, art installations, or digital storytelling projects. Visit our Get Involved page for more information."
-            }
-        }, {
-            "@type": "Question",
-            "name": "Is Cymru Unleashed available in Welsh?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Cymru Unleashed is fully bilingual. You can switch between English and Welsh versions of the website using the language toggle in the footer."
-            }
-        }]
-    }
-    </script>
-
 </head>
 
 <body>
@@ -653,12 +335,6 @@
                     <div class="footer-logo">Cymru <span>Unleashed</span></div>
                     <p data-translate="footer-tagline">Empowering the next generation of Welsh women through sport, art,
                         and culture.</p>
-                    <!-- <div class="footer-social">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div> -->
                     <div class="footer-social">
                         <a href="https://www.instagram.com/cymru.unleashed" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-instagram"></i>
@@ -672,8 +348,6 @@
                         <a href="https://www.youtube.com/@CymruUnleashed" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-youtube"></i>
                         </a>
-                        <!-- <a href="https://www.instagram.com/cymru.unleashed" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-instagram"></i></a> -->
                     </div>
 
                     <div class="partner-logos">
@@ -722,11 +396,8 @@
                             <strong>TikTok:</strong>
                             <a href="https://www.tiktok.com/cymru.unleashed" target="_blank"
                                 rel="noopener noreferrer">@cymru.unleashed</a>
-
                         </li>
                     </ul>
-
-
                 </div>
             </div>
             <div class="copyright">
@@ -737,194 +408,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Add before closing body tag -->
-    <div class="social-share-buttons">
-        <h3>Share This Page</h3>
-        <div class="share-buttons">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://cymruunleashed.com" target="_blank"
-                rel="noopener noreferrer" class="share-button facebook" aria-label="Share on Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://twitter.com/intent/tweet?url=https://cymruunleashed.com&text=Check%20out%20Cymru%20Unleashed%20-%20Empowering%20Wales%20Through%20Sport&hashtags=CymruUnleashed,WomensFootball,Wales"
-                target="_blank" rel="noopener noreferrer" class="share-button twitter" aria-label="Share on Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://cymruunleashed.com&title=Cymru%20Unleashed&summary=Empowering%20Wales%20Through%20Sport"
-                target="_blank" rel="noopener noreferrer" class="share-button linkedin" aria-label="Share on LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="https://api.whatsapp.com/send?text=Check%20out%20Cymru%20Unleashed%20-%20Empowering%20Wales%20Through%20Sport%20https://cymruunleashed.com"
-                target="_blank" rel="noopener noreferrer" class="share-button whatsapp" aria-label="Share on WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://www.instagram.com/cymru.unleashed" target="_blank" rel="noopener noreferrer"
-                class="share-button instagram" aria-label="Follow on Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@cymru.unleashed" target="_blank" rel="noopener noreferrer"
-                class="share-button tiktok" aria-label="Follow on TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.youtube.com/@CymruUnleashed" target="_blank" rel="noopener noreferrer"
-                class="share-button youtube" aria-label="Subscribe on YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <button class="share-button copy-link" aria-label="Copy link to clipboard" onclick="copyToClipboard()">
-                <i class="fas fa-link"></i>
-            </button>
-        </div>
-    </div>
-
-    <style>
-        .social-share-buttons {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .social-share-buttons:hover {
-            transform: translateY(-5px);
-        }
-
-        .social-share-buttons h3 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #333;
-            text-align: center;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .share-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .share-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .facebook {
-            background: #1877f2;
-        }
-
-        .twitter {
-            background: #1da1f2;
-        }
-
-        .linkedin {
-            background: #0077b5;
-        }
-
-        .whatsapp {
-            background: #25d366;
-        }
-
-        .instagram {
-            background: #e4405f;
-        }
-
-        .tiktok {
-            background: #000000;
-        }
-
-        .youtube {
-            background: #ff0000;
-        }
-
-        .copy-link {
-            background: #6c757d;
-        }
-
-        @media (max-width: 768px) {
-            .social-share-buttons {
-                bottom: 10px;
-                right: 10px;
-                padding: 10px;
-            }
-
-            .share-button {
-                width: 35px;
-                height: 35px;
-            }
-        }
-    </style>
-
-    <script>
-        // Social Share Tracking
-        document.querySelectorAll('.share-button').forEach(button => {
-            button.addEventListener('click', function (e) {
-                const platform = this.classList[1];
-                gtag('event', 'share', {
-                    'method': platform,
-                    'content_type': 'page',
-                    'content_id': window.location.pathname,
-                    'event_category': 'Social',
-                    'event_label': platform
-                });
-            });
-        });
-
-        // Copy to Clipboard Function
-        function copyToClipboard() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                // Show success message
-                const button = document.querySelector('.copy-link');
-                const originalIcon = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i>';
-                button.style.background = '#28a745';
-
-                // Track the copy event
-                gtag('event', 'share', {
-                    'method': 'copy_link',
-                    'content_type': 'page',
-                    'content_id': window.location.pathname,
-                    'event_category': 'Social',
-                    'event_label': 'Copy Link'
-                });
-
-                // Reset button after 2 seconds
-                setTimeout(() => {
-                    button.innerHTML = originalIcon;
-                    button.style.background = '#6c757d';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
-
-        // Add hover effect to the entire share buttons container
-        const shareContainer = document.querySelector('.social-share-buttons');
-        shareContainer.addEventListener('mouseenter', () => {
-            shareContainer.style.transform = 'translateY(-5px)';
-        });
-        shareContainer.addEventListener('mouseleave', () => {
-            shareContainer.style.transform = 'translateY(0)';
-        });
-    </script>
 
     <script src="scripts.js" defer></script>
 </body>
