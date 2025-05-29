@@ -321,7 +321,17 @@ window.addEventListener("load", () => {
 document.addEventListener("touchstart", () => {}, { passive: true });
 
 // Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeCarousel);
+document.addEventListener("DOMContentLoaded", () => {
+  const heroSlides = document.getElementById("heroSlides");
+  const indicators = document.getElementById("carouselIndicators");
+
+  if (!heroSlides || !indicators) {
+    console.error("Carousel elements not found");
+    return;
+  }
+
+  initializeCarousel();
+});
 
 function initializeCarousel() {
   console.log("Initializing carousel...");
