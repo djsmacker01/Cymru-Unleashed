@@ -304,11 +304,12 @@ nav ul li a.active {
     justify-content: center;
     text-align: center;
     transform: scale(1.1);
+    z-index: 1;
 }
 
 .hero-slide.active {
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
     transform: scale(1);
 }
 
@@ -320,6 +321,8 @@ nav ul li a.active {
     transform: translateY(30px);
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    position: relative;
+    z-index: 4;
 }
 
 .hero-slide.active .hero-content {
@@ -353,7 +356,7 @@ nav ul li a.active {
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 4;
+    z-index: 10;
     transition: all 0.3s ease;
     color: var(--light);
     display: flex;
@@ -383,7 +386,7 @@ nav ul li a.active {
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
-    z-index: 4;
+    z-index: 10;
 }
 
 .indicator {
