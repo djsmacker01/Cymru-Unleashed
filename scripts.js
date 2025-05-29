@@ -325,12 +325,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
 
-  if (!heroSlides || !indicators) {
+  if (heroSlides && indicators) {
+    initializeCarousel();
+  } else {
     console.error("Carousel elements not found");
-    return;
   }
-
-  initializeCarousel();
 });
 
 function initializeCarousel() {
