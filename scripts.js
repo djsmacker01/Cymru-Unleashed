@@ -321,20 +321,7 @@ window.addEventListener("load", () => {
 document.addEventListener("touchstart", () => {}, { passive: true });
 
 // Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM loaded, initializing carousel...");
-
-  // Initialize carousel controls first
-  const prevButton = document.querySelector(".carousel-control.prev");
-  const nextButton = document.querySelector(".carousel-control.next");
-
-  if (prevButton && nextButton) {
-    console.log("Carousel controls found");
-    initializeCarousel();
-  } else {
-    console.error("Carousel controls not found");
-  }
-});
+document.addEventListener("DOMContentLoaded", initializeCarousel);
 
 function initializeCarousel() {
   console.log("Initializing carousel...");
@@ -641,7 +628,6 @@ const deferAnimations = () => {
 // Initialize non-critical features after page load
 window.addEventListener("load", function () {
   deferAnimations();
-  initializeCarousel();
   initializeParticles();
 });
 
