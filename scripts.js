@@ -313,11 +313,11 @@ const carouselSlides = [
   //   title: "Celebrate Welsh Heritage",
   //   description: "Discover the rich culture and traditions of Wales",
   // },
-  {
-    image: "./Images/cymru_team.jpg",
-    title: "Team Wales",
-    description: "Supporting Welsh Women in Football",
-  }
+  // {
+  //   image: "./Images/cymru_team.jpg",
+  //   title: "Team Wales",
+  //   description: "Supporting Welsh Women in Football",
+  // }
 ];
 
 function initializeCarousel() {
