@@ -20,6 +20,11 @@ const carouselSlides = [
     title: "Team Wales",
     description: "Supporting Welsh Women in Football",
   },
+  {
+    image: "./Images/CULTURAL FOOTBALL RHYTHMS-fot.jpg",
+    title: "Team Wales",
+    description: "Supporting Welsh Women in Football",
+  },
 ];
 
 // Mobile Navigation Toggle
