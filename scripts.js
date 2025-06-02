@@ -41,48 +41,57 @@ const toggleMenu = () => {
     : '<i class="fas fa-bars"></i>';
 
   // Toggle body scroll
-  if (nav.classList.contains("active")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
+  document.body.style.overflow = nav.classList.contains("active")
+    ? "hidden"
+    : "";
 };
 
 // Initialize navigation event listeners
 const initializeNavigation = () => {
-  hamburger?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  overlay?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  // Close menu when clicking navigation links
-  document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", (e) => {
+  // Hamburger click handler
+  if (hamburger) {
+    hamburger.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const href = item.getAttribute("href");
-      if (nav?.classList.contains("active")) {
+      toggleMenu();
+    });
+  }
+
+  // Overlay click handler
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
+
+  // Navigation links click handler
+  const navLinks = document.querySelectorAll("nav a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const href = link.getAttribute("href");
+      if (nav && nav.classList.contains("active")) {
         toggleMenu();
       }
-      // Add a small delay before navigation
+
+      // Navigate after menu closes
       setTimeout(() => {
         window.location.href = href;
       }, 300);
     });
   });
 
-  // Prevent clicks inside nav from closing the menu
-  nav?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  });
+  // Prevent menu from closing when clicking inside
+  if (nav) {
+    nav.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  }
 };
 
 // Initialize navigation when DOM is loaded
