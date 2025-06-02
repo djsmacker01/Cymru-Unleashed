@@ -11,10 +11,15 @@ class MobileNavigation {
 
     // Debug log for element initialization
     console.log("🔍 Navigation elements found:", {
-      nav: !!this.nav,
-      hamburger: !!this.hamburger,
-      overlay: !!this.overlay,
+      nav: this.nav ? "Found" : "Missing",
+      hamburger: this.hamburger ? "Found" : "Missing",
+      overlay: this.overlay ? "Found" : "Missing",
     });
+
+    // Log element details if found
+    if (this.nav) console.log("📝 Nav element:", this.nav);
+    if (this.hamburger) console.log("📝 Hamburger element:", this.hamburger);
+    if (this.overlay) console.log("📝 Overlay element:", this.overlay);
 
     this.init();
   }
@@ -23,9 +28,9 @@ class MobileNavigation {
     // Check if all required elements exist
     if (!this.nav || !this.hamburger || !this.overlay) {
       console.error("❌ Navigation elements not found:", {
-        nav: !!this.nav,
-        hamburger: !!this.hamburger,
-        overlay: !!this.overlay,
+        nav: this.nav ? "Found" : "Missing",
+        hamburger: this.hamburger ? "Found" : "Missing",
+        overlay: this.overlay ? "Found" : "Missing",
       });
       return;
     }
@@ -34,6 +39,13 @@ class MobileNavigation {
     this.nav.classList.add("nav-initialized");
     this.hamburger.classList.add("hamburger-initialized");
     this.overlay.classList.add("overlay-initialized");
+
+    // Verify classes were added
+    console.log("🎨 Classes added:", {
+      nav: this.nav.classList.contains("nav-initialized"),
+      hamburger: this.hamburger.classList.contains("hamburger-initialized"),
+      overlay: this.overlay.classList.contains("overlay-initialized"),
+    });
 
     this.setupEventListeners();
     this.setupKeyboardNavigation();
@@ -46,7 +58,10 @@ class MobileNavigation {
     this.hamburger.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log("🍔 Hamburger clicked");
+      console.log("🍔 Hamburger clicked", {
+        isMenuOpen: this.isMenuOpen,
+        isAnimating: this.isAnimating,
+      });
       this.toggleMenu();
     });
 
@@ -54,7 +69,10 @@ class MobileNavigation {
     this.overlay.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log("🖱️ Overlay clicked");
+      console.log("🖱️ Overlay clicked", {
+        isMenuOpen: this.isMenuOpen,
+        isAnimating: this.isAnimating,
+      });
       if (this.isMenuOpen) {
         this.closeMenu();
       }
@@ -63,7 +81,11 @@ class MobileNavigation {
     // Navigation links - using event delegation for better performance
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
-      console.log("🔗 Link clicked:", link?.href);
+      console.log("🔗 Link clicked:", {
+        link: link?.href,
+        target: e.target,
+        closest: e.target.closest("a"),
+      });
 
       if (link) {
         e.preventDefault(); // Prevent default initially
@@ -79,6 +101,7 @@ class MobileNavigation {
           href,
           isExternalLink,
           isHashLink,
+          isMenuOpen: this.isMenuOpen,
         });
 
         if (href && href !== "#") {
@@ -119,7 +142,11 @@ class MobileNavigation {
         !this.nav.contains(e.target) &&
         !this.hamburger.contains(e.target)
       ) {
-        console.log("🖱️ Clicked outside menu");
+        console.log("🖱️ Clicked outside menu", {
+          target: e.target,
+          isInNav: this.nav.contains(e.target),
+          isInHamburger: this.hamburger.contains(e.target),
+        });
         this.closeMenu();
       }
     });
@@ -127,7 +154,10 @@ class MobileNavigation {
     // Handle window resize
     window.addEventListener("resize", () => {
       if (window.innerWidth > 768 && this.isMenuOpen) {
-        console.log("📱 Window resized, closing menu");
+        console.log("📱 Window resized", {
+          width: window.innerWidth,
+          isMenuOpen: this.isMenuOpen,
+        });
         this.closeMenu();
       }
     });
@@ -204,6 +234,13 @@ class MobileNavigation {
     this.hamburger.classList.add("active");
     this.overlay.classList.add("active");
 
+    // Verify classes were added
+    console.log("🎨 Classes after opening:", {
+      nav: this.nav.classList.contains("active"),
+      hamburger: this.hamburger.classList.contains("active"),
+      overlay: this.overlay.classList.contains("active"),
+    });
+
     // Prevent body scroll
     this.body.style.overflow = "hidden";
 
@@ -239,6 +276,13 @@ class MobileNavigation {
     this.hamburger.classList.remove("active");
     this.overlay.classList.remove("active");
 
+    // Verify classes were removed
+    console.log("🎨 Classes after closing:", {
+      nav: this.nav.classList.contains("active"),
+      hamburger: this.hamburger.classList.contains("active"),
+      overlay: this.overlay.classList.contains("active"),
+    });
+
     // Restore body scroll
     this.body.style.overflow = "";
 
@@ -262,6 +306,13 @@ class MobileNavigation {
         icon.classList.remove("fa-times");
         icon.classList.add("fa-bars");
       }
+      console.log("🔄 Hamburger icon updated:", {
+        isOpen,
+        hasBars: icon.classList.contains("fa-bars"),
+        hasTimes: icon.classList.contains("fa-times"),
+      });
+    } else {
+      console.warn("⚠️ No icon found in hamburger button");
     }
   }
 
@@ -278,6 +329,8 @@ class MobileNavigation {
         top: targetPosition,
         behavior: "smooth",
       });
+    } else {
+      console.warn("⚠️ Target section not found:", href);
     }
   }
 }
@@ -349,6 +402,8 @@ function animateValue(element, start, end, duration) {
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   try {
+    console.log("🌐 DOM loaded, initializing navigation...");
+
     // Initialize mobile navigation
     const mobileNav = new MobileNavigation();
     console.log("🚀 Navigation system initialized");
