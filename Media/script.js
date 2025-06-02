@@ -66,7 +66,10 @@ const initializeNavigation = () => {
 };
 
 // Initialize navigation when DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeNavigation);
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
+  initializeStickyHeader();
+});
 
 // Sticky Header on Scroll
 const initializeStickyHeader = () => {
@@ -258,12 +261,6 @@ languageToggle.forEach((link) => {
 // Set initial language based on stored preference or default to English
 const initialLang = localStorage.getItem("preferred-language") || "en";
 updateLanguage(initialLang);
-
-// Initialize all functionality
-document.addEventListener("DOMContentLoaded", () => {
-  initializeNavigation();
-  initializeStickyHeader();
-});
 
 // Download buttons interaction
 document.querySelectorAll(".download-btn").forEach((btn) => {
