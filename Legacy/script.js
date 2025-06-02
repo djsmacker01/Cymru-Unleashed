@@ -1,6 +1,7 @@
 // Complete Fixed Mobile Navigation - WORKING VERSION
 class MobileNavigation {
   constructor() {
+    // Get all required elements
     this.nav = document.getElementById("nav");
     this.hamburger = document.getElementById("hamburger");
     this.overlay = document.getElementById("overlay");
@@ -8,20 +9,26 @@ class MobileNavigation {
     this.isMenuOpen = false;
     this.isAnimating = false;
 
-    console.log("🔍 Elements found:", {
-      nav: !!this.nav,
-      hamburger: !!this.hamburger,
-      overlay: !!this.overlay,
+    // Debug log for element initialization
+    console.log("🔍 Navigation elements found:", {
+      nav: this.nav ? "Found" : "Missing",
+      hamburger: this.hamburger ? "Found" : "Missing",
+      overlay: this.overlay ? "Found" : "Missing",
     });
 
-    this.init();
+    // Initialize only if all elements exist
+    if (this.nav && this.hamburger && this.overlay) {
+      this.init();
+    } else {
+      console.error("❌ Required navigation elements missing");
+    }
   }
 
   init() {
-    if (!this.nav || !this.hamburger || !this.overlay) {
-      console.error("❌ Required navigation elements missing");
-      return;
-    }
+    // Add initial classes
+    this.nav.classList.add("nav-initialized");
+    this.hamburger.classList.add("hamburger-initialized");
+    this.overlay.classList.add("overlay-initialized");
 
     this.setupEventListeners();
     this.setupKeyboardNavigation();
@@ -29,7 +36,7 @@ class MobileNavigation {
   }
 
   setupEventListeners() {
-    // Hamburger click
+    // Hamburger click handler
     this.hamburger.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -37,7 +44,7 @@ class MobileNavigation {
       this.toggleMenu();
     });
 
-    // Overlay click - close menu
+    // Overlay click handler
     this.overlay.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -47,7 +54,7 @@ class MobileNavigation {
       }
     });
 
-    // FIXED: Simplified navigation link handling
+    // Navigation links - using event delegation
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
       if (!link) return;
@@ -55,30 +62,19 @@ class MobileNavigation {
       const href = link.getAttribute("href");
       console.log("🔗 Navigation link clicked:", href);
 
-      // Check if this is a valid link
-      if (!href || href === "#") {
-        e.preventDefault();
-        console.log("❌ Invalid link href");
-        return;
+      if (href && href !== "#") {
+        if (this.isMenuOpen) {
+          e.preventDefault();
+          console.log("📱 Mobile menu is open - closing before navigation");
+          this.closeMenu();
+          setTimeout(() => {
+            this.handleNavigation(href, link);
+          }, 300);
+        }
       }
-
-      // For mobile menu - always close menu first, then navigate
-      if (this.isMenuOpen) {
-        e.preventDefault(); // Prevent immediate navigation
-        console.log("📱 Mobile menu is open - closing before navigation");
-
-        // Close menu immediately
-        this.closeMenu();
-
-        // Navigate after menu closes
-        setTimeout(() => {
-          this.handleNavigation(href, link);
-        }, 100); // Reduced timeout for better UX
-      }
-      // If menu is not open, let browser handle navigation normally
     });
 
-    // Close menu when clicking outside (but not on nav links)
+    // Close menu when clicking outside
     document.addEventListener("click", (e) => {
       if (
         this.isMenuOpen &&
@@ -90,7 +86,7 @@ class MobileNavigation {
       }
     });
 
-    // Close menu on window resize
+    // Handle window resize
     window.addEventListener("resize", () => {
       if (window.innerWidth > 768 && this.isMenuOpen) {
         console.log("📱 Screen resized - closing mobile menu");
@@ -99,7 +95,6 @@ class MobileNavigation {
     });
   }
 
-  // NEW: Separated navigation handling logic
   handleNavigation(href, link) {
     console.log("🚀 Handling navigation to:", href);
 
@@ -123,7 +118,6 @@ class MobileNavigation {
       }
     } catch (error) {
       console.error("❌ Navigation failed:", error);
-      // Fallback - try direct navigation
       window.location.href = href;
     }
   }
@@ -152,7 +146,12 @@ class MobileNavigation {
   }
 
   openMenu() {
-    if (this.isAnimating || this.isMenuOpen) return;
+    if (this.isAnimating || this.isMenuOpen) {
+      console.log(
+        "⏳ Cannot open menu - animation in progress or menu already open"
+      );
+      return;
+    }
 
     console.log("📱 Opening menu...");
     this.isAnimating = true;
@@ -174,7 +173,6 @@ class MobileNavigation {
       icon.classList.add("fa-times");
     }
 
-    // FIXED: Reduced timeout and better state management
     setTimeout(() => {
       this.isAnimating = false;
       console.log("✅ Menu opened");
@@ -182,7 +180,12 @@ class MobileNavigation {
   }
 
   closeMenu() {
-    if (this.isAnimating || !this.isMenuOpen) return;
+    if (this.isAnimating || !this.isMenuOpen) {
+      console.log(
+        "⏳ Cannot close menu - animation in progress or menu already closed"
+      );
+      return;
+    }
 
     console.log("📱 Closing menu...");
     this.isAnimating = true;
@@ -204,7 +207,6 @@ class MobileNavigation {
       icon.classList.add("fa-bars");
     }
 
-    // FIXED: Reduced timeout
     setTimeout(() => {
       this.isAnimating = false;
       console.log("✅ Menu closed");
