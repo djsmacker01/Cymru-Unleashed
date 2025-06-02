@@ -1,5 +1,4 @@
-// Mobile Navigation Toggle
-
+// Mobile Navigation Toggle - FIXED VERSION
 
 // Refined Mobile Navigation - Complete Working Solution
 class MobileNavigation {
@@ -43,28 +42,28 @@ class MobileNavigation {
       }
     });
 
-    // Navigation links - using event delegation for better performance
+    // Navigation links - FIXED VERSION
     this.nav?.addEventListener("click", (e) => {
       const link = e.target.closest("a");
 
       if (link) {
-        e.preventDefault(); // Prevent default initially
-
         const href = link.getAttribute("href");
-        const isExternalLink =
-          href?.startsWith("http") ||
-          href?.startsWith("mailto") ||
-          href?.startsWith("tel");
-        const isHashLink = href?.startsWith("#");
-
         console.log("Navigation link clicked:", href);
 
+        // Only prevent default for anchor links or if we need to close menu first
         if (href && href !== "#") {
+          const isExternalLink =
+            href?.startsWith("http") ||
+            href?.startsWith("mailto") ||
+            href?.startsWith("tel");
+          const isHashLink = href?.startsWith("#");
+
           if (this.isMenuOpen) {
-            // Close menu first, then navigate
+            // For mobile menu, close it first for ALL links
+            e.preventDefault();
             this.closeMenu();
 
-            // Wait for menu close animation to complete
+            // Wait for menu close animation, then navigate
             setTimeout(() => {
               if (isExternalLink) {
                 window.open(href, link.target || "_self");
@@ -77,15 +76,17 @@ class MobileNavigation {
               }
             }, 300); // Match CSS transition duration
           } else {
-            // Menu not open, navigate immediately
-            if (isExternalLink) {
-              window.open(href, link.target || "_self");
-            } else if (isHashLink) {
+            // Menu not open, let browser handle navigation naturally
+            // Only prevent default for hash links to use smooth scroll
+            if (isHashLink) {
+              e.preventDefault();
               this.scrollToSection(href);
-            } else {
-              window.location.href = href;
             }
+            // For all other links, let browser handle normally (don't prevent default)
           }
+        } else {
+          // Empty or # href, prevent default
+          e.preventDefault();
         }
       }
     });
@@ -233,18 +234,28 @@ class MobileNavigation {
   }
 
   scrollToSection(href) {
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      const headerHeight = document.getElementById("header")?.offsetHeight || 0;
-      const targetPosition =
-        targetElement.getBoundingClientRect().top +
-        window.pageYOffset -
-        headerHeight;
+    try {
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        const headerHeight =
+          document.getElementById("header")?.offsetHeight || 80;
+        const targetPosition =
+          targetElement.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight -
+          20; // Extra 20px padding
 
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+
+        console.log(`Scrolled to section: ${href}`);
+      } else {
+        console.warn(`Target element not found for: ${href}`);
+      }
+    } catch (error) {
+      console.error(`Error scrolling to section ${href}:`, error);
     }
   }
 }
@@ -313,7 +324,10 @@ socialTabs.forEach((tab) => {
     socialFeeds.forEach((feed) => feed.classList.remove("active"));
     // Show corresponding feed
     const feedId = `${tab.getAttribute("data-tab")}-feed`;
-    document.getElementById(feedId).classList.add("active");
+    const targetFeed = document.getElementById(feedId);
+    if (targetFeed) {
+      targetFeed.classList.add("active");
+    }
   });
 });
 
@@ -322,15 +336,19 @@ const mainVideo = document.querySelector(".featured-video .video-container");
 const playButton = document.querySelector(".play-button");
 const videoThumbs = document.querySelectorAll(".video-thumb");
 
-playButton.addEventListener("click", () => {
-  // In a real implementation, this would play the video
-  alert("Video would play here in the real implementation.");
-});
+if (playButton) {
+  playButton.addEventListener("click", () => {
+    // In a real implementation, this would play the video
+    alert("Video would play here in the real implementation.");
+  });
+}
 
 videoThumbs.forEach((thumb) => {
   thumb.addEventListener("click", () => {
     // In a real implementation, this would change and play the video
-    const thumbTitle = thumb.querySelector(".thumb-title").textContent.trim();
+    const thumbTitle =
+      thumb.querySelector(".thumb-title")?.textContent?.trim() ||
+      "Unknown Video";
     alert(
       `Video would change to "${thumbTitle}" and play in the real implementation.`
     );
@@ -342,26 +360,28 @@ const animateElements = document.querySelectorAll(
   ".news-card, .social-post, .download-item"
 );
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("animated");
-        // Stop observing after animation
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    root: null,
-    threshold: 0.1,
-    rootMargin: "-50px",
-  }
-);
+if (animateElements.length > 0) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animated");
+          // Stop observing after animation
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "-50px",
+    }
+  );
 
-animateElements.forEach((element) => {
-  observer.observe(element);
-});
+  animateElements.forEach((element) => {
+    observer.observe(element);
+  });
+}
 
 // Language Toggle
 const languageToggle = document.querySelectorAll(".language-toggle a");
@@ -446,7 +466,7 @@ function updateLanguage(lang) {
   // Update all elements with data-translate attribute
   document.querySelectorAll("[data-translate]").forEach((element) => {
     const key = element.getAttribute("data-translate");
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       element.textContent = translations[lang][key];
     }
   });
@@ -456,7 +476,11 @@ function updateLanguage(lang) {
     lang === "cy" ? "Cyfryngau | Cymru Unleashed" : "Media | Cymru Unleashed";
 
   // Store language preference
-  localStorage.setItem("preferred-language", lang);
+  try {
+    localStorage.setItem("preferred-language", lang);
+  } catch (e) {
+    console.warn("Could not save language preference:", e);
+  }
 }
 
 languageToggle.forEach((link) => {
@@ -478,26 +502,33 @@ languageToggle.forEach((link) => {
 });
 
 // Set initial language based on stored preference or default to English
-const initialLang = localStorage.getItem("preferred-language") || "en";
+let initialLang = "en";
+try {
+  initialLang = localStorage.getItem("preferred-language") || "en";
+} catch (e) {
+  console.warn("Could not load language preference:", e);
+}
 updateLanguage(initialLang);
 
 // Download buttons interaction
 document.querySelectorAll(".download-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    const fileName = e.currentTarget.parentElement
-      .querySelector("h4")
-      .textContent.trim();
+    const fileNameElement = e.currentTarget.parentElement?.querySelector("h4");
+    const fileName = fileNameElement?.textContent?.trim() || "Unknown File";
     alert(
       `Downloading ${fileName} - This would be a real download in the live implementation.`
     );
 
     // Animation effect
     const icon = e.currentTarget.querySelector("i");
-    icon.className = "fas fa-check";
-    setTimeout(() => {
-      icon.className = "fas fa-download";
-    }, 1500);
+    if (icon) {
+      const originalClass = icon.className;
+      icon.className = "fas fa-check";
+      setTimeout(() => {
+        icon.className = originalClass;
+      }, 1500);
+    }
   });
 });
 
@@ -529,19 +560,21 @@ document.addEventListener("DOMContentLoaded", function () {
     threshold: 0.5,
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const element = entry.target;
         const endValue = parseInt(element.getAttribute("data-count"));
-        animateValue(element, 0, endValue, 2000);
-        observer.unobserve(element);
+        if (!isNaN(endValue)) {
+          animateValue(element, 0, endValue, 2000);
+        }
+        statsObserver.unobserve(element);
       }
     });
   }, observerOptions);
 
   stats.forEach((stat) => {
-    observer.observe(stat);
+    statsObserver.observe(stat);
   });
 
   // Smooth scroll for the CTA button
@@ -564,18 +597,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const heroSection = document.querySelector(".page-hero");
   const shapes = document.querySelectorAll(".hero-shapes .shape");
 
-  window.addEventListener("mousemove", (e) => {
-    const { clientX, clientY } = e;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+  if (heroSection && shapes.length > 0) {
+    window.addEventListener("mousemove", (e) => {
+      const { clientX, clientY } = e;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
 
-    shapes.forEach((shape, index) => {
-      const speed = 0.05 + index * 0.02;
-      const x = (clientX - centerX) * speed;
-      const y = (clientY - centerY) * speed;
-      shape.style.transform = `translate(${x}px, ${y}px)`;
+      shapes.forEach((shape, index) => {
+        const speed = 0.05 + index * 0.02;
+        const x = (clientX - centerX) * speed;
+        const y = (clientY - centerY) * speed;
+        shape.style.transform = `translate(${x}px, ${y}px)`;
+      });
     });
-  });
+  }
 });
 
 // Digital Clock Function
@@ -585,9 +620,13 @@ function updateClock() {
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
 
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+
+  if (hoursEl) hoursEl.textContent = hours;
+  if (minutesEl) minutesEl.textContent = minutes;
+  if (secondsEl) secondsEl.textContent = seconds;
 }
 
 // Update clock immediately and then every second
@@ -602,10 +641,15 @@ function initializeDownloads() {
     button.addEventListener("click", async (e) => {
       e.preventDefault();
       const downloadItem = button.closest(".download-item");
-      const progressBar = downloadItem.querySelector(".progress-bar");
+      const progressBar = downloadItem?.querySelector(".progress-bar");
       const progressContainer =
-        downloadItem.querySelector(".download-progress");
-      const fileName = button.getAttribute("data-file");
+        downloadItem?.querySelector(".download-progress");
+      const fileName = button.getAttribute("data-file") || "Unknown File";
+
+      if (!downloadItem || !progressBar || !progressContainer) {
+        console.warn("Download elements not found");
+        return;
+      }
 
       // Start download animation
       downloadItem.classList.add("downloading");
@@ -624,18 +668,6 @@ function initializeDownloads() {
           progressBar.style.width = `${progress}%`;
           progressBar.setAttribute("data-progress", progress);
         }, 200);
-
-        // In a real implementation, you would use fetch to download the file
-        // const response = await fetch(button.href);
-        // const blob = await response.blob();
-        // const url = window.URL.createObjectURL(blob);
-        // const a = document.createElement('a');
-        // a.href = url;
-        // a.download = fileName;
-        // document.body.appendChild(a);
-        // a.click();
-        // window.URL.revokeObjectURL(url);
-        // document.body.removeChild(a);
       } catch (error) {
         console.error("Download failed:", error);
         downloadItem.classList.remove("downloading");
@@ -651,10 +683,12 @@ function completeDownload(downloadItem, fileName) {
   downloadItem.classList.add("completed");
 
   const button = downloadItem.querySelector(".download-btn");
-  const icon = button.querySelector("i");
+  const icon = button?.querySelector("i");
 
   // Change icon to checkmark
-  icon.className = "fas fa-check";
+  if (icon) {
+    icon.className = "fas fa-check";
+  }
 
   // Show success message
   const successMessage = document.createElement("div");
@@ -665,10 +699,14 @@ function completeDownload(downloadItem, fileName) {
   // Reset after 3 seconds
   setTimeout(() => {
     downloadItem.classList.remove("completed");
-    icon.className = "fas fa-download";
+    if (icon) {
+      icon.className = "fas fa-download";
+    }
     successMessage.remove();
-    downloadItem.querySelector(".download-progress").classList.remove("active");
-    downloadItem.querySelector(".progress-bar").style.width = "0%";
+    const progressContainer = downloadItem.querySelector(".download-progress");
+    const progressBar = downloadItem.querySelector(".progress-bar");
+    if (progressContainer) progressContainer.classList.remove("active");
+    if (progressBar) progressBar.style.width = "0%";
   }, 3000);
 }
 
@@ -693,7 +731,8 @@ function initializeSmoothScroll() {
         link.classList.add("active");
 
         // Calculate the target position (accounting for header height)
-        const headerHeight = document.getElementById("header").offsetHeight;
+        const header = document.getElementById("header");
+        const headerHeight = header ? header.offsetHeight : 80;
         const targetPosition =
           targetSection.getBoundingClientRect().top +
           window.pageYOffset -
