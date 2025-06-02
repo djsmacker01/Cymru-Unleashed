@@ -45,11 +45,18 @@ function initializeNavigation() {
   // Navigation link click handlers
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      // Close menu before navigation
+      // Get the href before any potential menu closing
+      const href = link.getAttribute("href");
+
+      // Close menu if it's open
       if (nav.classList.contains("active")) {
         toggleMenu();
       }
-      // Allow the default link behavior to continue
+
+      // Navigate to the page
+      if (href) {
+        window.location.href = href;
+      }
     });
   });
 
