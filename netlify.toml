@@ -1,0 +1,17 @@
+[[redirects]]
+  from = "http://cymruunleashed.com/*"
+  to = "https://cymruunleashed.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.cymruunleashed.com/*"
+  to = "https://cymruunleashed.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.cymruunleashed.com/*"
+  to = "https://cymruunleashed.com/:splat"
+  status = 301
+  force = true
