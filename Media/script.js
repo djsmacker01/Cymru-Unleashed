@@ -1,93 +1,191 @@
-// DIAGNOSTIC SCRIPT FOR YOUR REAL PAGE
-// Add this to your script.js file temporarily
+// VISUAL FIX SCRIPT
+// This will force the menu to be visible and check what's wrong
 
-console.log("🔍 REAL PAGE DIAGNOSTIC STARTING...");
+console.log("🔧 VISUAL FIX: Loading...");
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("🔍 DOM loaded on real page");
-
-  // Check elements exist
   const nav = document.getElementById("nav");
   const hamburger = document.getElementById("hamburger");
   const overlay = document.getElementById("overlay");
 
-  console.log("🔍 Elements found:");
-  console.log("- nav:", !!nav);
-  console.log("- hamburger:", !!hamburger);
-  console.log("- overlay:", !!overlay);
-
   if (!nav || !hamburger || !overlay) {
-    console.error("❌ Missing elements on real page!");
+    console.error("❌ Elements missing");
     return;
   }
 
-  // Check CSS styles that might be interfering
-  console.log("🔍 Checking CSS styles...");
-
-  const navStyles = window.getComputedStyle(nav);
-  const hamburgerStyles = window.getComputedStyle(hamburger);
-
-  console.log("🔍 Nav styles:");
-  console.log("- display:", navStyles.display);
-  console.log("- position:", navStyles.position);
-  console.log("- transform:", navStyles.transform);
-  console.log("- z-index:", navStyles.zIndex);
-  console.log("- visibility:", navStyles.visibility);
-
-  console.log("🔍 Hamburger styles:");
-  console.log("- display:", hamburgerStyles.display);
-  console.log("- visibility:", hamburgerStyles.visibility);
-
-  // Check for conflicting event listeners
-  console.log("🔍 Adding test event listener...");
+  console.log("🔧 Adding improved hamburger functionality...");
 
   hamburger.addEventListener("click", function (e) {
     e.preventDefault();
-    console.log("🔍 REAL PAGE: Hamburger clicked!");
+    e.stopPropagation();
 
-    // Force add classes and log what happens
-    console.log("🔍 Adding 'active' classes...");
-    nav.classList.add("active");
-    overlay.classList.add("active");
-    hamburger.classList.add("active");
+    console.log("🔧 Hamburger clicked - applying FORCE FIX");
 
-    // Check if classes were added
-    console.log("🔍 Classes added:");
-    console.log("- nav.active:", nav.classList.contains("active"));
-    console.log("- overlay.active:", overlay.classList.contains("active"));
-    console.log("- hamburger.active:", hamburger.classList.contains("active"));
+    const isOpen = nav.classList.contains("active");
 
-    // Check styles after adding active class
-    setTimeout(() => {
-      const activeNavStyles = window.getComputedStyle(nav);
-      console.log("🔍 Nav styles AFTER adding 'active':");
-      console.log("- display:", activeNavStyles.display);
-      console.log("- transform:", activeNavStyles.transform);
-      console.log("- visibility:", activeNavStyles.visibility);
-      console.log("- opacity:", activeNavStyles.opacity);
-    }, 100);
+    if (isOpen) {
+      // Close menu
+      nav.classList.remove("active");
+      overlay.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "";
+
+      // Force remove inline styles
+      nav.style.display = "";
+      nav.style.transform = "";
+      nav.style.zIndex = "";
+
+      console.log("🔧 Menu CLOSED");
+    } else {
+      // Open menu with FORCE
+      nav.classList.add("active");
+      overlay.classList.add("active");
+      hamburger.classList.add("active");
+      document.body.style.overflow = "hidden";
+
+      // FORCE the menu to be visible with inline styles
+      nav.style.display = "flex !important";
+      nav.style.position = "fixed !important";
+      nav.style.top = "0 !important";
+      nav.style.left = "0 !important";
+      nav.style.width = "100% !important";
+      nav.style.height = "100% !important";
+      nav.style.backgroundColor = "white !important";
+      nav.style.zIndex = "9999 !important";
+      nav.style.transform = "translateX(0) !important";
+      nav.style.transition = "transform 0.3s ease !important";
+
+      // Force overlay to be visible
+      overlay.style.display = "block !important";
+      overlay.style.position = "fixed !important";
+      overlay.style.top = "0 !important";
+      overlay.style.left = "0 !important";
+      overlay.style.width = "100% !important";
+      overlay.style.height = "100% !important";
+      overlay.style.backgroundColor = "rgba(0,0,0,0.5) !important";
+      overlay.style.zIndex = "9998 !important";
+      overlay.style.opacity = "1 !important";
+      overlay.style.visibility = "visible !important";
+
+      console.log("🔧 Menu FORCED OPEN with inline styles");
+
+      // Add a visible border to debug
+      nav.style.border = "5px solid red !important";
+
+      // Log the actual position
+      setTimeout(() => {
+        const rect = nav.getBoundingClientRect();
+        console.log("🔧 Menu position:", {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+          visible: rect.width > 0 && rect.height > 0,
+        });
+      }, 100);
+    }
   });
 
-  // Check for other scripts that might be interfering
-  console.log("🔍 Checking for other scripts...");
-  const scripts = document.querySelectorAll("script[src]");
-  console.log("🔍 Script files loaded:");
-  scripts.forEach((script, index) => {
-    console.log(`${index + 1}. ${script.src}`);
+  // Overlay click to close
+  overlay.addEventListener("click", function () {
+    console.log("🔧 Overlay clicked - closing menu");
+    nav.classList.remove("active");
+    overlay.classList.remove("active");
+    hamburger.classList.remove("active");
+    document.body.style.overflow = "";
+
+    // Remove force styles
+    nav.style.display = "";
+    nav.style.position = "";
+    nav.style.top = "";
+    nav.style.left = "";
+    nav.style.width = "";
+    nav.style.height = "";
+    nav.style.backgroundColor = "";
+    nav.style.zIndex = "";
+    nav.style.transform = "";
+    nav.style.border = "";
+
+    overlay.style.display = "";
+    overlay.style.position = "";
+    overlay.style.opacity = "";
+    overlay.style.visibility = "";
   });
 
-  // Check CSS files
-  const stylesheets = document.querySelectorAll("link[rel='stylesheet']");
-  console.log("🔍 CSS files loaded:");
-  stylesheets.forEach((link, index) => {
-    console.log(`${index + 1}. ${link.href}`);
+  // Navigation links
+  nav.addEventListener("click", function (e) {
+    const link = e.target.closest("a");
+    if (link) {
+      const href = link.getAttribute("href");
+      console.log("🔧 Navigation link clicked:", href);
+
+      // Close menu
+      nav.classList.remove("active");
+      overlay.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "";
+
+      // Remove force styles
+      nav.style.cssText = "";
+      overlay.style.cssText = "";
+
+      // Navigate after short delay
+      setTimeout(() => {
+        if (
+          href &&
+          href !== "#" &&
+          !href.startsWith("mailto:") &&
+          !href.startsWith("tel:")
+        ) {
+          console.log("🔧 Navigating to:", href);
+          window.location.href = href;
+        }
+      }, 300);
+    }
   });
 
-  console.log("✅ DIAGNOSTIC COMPLETE - Check messages above!");
+  // Also check screen size
+  console.log("🔧 Screen size:", window.innerWidth + "x" + window.innerHeight);
+  console.log("🔧 Is mobile size?", window.innerWidth <= 768);
+
+  console.log("✅ VISUAL FIX: Ready! Try clicking hamburger now.");
 });
 
-// Also run diagnostic immediately in case DOM is already loaded
-if (document.readyState !== "loading") {
-  console.log("🔍 DOM already loaded, running diagnostic now...");
-  // Run the same diagnostic code here if needed
-}
+// Add CSS fix as well
+const style = document.createElement("style");
+style.textContent = `
+    /* EMERGENCY CSS FIX */
+    @media (max-width: 768px) {
+        .hamburger {
+            display: flex !important;
+            visibility: visible !important;
+        }
+        
+        nav.active {
+            display: flex !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: white !important;
+            z-index: 9999 !important;
+            transform: translateX(0) !important;
+        }
+        
+        .overlay.active {
+            display: block !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0,0,0,0.5) !important;
+            z-index: 9998 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    }
+`;
+document.head.appendChild(style);
+console.log("🔧 Emergency CSS added");
