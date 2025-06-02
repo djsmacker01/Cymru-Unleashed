@@ -1,71 +1,72 @@
 // Mobile Navigation Toggle
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-const overlay = document.getElementById("overlay");
+function toggleMenu() {
+  const nav = document.getElementById("nav");
+  const hamburger = document.getElementById("hamburger");
+  const overlay = document.getElementById("overlay");
+  const body = document.body;
 
-const toggleMenu = () => {
   nav.classList.toggle("active");
   hamburger.classList.toggle("active");
   overlay.classList.toggle("active");
-  hamburger.innerHTML = nav.classList.contains("active")
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
+  body.style.overflow = nav.classList.contains("active") ? "hidden" : "";
 
-  // Toggle body scroll
-  document.body.style.overflow = nav.classList.contains("active")
-    ? "hidden"
-    : "";
-};
-
-// Initialize navigation event listeners
-const initializeNavigation = () => {
-  // Hamburger click handler
-  if (hamburger) {
-    hamburger.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
+  // Update hamburger icon
+  const icon = hamburger.querySelector("i");
+  if (nav.classList.contains("active")) {
+    icon.classList.remove("fa-bars");
+    icon.classList.add("fa-times");
+  } else {
+    icon.classList.remove("fa-times");
+    icon.classList.add("fa-bars");
   }
+}
+
+// Initialize Navigation
+function initializeNavigation() {
+  const hamburger = document.getElementById("hamburger");
+  const overlay = document.getElementById("overlay");
+  const nav = document.getElementById("nav");
+  const navLinks = document.querySelectorAll("nav ul li a");
+
+  // Hamburger click handler
+  hamburger?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
 
   // Overlay click handler
-  if (overlay) {
-    overlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
-  }
+  overlay?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
 
-  // Navigation links click handler
-  const navLinks = document.querySelectorAll("nav a");
+  // Navigation link click handlers
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault();
       e.stopPropagation();
-
       const href = link.getAttribute("href");
-      if (nav?.classList.contains("active")) {
+
+      // Close menu before navigation
+      if (nav.classList.contains("active")) {
         toggleMenu();
       }
 
-      // Navigate after menu closes
-      setTimeout(() => {
+      // Navigate to the page
+      if (href) {
         window.location.href = href;
-      }, 300);
+      }
     });
   });
 
-  // Prevent menu from closing when clicking inside
-  if (nav) {
-    nav.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    });
-  }
-};
+  // Prevent menu from closing when clicking inside nav
+  nav?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+}
 
-// Initialize navigation when DOM is loaded
+// Initialize when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   initializeNavigation();
   initializeStickyHeader();
