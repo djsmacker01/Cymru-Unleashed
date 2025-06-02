@@ -1,6 +1,7 @@
 // Refined Mobile Navigation - Complete Working Solution
 class MobileNavigation {
   constructor() {
+    // Get all required elements
     this.nav = document.getElementById("nav");
     this.hamburger = document.getElementById("hamburger");
     this.overlay = document.getElementById("overlay");
@@ -8,18 +9,31 @@ class MobileNavigation {
     this.isMenuOpen = false;
     this.isAnimating = false;
 
+    // Debug log for element initialization
+    console.log("🔍 Navigation elements found:", {
+      nav: !!this.nav,
+      hamburger: !!this.hamburger,
+      overlay: !!this.overlay,
+    });
+
     this.init();
   }
 
   init() {
+    // Check if all required elements exist
     if (!this.nav || !this.hamburger || !this.overlay) {
-      console.error("Navigation elements not found:", {
+      console.error("❌ Navigation elements not found:", {
         nav: !!this.nav,
         hamburger: !!this.hamburger,
         overlay: !!this.overlay,
       });
       return;
     }
+
+    // Add initial classes
+    this.nav.classList.add("nav-initialized");
+    this.hamburger.classList.add("hamburger-initialized");
+    this.overlay.classList.add("overlay-initialized");
 
     this.setupEventListeners();
     this.setupKeyboardNavigation();
@@ -32,6 +46,7 @@ class MobileNavigation {
     this.hamburger.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
+      console.log("🍔 Hamburger clicked");
       this.toggleMenu();
     });
 
@@ -39,6 +54,7 @@ class MobileNavigation {
     this.overlay.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
+      console.log("🖱️ Overlay clicked");
       if (this.isMenuOpen) {
         this.closeMenu();
       }
@@ -47,6 +63,7 @@ class MobileNavigation {
     // Navigation links - using event delegation for better performance
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
+      console.log("🔗 Link clicked:", link?.href);
 
       if (link) {
         e.preventDefault(); // Prevent default initially
@@ -58,7 +75,11 @@ class MobileNavigation {
           href?.startsWith("tel");
         const isHashLink = href?.startsWith("#");
 
-        console.log("🔗 Navigation link clicked:", href);
+        console.log("🔗 Navigation link clicked:", {
+          href,
+          isExternalLink,
+          isHashLink,
+        });
 
         if (href && href !== "#") {
           if (this.isMenuOpen) {
@@ -98,6 +119,7 @@ class MobileNavigation {
         !this.nav.contains(e.target) &&
         !this.hamburger.contains(e.target)
       ) {
+        console.log("🖱️ Clicked outside menu");
         this.closeMenu();
       }
     });
@@ -105,6 +127,7 @@ class MobileNavigation {
     // Handle window resize
     window.addEventListener("resize", () => {
       if (window.innerWidth > 768 && this.isMenuOpen) {
+        console.log("📱 Window resized, closing menu");
         this.closeMenu();
       }
     });
@@ -153,6 +176,7 @@ class MobileNavigation {
 
   toggleMenu() {
     if (this.isAnimating) {
+      console.log("⏳ Menu animation in progress, ignoring toggle");
       return;
     }
 
@@ -165,9 +189,13 @@ class MobileNavigation {
 
   openMenu() {
     if (this.isAnimating || this.isMenuOpen) {
+      console.log(
+        "⏳ Cannot open menu - animation in progress or menu already open"
+      );
       return;
     }
 
+    console.log("📱 Opening menu");
     this.isAnimating = true;
     this.isMenuOpen = true;
 
@@ -191,14 +219,18 @@ class MobileNavigation {
       this.isAnimating = false;
     }, 300);
 
-    console.log("📱 Menu opened");
+    console.log("✅ Menu opened");
   }
 
   closeMenu() {
     if (this.isAnimating || !this.isMenuOpen) {
+      console.log(
+        "⏳ Cannot close menu - animation in progress or menu already closed"
+      );
       return;
     }
 
+    console.log("📱 Closing menu");
     this.isAnimating = true;
     this.isMenuOpen = false;
 
@@ -217,7 +249,7 @@ class MobileNavigation {
       this.isAnimating = false;
     }, 300);
 
-    console.log("❌ Menu closed");
+    console.log("✅ Menu closed");
   }
 
   updateHamburgerIcon(isOpen) {
@@ -318,12 +350,12 @@ function animateValue(element, start, end, duration) {
 document.addEventListener("DOMContentLoaded", () => {
   try {
     // Initialize mobile navigation
-    new MobileNavigation();
+    const mobileNav = new MobileNavigation();
+    console.log("🚀 Navigation system initialized");
 
     // Initialize sticky header
-    new StickyHeader();
-
-    console.log("🚀 All navigation systems initialized");
+    const stickyHeader = new StickyHeader();
+    console.log("🚀 Sticky header initialized");
 
     // Initialize stats counter animation (only if elements exist)
     const stats = document.querySelectorAll(".stat-number");
@@ -455,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   } catch (error) {
-    console.error("Error initializing systems:", error);
+    console.error("❌ Error initializing navigation system:", error);
   }
 });
 
