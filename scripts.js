@@ -39,12 +39,13 @@ class MobileNavigation {
     this.body = document.body;
     this.isMenuOpen = false;
     this.isAnimating = false;
-    
+
     this.init();
   }
 
   init() {
-    if (!this.nav || !this.hamburger || !this.overlay) {
+    const elements = [this.nav, this.hamburger, this.overlay];
+    if (elements.some((el) => !el)) {
       console.error("Navigation elements not found");
       return;
     }
@@ -75,24 +76,27 @@ class MobileNavigation {
     // Navigation links - using event delegation for better performance
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
-      
+
       if (link) {
         e.preventDefault(); // Prevent default initially
-        
+
         const href = link.getAttribute("href");
-        const isExternalLink = href && (href.startsWith("http") || href.startsWith("mailto") || href.startsWith("tel"));
-        const isHashLink = href && href.startsWith("#");
-        
+        const isExternalLink =
+          href?.startsWith("http") ||
+          href?.startsWith("mailto") ||
+          href?.startsWith("tel");
+        const isHashLink = href?.startsWith("#");
+
         console.log("🔗 Navigation link clicked:", href);
-        
+
         // Update active link
         this.updateActiveLink(link);
-        
+
         if (href && href !== "#") {
           if (this.isMenuOpen) {
             // Close menu first, then navigate
             this.closeMenu();
-            
+
             // Wait for menu close animation to complete
             setTimeout(() => {
               if (isExternalLink) {
@@ -105,7 +109,6 @@ class MobileNavigation {
                 window.location.href = href;
               }
             }, 300); // Match CSS transition duration
-            
           } else {
             // Menu not open, navigate immediately
             if (isExternalLink) {
@@ -122,7 +125,11 @@ class MobileNavigation {
 
     // Close menu when clicking outside
     document.addEventListener("click", (e) => {
-      if (this.isMenuOpen && !this.nav.contains(e.target) && !this.hamburger.contains(e.target)) {
+      if (
+        this.isMenuOpen &&
+        !this.nav.contains(e.target) &&
+        !this.hamburger.contains(e.target)
+      ) {
         this.closeMenu();
       }
     });
@@ -147,7 +154,9 @@ class MobileNavigation {
     // Tab trapping within menu
     this.nav.addEventListener("keydown", (e) => {
       if (e.key === "Tab" && this.isMenuOpen) {
-        const focusableElements = this.nav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+        const focusableElements = this.nav.querySelectorAll(
+          'a, button, [tabindex]:not([tabindex="-1"])'
+        );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 
@@ -175,8 +184,10 @@ class MobileNavigation {
   }
 
   toggleMenu() {
-    if (this.isAnimating) return;
-    
+    if (this.isAnimating) {
+      return;
+    }
+
     if (this.isMenuOpen) {
       this.closeMenu();
     } else {
@@ -185,8 +196,10 @@ class MobileNavigation {
   }
 
   openMenu() {
-    if (this.isAnimating || this.isMenuOpen) return;
-    
+    if (this.isAnimating || this.isMenuOpen) {
+      return;
+    }
+
     this.isAnimating = true;
     this.isMenuOpen = true;
 
@@ -194,13 +207,13 @@ class MobileNavigation {
     this.nav.classList.add("active");
     this.hamburger.classList.add("active");
     this.overlay.classList.add("active");
-    
+
     // Prevent body scroll
     this.body.style.overflow = "hidden";
-    
+
     // Update hamburger icon
     this.updateHamburgerIcon(true);
-    
+
     // Set focus to first navigation item
     setTimeout(() => {
       const firstLink = this.nav.querySelector("a");
@@ -214,8 +227,10 @@ class MobileNavigation {
   }
 
   closeMenu() {
-    if (this.isAnimating || !this.isMenuOpen) return;
-    
+    if (this.isAnimating || !this.isMenuOpen) {
+      return;
+    }
+
     this.isAnimating = true;
     this.isMenuOpen = false;
 
@@ -223,13 +238,13 @@ class MobileNavigation {
     this.nav.classList.remove("active");
     this.hamburger.classList.remove("active");
     this.overlay.classList.remove("active");
-    
+
     // Restore body scroll
     this.body.style.overflow = "";
-    
+
     // Update hamburger icon
     this.updateHamburgerIcon(false);
-    
+
     setTimeout(() => {
       this.isAnimating = false;
     }, 300);
@@ -252,10 +267,10 @@ class MobileNavigation {
 
   updateActiveLink(activeLink) {
     // Remove active class from all links
-    this.nav.querySelectorAll("a").forEach(link => {
+    this.nav.querySelectorAll("a").forEach((link) => {
       link.classList.remove("active");
     });
-    
+
     // Add active class to clicked link
     activeLink.classList.add("active");
   }
@@ -264,13 +279,16 @@ class MobileNavigation {
     const targetElement = document.querySelector(href);
     if (targetElement) {
       const headerHeight = document.getElementById("header")?.offsetHeight || 0;
-      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-      
+      const targetPosition =
+        targetElement.getBoundingClientRect().top +
+        window.pageYOffset -
+        headerHeight;
+
       window.scrollTo({
         top: targetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
-      
+
       console.log("🎯 Scrolled to section:", href);
     }
   }
@@ -278,7 +296,7 @@ class MobileNavigation {
 
 // REMOVE THESE OLD FUNCTIONS COMPLETELY:
 // - toggleMenu
-// - initializeNavigation  
+// - initializeNavigation
 // - The old navigation event listeners
 
 // KEEP ALL YOUR OTHER EXISTING CODE:
@@ -292,11 +310,11 @@ class MobileNavigation {
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize mobile navigation
   new MobileNavigation();
-  
+
   // Keep your existing initializations:
   console.log("DOM loaded, initializing carousel...");
   initializeCarousel();
-  
+
   console.log("🚀 All systems initialized and ready!");
 });
 // const hamburger = document.getElementById("hamburger");
@@ -438,10 +456,18 @@ const updateCountdown = () => {
   const minutesEl = document.getElementById("minutes");
   const secondsEl = document.getElementById("seconds");
 
-  if (daysEl) daysEl.innerText = days;
-  if (hoursEl) hoursEl.innerText = hours;
-  if (minutesEl) minutesEl.innerText = minutes;
-  if (secondsEl) secondsEl.innerText = seconds;
+  if (daysEl) {
+    daysEl.innerText = days;
+  }
+  if (hoursEl) {
+    hoursEl.innerText = hours;
+  }
+  if (minutesEl) {
+    minutesEl.innerText = minutes;
+  }
+  if (secondsEl) {
+    secondsEl.innerText = seconds;
+  }
 
   if (distance < 0) {
     clearInterval(countdownInterval);
@@ -636,7 +662,8 @@ function initializeCarousel() {
   const heroSlides = document.getElementById("heroSlides");
   const indicators = document.getElementById("carouselIndicators");
 
-  if (!heroSlides || !indicators) {
+  const elements = [heroSlides, indicators];
+  if (elements.some((el) => !el)) {
     console.error("Carousel elements not found");
     return;
   }
