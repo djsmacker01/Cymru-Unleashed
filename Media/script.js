@@ -19,18 +19,54 @@ const toggleMenu = () => {
 
 // Initialize navigation event listeners
 const initializeNavigation = () => {
-  hamburger.addEventListener("click", toggleMenu);
-  overlay.addEventListener("click", toggleMenu);
+  // Hamburger click handler
+  if (hamburger) {
+    hamburger.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
 
-  // Close menu when clicking navigation links
-  document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", () => {
-      if (nav.classList.contains("active")) {
+  // Overlay click handler
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
+
+  // Navigation links click handler
+  const navLinks = document.querySelectorAll("nav a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const href = link.getAttribute("href");
+      if (nav?.classList.contains("active")) {
         toggleMenu();
       }
+
+      // Navigate after menu closes
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
     });
   });
+
+  // Prevent menu from closing when clicking inside
+  if (nav) {
+    nav.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  }
 };
+
+// Initialize navigation when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeNavigation);
 
 // Sticky Header on Scroll
 const initializeStickyHeader = () => {
