@@ -1205,6 +1205,7 @@ footer {
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         pointer-events: auto;
+        position: relative;
     }
 
     .hamburger:hover {
@@ -1229,6 +1230,7 @@ footer {
         flex-direction: column;
         justify-content: center;
         pointer-events: auto;
+        padding: 20px;
     }
 
     nav.active {
@@ -1242,12 +1244,14 @@ footer {
         position: relative;
         z-index: 1061;
         pointer-events: auto;
+        margin: 0;
     }
 
     nav ul li {
         margin: 15px 0;
         width: 100%;
         pointer-events: auto;
+        list-style: none;
     }
 
     nav ul li a {
@@ -1261,6 +1265,8 @@ footer {
         z-index: 1061;
         pointer-events: auto;
         cursor: pointer;
+        text-decoration: none;
+        color: var(--dark);
     }
 
     nav ul li a.active {
