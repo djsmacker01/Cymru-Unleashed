@@ -48,8 +48,6 @@ class MobileNavigation {
       const link = e.target.closest("a");
 
       if (link) {
-        e.preventDefault(); // Prevent default initially
-
         const href = link.getAttribute("href");
         const isExternalLink =
           href?.startsWith("http") ||

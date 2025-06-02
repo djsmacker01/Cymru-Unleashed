@@ -158,56 +158,56 @@ nav ul li a.active {
     font-size: 1.5rem;
     color: var(--dark);
 } */
- .hamburger {
-     display: none;
-     cursor: pointer;
-     background: var(--light);
-     border: none;
-     font-size: 1.2rem;
-     color: var(--dark);
-     width: 45px;
-     height: 45px;
-     border-radius: 50%;
-     justify-content: center;
-     align-items: center;
-     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-     transition: all 0.3s ease;
-     z-index: 1100;
-     position: relative;
- }
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: var(--light);
+    border: none;
+    font-size: 1.2rem;
+    color: var(--dark);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1100;
+    position: relative;
+}
 
- .hamburger:hover {
-     background: var(--grey);
-     transform: scale(1.05);
- }
+.hamburger:hover {
+    background: var(--grey);
+    transform: scale(1.05);
+}
 
- .hamburger.active {
-     background: var(--primary);
-     color: var(--light);
-     box-shadow: 0 2px 15px rgba(211, 7, 29, 0.3);
- }
+.hamburger.active {
+    background: var(--primary);
+    color: var(--light);
+    box-shadow: 0 2px 15px rgba(211, 7, 29, 0.3);
+}
 
- /* Overlay improvements */
- .overlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background: rgba(0, 0, 0, 0.5);
-     z-index: 1050;
-     opacity: 0;
-     visibility: hidden;
-     transition: all 0.3s ease;
-     pointer-events: none;
-     backdrop-filter: blur(2px);
- }
+/* Overlay improvements */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    backdrop-filter: blur(2px);
+}
 
- .overlay.active {
-     opacity: 1;
-     visibility: visible;
-     pointer-events: auto;
- }
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
 
 /* Hero Section Styles */
 .page-hero {
@@ -1465,12 +1465,11 @@ footer {
         position: relative;
         cursor: pointer;
         text-decoration: none;
-
-        /* Ensure links are clickable */
-        pointer-events: auto !important;
+        pointer-events: auto;
         touch-action: manipulation;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
         min-height: 60px;
+        z-index: 1;
     }
 
     nav ul li a:hover,
@@ -1478,6 +1477,7 @@ footer {
         background: var(--grey);
         color: var(--primary);
         padding-left: 40px;
+        text-decoration: none;
     }
 
     nav ul li a.active {
@@ -1485,6 +1485,7 @@ footer {
         color: var(--primary);
         font-weight: 600;
         border-left: 4px solid var(--primary);
+        text-decoration: none;
     }
 
     nav ul li a i {
@@ -1740,6 +1741,7 @@ footer {
         transform: translateX(100%);
     }
 }
+
 @media (max-width: 480px) {
     nav {
         width: 90%;
