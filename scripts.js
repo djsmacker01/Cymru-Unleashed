@@ -48,21 +48,29 @@ const toggleMenu = () => {
   }
 };
 
-if (hamburger) {
-  hamburger.addEventListener("click", toggleMenu);
-}
+hamburger?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  toggleMenu();
+});
 
-if (overlay) {
-  overlay.addEventListener("click", toggleMenu);
-}
+overlay?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  toggleMenu();
+});
 
 // Close menu when clicking navigation links
 document.querySelectorAll("nav a").forEach((item) => {
-  item.addEventListener("click", () => {
-    if (nav && nav.classList.contains("active")) {
+  item.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (nav?.classList.contains("active")) {
       toggleMenu();
     }
   });
+});
+
+// Prevent clicks inside nav from closing the menu
+nav?.addEventListener("click", (e) => {
+  e.stopPropagation();
 });
 
 // Sticky Header on Scroll
