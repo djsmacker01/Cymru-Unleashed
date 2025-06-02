@@ -21,86 +21,75 @@ function toggleMenu() {
   }
 }
 
-// Initialize Navigation
+// Simplified Mobile Navigation
 function initializeNavigation() {
   const hamburger = document.getElementById("hamburger");
   const overlay = document.getElementById("overlay");
   const nav = document.getElementById("nav");
-  const navLinks = document.querySelectorAll("nav ul li a");
 
-  console.log("Navigation links found:", navLinks.length); // Debug log
+  function closeMenu() {
+    nav.classList.remove("active");
+    hamburger.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+
+    const icon = hamburger.querySelector("i");
+    icon.classList.remove("fa-times");
+    icon.classList.add("fa-bars");
+  }
+
+  function openMenu() {
+    nav.classList.add("active");
+    hamburger.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+
+    const icon = hamburger.querySelector("i");
+    icon.classList.remove("fa-bars");
+    icon.classList.add("fa-times");
+  }
 
   // Hamburger click handler
   hamburger?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleMenu();
+
+    if (nav.classList.contains("active")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
   // Overlay click handler
   overlay?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleMenu();
+    closeMenu();
   });
 
-  // Navigation link click handlers - Updated with better event handling
-  navLinks.forEach((link) => {
+  // Simple approach: Direct event listeners on each link
+  const navLinks = document.querySelectorAll("nav ul li a");
+  navLinks.forEach((link, index) => {
     link.addEventListener("click", (e) => {
-      // Don't prevent default for navigation links
-      const href = link.getAttribute("href");
+      const href = link.href; // Use .href instead of getAttribute
 
-      console.log("Navigation link clicked:", href); // Debug log
+      console.log(`Link ${index} clicked:`, href);
 
-      // Close menu if it's open
-      if (nav.classList.contains("active")) {
-        toggleMenu();
+      if (href && href !== window.location.href) {
+        // Close menu first
+        closeMenu();
 
-        // Small delay to let menu close animation start
+        // Navigate after menu closes
         setTimeout(() => {
-          if (href && href !== "#") {
-            window.location.href = href;
-          }
-        }, 100);
-      } else {
-        // Menu not open, navigate immediately
-        if (href && href !== "#") {
           window.location.href = href;
-        }
+        }, 200);
       }
     });
-  });
 
-  // Modified: Only prevent propagation for non-link clicks
-  nav?.addEventListener("click", (e) => {
-    // Only stop propagation if the click is NOT on a link
-    if (!e.target.closest("a")) {
-      e.stopPropagation();
-    }
-  });
-
-  // Alternative approach: Use event delegation for better reliability
-  nav?.addEventListener("click", (e) => {
-    const clickedLink = e.target.closest("a");
-    if (clickedLink) {
-      const href = clickedLink.getAttribute("href");
-
-      if (href && href !== "#") {
-        console.log("Navigation via delegation:", href); // Debug log
-
-        // Close menu and navigate
-        if (nav.classList.contains("active")) {
-          toggleMenu();
-
-          // Navigate after a short delay to allow menu animation
-          setTimeout(() => {
-            window.location.href = href;
-          }, 150);
-        } else {
-          window.location.href = href;
-        }
-      }
-    }
+    // Ensure link is clickable
+    link.style.pointerEvents = "auto";
+    link.style.cursor = "pointer";
   });
 }
 
