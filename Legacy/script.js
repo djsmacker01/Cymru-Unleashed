@@ -17,9 +17,15 @@ class MobileNavigation {
     });
 
     // Log element details if found
-    if (this.nav) console.log("📝 Nav element:", this.nav);
-    if (this.hamburger) console.log("📝 Hamburger element:", this.hamburger);
-    if (this.overlay) console.log("📝 Overlay element:", this.overlay);
+    if (this.nav) {
+      console.log("📝 Nav element:", this.nav);
+    }
+    if (this.hamburger) {
+      console.log("📝 Hamburger element:", this.hamburger);
+    }
+    if (this.overlay) {
+      console.log("📝 Overlay element:", this.overlay);
+    }
 
     this.init();
   }
@@ -81,55 +87,55 @@ class MobileNavigation {
     // Navigation links - using event delegation for better performance
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
+      if (!link) return;
+
       console.log("🔗 Link clicked:", {
-        link: link?.href,
+        link: link.href,
         target: e.target,
         closest: e.target.closest("a"),
       });
 
-      if (link) {
-        e.preventDefault(); // Prevent default initially
+      e.preventDefault(); // Prevent default initially
 
-        const href = link.getAttribute("href");
-        const isExternalLink =
-          href?.startsWith("http") ||
-          href?.startsWith("mailto") ||
-          href?.startsWith("tel");
-        const isHashLink = href?.startsWith("#");
+      const href = link.getAttribute("href");
+      const isExternalLink =
+        href?.startsWith("http") ||
+        href?.startsWith("mailto") ||
+        href?.startsWith("tel");
+      const isHashLink = href?.startsWith("#");
 
-        console.log("🔗 Navigation link clicked:", {
-          href,
-          isExternalLink,
-          isHashLink,
-          isMenuOpen: this.isMenuOpen,
-        });
+      console.log("🔗 Navigation link clicked:", {
+        href,
+        isExternalLink,
+        isHashLink,
+        isMenuOpen: this.isMenuOpen,
+      });
 
-        if (href && href !== "#") {
-          if (this.isMenuOpen) {
-            // Close menu first, then navigate
-            this.closeMenu();
+      if (href && href !== "#") {
+        if (this.isMenuOpen) {
+          // Close menu first, then navigate
+          this.closeMenu();
 
-            // Wait for menu close animation to complete
-            setTimeout(() => {
-              if (isExternalLink) {
-                window.open(href, link.target || "_self");
-              } else if (isHashLink) {
-                // Handle anchor links
-                this.scrollToSection(href);
-              } else {
-                // Handle internal navigation
-                window.location.href = href;
-              }
-            }, 300); // Match CSS transition duration
-          } else {
-            // Menu not open, navigate immediately
+          // Wait for menu close animation to complete
+          setTimeout(() => {
             if (isExternalLink) {
               window.open(href, link.target || "_self");
             } else if (isHashLink) {
+              // Handle anchor links
               this.scrollToSection(href);
             } else {
+              // Handle internal navigation
               window.location.href = href;
             }
+          }, 300); // Match CSS transition duration
+        } else {
+          // Menu not open, navigate immediately
+          if (isExternalLink) {
+            window.open(href, link.target || "_self");
+          } else if (isHashLink) {
+            this.scrollToSection(href);
+          } else {
+            window.location.href = href;
           }
         }
       }
@@ -161,47 +167,6 @@ class MobileNavigation {
         this.closeMenu();
       }
     });
-  }
-
-  setupKeyboardNavigation() {
-    // ESC key to close menu
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.isMenuOpen) {
-        this.closeMenu();
-        this.hamburger.focus();
-      }
-    });
-
-    // Tab trapping within menu
-    this.nav.addEventListener("keydown", (e) => {
-      if (e.key === "Tab" && this.isMenuOpen) {
-        const focusableElements = this.nav.querySelectorAll(
-          'a, button, [tabindex]:not([tabindex="-1"])'
-        );
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey && document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        } else if (!e.shiftKey && document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
-      }
-    });
-  }
-
-  preventBodyScroll() {
-    // Prevent body scroll when menu is open
-    const preventScroll = (e) => {
-      if (this.isMenuOpen) {
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener("touchmove", preventScroll, { passive: false });
-    document.addEventListener("wheel", preventScroll, { passive: false });
   }
 
   toggleMenu() {
@@ -332,6 +297,47 @@ class MobileNavigation {
     } else {
       console.warn("⚠️ Target section not found:", href);
     }
+  }
+
+  setupKeyboardNavigation() {
+    // ESC key to close menu
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.isMenuOpen) {
+        this.closeMenu();
+        this.hamburger.focus();
+      }
+    });
+
+    // Tab trapping within menu
+    this.nav.addEventListener("keydown", (e) => {
+      if (e.key === "Tab" && this.isMenuOpen) {
+        const focusableElements = this.nav.querySelectorAll(
+          'a, button, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    });
+  }
+
+  preventBodyScroll() {
+    // Prevent body scroll when menu is open
+    const preventScroll = (e) => {
+      if (this.isMenuOpen) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+    document.addEventListener("wheel", preventScroll, { passive: false });
   }
 }
 
