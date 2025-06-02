@@ -1041,7 +1041,7 @@ h2 {
 .social-tab {
     margin-bottom: 10px;
 }
-}
+
 
 /* Small mobile devices */
 @media (max-width: 480px) {
@@ -1169,60 +1169,160 @@ h2 {
         outline-offset: -2px;
     }
 
-    @media (max-width: 480px) {
-        .hero-content h1 {
-            font-size: 2rem;
-        }
-
-        .hero-content p {
-            font-size: 1rem;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-        }
-
-        .countdown-timer {
-            gap: 5px;
-        }
-
-        .countdown-item {
-            width: 70px;
-            height: 70px;
-        }
-
-        .countdown-number {
-            font-size: 1.5rem;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-        }
+    .hero-content h1 {
+        font-size: 2.5rem;
     }
 
-    /* Lazy Loading Styles */
-    .lazy-content {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    .hero-content p {
+        font-size: 1.2rem;
     }
 
-    .lazy-content.loaded {
-        opacity: 1;
-        transform: translateY(0);
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
     }
 
-    img[data-src] {
-        opacity: 0;
-        transition: opacity 0.3s ease-in;
+    .carousel-control.prev {
+        left: 15px;
     }
 
-    img[src] {
-        opacity: 1;
+    .carousel-control.next {
+        right: 15px;
     }
 
-    img[data-src] {
-        background: #f0f0f0;
-        min-height: 100px;
+    section {
+        padding: 60px 0;
     }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .activities-home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .countdown-item {
+        width: 80px;
+        height: 80px;
+    }
+
+    .countdown-number {
+        font-size: 2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.8rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* @media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .countdown-timer {
+        gap: 5px;
+    }
+
+    .countdown-item {
+        width: 70px;
+        height: 70px;
+    }
+
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+} */
+
+@media (max-width: 480px) {
+    nav {
+        width: 90%;
+    }
+
+    nav ul li a {
+        padding: 18px 25px;
+        font-size: 1rem;
+    }
+
+    .hamburger {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    /* Keep all your other small mobile styles unchanged */
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .countdown-timer {
+        gap: 5px;
+    }
+
+    .countdown-item {
+        width: 70px;
+        height: 70px;
+    }
+
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+}
+/* Lazy Loading Styles */
+.lazy-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.lazy-content.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+img[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+img[src] {
+    opacity: 1;
+}
+
+img[data-src] {
+    background: #f0f0f0;
+    min-height: 100px;
+}
