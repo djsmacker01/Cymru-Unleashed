@@ -1,102 +1,93 @@
-// SIMPLE DEBUG SCRIPT - Place this in your script.js file temporarily
+// DIAGNOSTIC SCRIPT FOR YOUR REAL PAGE
+// Add this to your script.js file temporarily
 
-console.log("🔍 DEBUG: Script is loading...");
+console.log("🔍 REAL PAGE DIAGNOSTIC STARTING...");
 
-// Test 1: Check if script runs at all
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("🔍 DEBUG: DOM loaded, script is running");
+  console.log("🔍 DOM loaded on real page");
 
-  // Test 2: Check if elements exist
+  // Check elements exist
   const nav = document.getElementById("nav");
   const hamburger = document.getElementById("hamburger");
   const overlay = document.getElementById("overlay");
 
-  console.log("🔍 DEBUG: Elements found:");
-  console.log("- nav:", !!nav, nav);
-  console.log("- hamburger:", !!hamburger, hamburger);
-  console.log("- overlay:", !!overlay, overlay);
+  console.log("🔍 Elements found:");
+  console.log("- nav:", !!nav);
+  console.log("- hamburger:", !!hamburger);
+  console.log("- overlay:", !!overlay);
 
-  if (!nav) {
-    console.error("❌ NAV element not found! Check if you have <nav id='nav'>");
+  if (!nav || !hamburger || !overlay) {
+    console.error("❌ Missing elements on real page!");
     return;
   }
 
-  if (!hamburger) {
-    console.error(
-      "❌ HAMBURGER element not found! Check if you have <button id='hamburger'>"
-    );
-    return;
-  }
+  // Check CSS styles that might be interfering
+  console.log("🔍 Checking CSS styles...");
 
-  if (!overlay) {
-    console.error(
-      "❌ OVERLAY element not found! Check if you have <div id='overlay'>"
-    );
-    return;
-  }
+  const navStyles = window.getComputedStyle(nav);
+  const hamburgerStyles = window.getComputedStyle(hamburger);
 
-  console.log("✅ All elements found, adding click listeners...");
+  console.log("🔍 Nav styles:");
+  console.log("- display:", navStyles.display);
+  console.log("- position:", navStyles.position);
+  console.log("- transform:", navStyles.transform);
+  console.log("- z-index:", navStyles.zIndex);
+  console.log("- visibility:", navStyles.visibility);
 
-  // Test 3: Simple click test
+  console.log("🔍 Hamburger styles:");
+  console.log("- display:", hamburgerStyles.display);
+  console.log("- visibility:", hamburgerStyles.visibility);
+
+  // Check for conflicting event listeners
+  console.log("🔍 Adding test event listener...");
+
   hamburger.addEventListener("click", function (e) {
     e.preventDefault();
-    console.log("🔍 DEBUG: Hamburger was clicked!");
+    console.log("🔍 REAL PAGE: Hamburger clicked!");
 
-    // Simple toggle test
-    if (nav.classList.contains("active")) {
-      nav.classList.remove("active");
-      overlay.classList.remove("active");
-      hamburger.classList.remove("active");
-      console.log("🔍 DEBUG: Menu closed");
-    } else {
-      nav.classList.add("active");
-      overlay.classList.add("active");
-      hamburger.classList.add("active");
-      console.log("🔍 DEBUG: Menu opened");
-    }
+    // Force add classes and log what happens
+    console.log("🔍 Adding 'active' classes...");
+    nav.classList.add("active");
+    overlay.classList.add("active");
+    hamburger.classList.add("active");
+
+    // Check if classes were added
+    console.log("🔍 Classes added:");
+    console.log("- nav.active:", nav.classList.contains("active"));
+    console.log("- overlay.active:", overlay.classList.contains("active"));
+    console.log("- hamburger.active:", hamburger.classList.contains("active"));
+
+    // Check styles after adding active class
+    setTimeout(() => {
+      const activeNavStyles = window.getComputedStyle(nav);
+      console.log("🔍 Nav styles AFTER adding 'active':");
+      console.log("- display:", activeNavStyles.display);
+      console.log("- transform:", activeNavStyles.transform);
+      console.log("- visibility:", activeNavStyles.visibility);
+      console.log("- opacity:", activeNavStyles.opacity);
+    }, 100);
   });
 
-  // Test 4: Test navigation links
-  nav.addEventListener("click", function (e) {
-    const link = e.target.closest("a");
-    if (link) {
-      const href = link.getAttribute("href");
-      console.log("🔍 DEBUG: Link clicked:", href);
-
-      // If menu is open, close it first
-      if (nav.classList.contains("active")) {
-        console.log("🔍 DEBUG: Closing menu before navigation");
-        nav.classList.remove("active");
-        overlay.classList.remove("active");
-        hamburger.classList.remove("active");
-
-        // Wait a bit then navigate
-        setTimeout(() => {
-          console.log("🔍 DEBUG: Navigating to:", href);
-          if (href.startsWith("#")) {
-            // Hash link - scroll to section
-            const target = document.querySelector(href);
-            if (target) {
-              target.scrollIntoView({ behavior: "smooth" });
-            }
-          } else if (!href.startsWith("mailto:") && !href.startsWith("tel:")) {
-            // Regular page link
-            window.location.href = href;
-          }
-        }, 300);
-      }
-    }
+  // Check for other scripts that might be interfering
+  console.log("🔍 Checking for other scripts...");
+  const scripts = document.querySelectorAll("script[src]");
+  console.log("🔍 Script files loaded:");
+  scripts.forEach((script, index) => {
+    console.log(`${index + 1}. ${script.src}`);
   });
 
-  // Test 5: Overlay click
-  overlay.addEventListener("click", function () {
-    console.log("🔍 DEBUG: Overlay clicked, closing menu");
-    nav.classList.remove("active");
-    overlay.classList.remove("active");
-    hamburger.classList.remove("active");
+  // Check CSS files
+  const stylesheets = document.querySelectorAll("link[rel='stylesheet']");
+  console.log("🔍 CSS files loaded:");
+  stylesheets.forEach((link, index) => {
+    console.log(`${index + 1}. ${link.href}`);
   });
 
-  console.log("✅ DEBUG: All event listeners added successfully!");
+  console.log("✅ DIAGNOSTIC COMPLETE - Check messages above!");
 });
 
-console.log("🔍 DEBUG: Script file loaded completely");
+// Also run diagnostic immediately in case DOM is already loaded
+if (document.readyState !== "loading") {
+  console.log("🔍 DOM already loaded, running diagnostic now...");
+  // Run the same diagnostic code here if needed
+}

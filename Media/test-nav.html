@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+    <style>
+        /* Minimal CSS to test navigation */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #D3071D;
+            text-decoration: none;
+        }
+
+        /* Hamburger - hidden on desktop */
+        .hamburger {
+            display: none;
+            background: white;
+            border: 2px solid #D3071D;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .hamburger.active {
+            background: #D3071D;
+            color: white;
+        }
+
+        /* Navigation - visible on desktop */
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+
+        nav ul li a:hover {
+            color: #D3071D;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        main {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex !important;
+                justify-content: center;
+                align-items: center;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                gap: 0;
+                height: 100vh;
+                overflow-y: auto;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid #eee;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem;
+                width: 100%;
+                font-size: 1.1rem;
+            }
+
+            nav ul li a:hover {
+                background: #f5f5f5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <a href="#" class="logo">Cymru Unleashed</a>
+
+            <button class="hamburger" id="hamburger">☰</button>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/About/about.html">About</a></li>
+                    <li><a href="/Activities/activities.html">Activities</a></li>
+                    <li><a href="/Legacy/legacy.html">Legacy</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="/getInvolved/get-involved.html">Get Involved</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Navigation Test Page</h1>
+        <p>This is a test page to debug the navigation.</p>
+        <p>Open the browser console (F12) and try clicking the hamburger menu.</p>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 5px;">
+            <h3>Debug Instructions:</h3>
+            <ol>
+                <li>Open browser console (F12)</li>
+                <li>Look for debug messages</li>
+                <li>Try clicking the hamburger (☰) button</li>
+                <li>Try clicking navigation links</li>
+                <li>Report what you see in the console</li>
+            </ol>
+        </div>
+    </main>
+
+    <script>
+        console.log("🔍 EMERGENCY DEBUG: Script starting...");
+
+        // Check if script loads immediately
+        console.log("🔍 Script loaded at:", new Date().toISOString());
+
+        // Function to run when DOM is ready
+        function initDebug() {
+            console.log("🔍 DOM ready, checking elements...");
+
+            // Find elements
+            const nav = document.getElementById("nav");
+            const hamburger = document.getElementById("hamburger");
+            const overlay = document.getElementById("overlay");
+
+            console.log("🔍 Elements check:");
+            console.log("- nav element:", nav ? "✅ FOUND" : "❌ NOT FOUND");
+            console.log("- hamburger element:", hamburger ? "✅ FOUND" : "❌ NOT FOUND");
+            console.log("- overlay element:", overlay ? "✅ FOUND" : "❌ NOT FOUND");
+
+            if (!nav || !hamburger || !overlay) {
+                console.error("❌ CRITICAL: Missing required elements!");
+                return;
+            }
+
+            console.log("🔍 Adding hamburger click listener...");
+
+            // Add hamburger click
+            hamburger.addEventListener("click", function (e) {
+                e.preventDefault();
+                console.log("🔍 HAMBURGER CLICKED! 🍔");
+
+                const isOpen = nav.classList.contains("active");
+                console.log("🔍 Menu currently open:", isOpen);
+
+                if (isOpen) {
+                    // Close menu
+                    nav.classList.remove("active");
+                    overlay.classList.remove("active");
+                    hamburger.classList.remove("active");
+                    hamburger.innerHTML = "☰";
+                    console.log("🔍 Menu CLOSED");
+                } else {
+                    // Open menu
+                    nav.classList.add("active");
+                    overlay.classList.add("active");
+                    hamburger.classList.add("active");
+                    hamburger.innerHTML = "✕";
+                    console.log("🔍 Menu OPENED");
+                }
+            });
+
+            // Add navigation click
+            nav.addEventListener("click", function (e) {
+                const link = e.target.closest("a");
+                if (link) {
+                    const href = link.getAttribute("href");
+                    console.log("🔍 NAVIGATION LINK CLICKED:", href);
+
+                    // Close menu if open
+                    if (nav.classList.contains("active")) {
+                        nav.classList.remove("active");
+                        overlay.classList.remove("active");
+                        hamburger.classList.remove("active");
+                        hamburger.innerHTML = "☰";
+                        console.log("🔍 Menu closed, will navigate to:", href);
+
+                        setTimeout(() => {
+                            if (href && href !== "#") {
+                                console.log("🔍 Navigating now...");
+                                window.location.href = href;
+                            }
+                        }, 300);
+                    } else {
+                        console.log("🔍 Direct navigation to:", href);
+                    }
+                }
+            });
+
+            // Add overlay click
+            overlay.addEventListener("click", function () {
+                console.log("🔍 OVERLAY CLICKED");
+                nav.classList.remove("active");
+                overlay.classList.remove("active");
+                hamburger.classList.remove("active");
+                hamburger.innerHTML = "☰";
+                console.log("🔍 Menu closed via overlay");
+            });
+
+            console.log("✅ ALL EVENT LISTENERS ADDED SUCCESSFULLY!");
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initDebug);
+        } else {
+            initDebug();
+        }
+
+        console.log("🔍 Script setup complete");
+    </script>
+</body>
+
+</html>
