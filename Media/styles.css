@@ -1698,12 +1698,12 @@ footer {
     }
 }
 
-/* CRITICAL CSS FIX - Add this to your styles.css */
+/* FINAL CLEAN CSS - Replace the debug version with this */
 
-/* Ensure navigation is properly layered and clickable */
+/* Mobile Navigation Styles */
 @media (max-width: 768px) {
 
-    /* Force hamburger to be visible */
+    /* Show hamburger menu on mobile */
     .hamburger {
         display: flex !important;
         z-index: 1100 !important;
@@ -1727,7 +1727,7 @@ footer {
         align-items: stretch !important;
     }
 
-    /* When menu is active */
+    /* When menu is active - slide in from left */
     nav.active {
         transform: translateX(0) !important;
     }
@@ -1749,53 +1749,71 @@ footer {
     nav ul li {
         width: 100% !important;
         margin: 0 !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
     }
 
-    /* CRITICAL: Navigation links - ensure they're clickable */
+    nav ul li:last-child {
+        border-bottom: none !important;
+    }
+
+    /* Navigation links */
     nav ul li a {
         display: block !important;
         width: 100% !important;
         padding: 20px 30px !important;
-        color: #333 !important;
+        color: var(--dark) !important;
         text-decoration: none !important;
         font-size: 1.1rem !important;
         font-weight: 500 !important;
         transition: all 0.3s ease !important;
         position: relative !important;
         z-index: 1001 !important;
-
-        /* ENSURE CLICKABILITY */
         pointer-events: auto !important;
         cursor: pointer !important;
         touch-action: manipulation !important;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
-
-        /* VISUAL DEBUGGING - REMOVE AFTER TESTING */
-        background: rgba(0, 255, 0, 0.1) !important;
-        border: 1px solid rgba(0, 255, 0, 0.3) !important;
+        background: none !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        min-height: 60px !important;
     }
 
     /* Hover states */
-    nav ul li a:hover {
-        background: #f0f0f0 !important;
-        color: #D3071D !important;
+    nav ul li a:hover,
+    nav ul li a:focus {
+        background: var(--grey) !important;
+        color: var(--primary) !important;
         padding-left: 40px !important;
     }
 
     /* Active states */
     nav ul li a.active {
-        background: linear-gradient(90deg, #D3071D, transparent) !important;
-        color: #D3071D !important;
+        background: linear-gradient(90deg, var(--primary), transparent) !important;
+        color: var(--primary) !important;
         font-weight: 600 !important;
-        border-left: 4px solid #D3071D !important;
+        border-left: 4px solid var(--primary) !important;
     }
 
     /* Icons in links */
     nav ul li a i {
-        margin-right: 10px !important;
+        font-size: 1.2rem !important;
         width: 20px !important;
         text-align: center !important;
+        opacity: 0.7 !important;
+        transition: opacity 0.3s ease !important;
+    }
+
+    nav ul li a:hover i,
+    nav ul li a.active i {
+        opacity: 1 !important;
+    }
+
+    /* Focus styles for accessibility */
+    nav ul li a:focus {
+        outline: 2px solid var(--primary) !important;
+        outline-offset: -2px !important;
     }
 
     /* Overlay */
@@ -1811,12 +1829,99 @@ footer {
         visibility: hidden !important;
         transition: all 0.3s ease !important;
         pointer-events: none !important;
+        backdrop-filter: blur(2px) !important;
     }
 
     .overlay.active {
         opacity: 1 !important;
         visibility: visible !important;
         pointer-events: auto !important;
+    }
+
+    /* Other mobile responsive styles */
+    .page-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-illustration {
+        position: relative;
+        width: 80%;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 2rem auto;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-text-wrapper h1 {
+        font-size: 3rem;
+    }
+
+    .page-hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .page-hero-content p {
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-feed.active {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .social-tabs {
+        flex-wrap: wrap;
+    }
+
+    .social-tab {
+        margin-bottom: 10px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .stat-item {
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .clock-display {
+        font-size: 2rem;
+    }
+
+    .clock-display span {
+        min-width: 50px;
+    }
+
+    .contact-card {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
@@ -1841,22 +1946,48 @@ footer {
         display: flex !important;
         flex-direction: row !important;
         padding: 0 !important;
+        margin: 0 !important;
+        width: auto !important;
+        min-height: auto !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        list-style: none !important;
         height: auto !important;
         background: none !important;
     }
 
     nav ul li {
-        width: auto !important;
         margin: 0 0 0 30px !important;
+        width: auto !important;
         border-bottom: none !important;
     }
 
     nav ul li a {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        padding: 0 !important;
         display: inline !important;
         width: auto !important;
-        padding: 0 !important;
+        color: var(--dark) !important;
         background: none !important;
-        border: none !important;
-        font-size: 1rem !important;
+        border-left: none !important;
+        min-height: auto !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        gap: 0 !important;
+        align-items: initial !important;
+    }
+
+    nav ul li a:hover {
+        background: none !important;
+        color: var(--primary) !important;
+        padding-left: 0 !important;
+    }
+
+    nav ul li a.active {
+        background: none !important;
+        color: var(--primary) !important;
+        font-weight: 600 !important;
+        border-left: none !important;
     }
 }
