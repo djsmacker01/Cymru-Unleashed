@@ -1,6 +1,3 @@
-// Mobile Navigation Toggle
-// REPLACE ALL NAVIGATION-RELATED CODE WITH THIS:
-
 // Refined Mobile Navigation - Complete Working Solution
 class MobileNavigation {
   constructor() {
@@ -15,15 +12,19 @@ class MobileNavigation {
   }
 
   init() {
-    const requiredElements = [this.nav, this.hamburger, this.overlay];
-    if (requiredElements.some((element) => !element)) {
-      console.error("Navigation elements not found");
+    if (!this.nav || !this.hamburger || !this.overlay) {
+      console.error("Navigation elements not found:", {
+        nav: !!this.nav,
+        hamburger: !!this.hamburger,
+        overlay: !!this.overlay,
+      });
       return;
     }
 
     this.setupEventListeners();
     this.setupKeyboardNavigation();
     this.preventBodyScroll();
+    console.log("🎯 Navigation system initialized successfully!");
   }
 
   setupEventListeners() {
@@ -57,7 +58,7 @@ class MobileNavigation {
           href?.startsWith("tel");
         const isHashLink = href?.startsWith("#");
 
-        console.log("Navigation link clicked:", href);
+        console.log("🔗 Navigation link clicked:", href);
 
         if (href && href !== "#") {
           if (this.isMenuOpen) {
@@ -190,7 +191,7 @@ class MobileNavigation {
       this.isAnimating = false;
     }, 300);
 
-    console.log("Menu opened");
+    console.log("📱 Menu opened");
   }
 
   closeMenu() {
@@ -216,7 +217,7 @@ class MobileNavigation {
       this.isAnimating = false;
     }, 300);
 
-    console.log("Menu closed");
+    console.log("❌ Menu closed");
   }
 
   updateHamburgerIcon(isOpen) {
@@ -284,39 +285,70 @@ class StickyHeader {
   }
 }
 
+// Helper function for animations
+function animateValue(element, start, end, duration) {
+  if (!element) return;
+
+  let startTimestamp = null;
+  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+  const step = (timestamp) => {
+    if (!startTimestamp) {
+      startTimestamp = timestamp;
+    }
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const easedProgress = easeOutQuart(progress);
+    const value = Math.floor(easedProgress * (end - start) + start);
+    element.textContent = value;
+
+    // Add pulse animation when value changes
+    element.classList.add("number-pulse");
+    setTimeout(() => {
+      element.classList.remove("number-pulse");
+    }, 200);
+
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   try {
     // Initialize mobile navigation
-    const mobileNav = new MobileNavigation();
+    new MobileNavigation();
 
     // Initialize sticky header
-    const stickyHeader = new StickyHeader();
+    new StickyHeader();
 
-    console.log("Navigation system initialized");
+    console.log("🚀 All navigation systems initialized");
 
-    // Initialize stats counter animation
+    // Initialize stats counter animation (only if elements exist)
     const stats = document.querySelectorAll(".stat-number");
-    const observerOptions = {
-      threshold: 0.5,
-    };
+    if (stats.length > 0) {
+      const observerOptions = {
+        threshold: 0.5,
+      };
 
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const target = entry.target;
-          const finalValue = parseInt(target.getAttribute("data-count"));
-          animateValue(target, 0, finalValue, 2000);
-          statsObserver.unobserve(target);
-        }
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const finalValue = parseInt(target.getAttribute("data-count"));
+            animateValue(target, 0, finalValue, 2000);
+            statsObserver.unobserve(target);
+          }
+        });
+      }, observerOptions);
+
+      stats.forEach((stat) => {
+        statsObserver.observe(stat);
       });
-    }, observerOptions);
+    }
 
-    stats.forEach((stat) => {
-      statsObserver.observe(stat);
-    });
-
-    // Smooth scrolling for hero buttons
+    // Smooth scrolling for hero buttons (only if they exist)
     const exploreLegacyBtn = document.querySelector(
       'a[href="#legacy-pillars"]'
     );
@@ -378,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Scroll indicator functionality
+    // Scroll indicator functionality (only if it exists)
     const scrollIndicator = document.querySelector(".hero-scroll-indicator");
     if (scrollIndicator) {
       scrollIndicator.addEventListener("click", function () {
@@ -423,298 +455,256 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   } catch (error) {
-    console.error("Error initializing navigation system:", error);
+    console.error("Error initializing systems:", error);
   }
 });
 
-// Testimonial Slider with Touch Support
-const track = document.getElementById("stories-track");
-const dots = document.querySelectorAll(".slider-dot");
-const nextBtn = document.getElementById("next");
-const prevBtn = document.getElementById("prev");
+// Testimonial Slider with Touch Support (only initialize if elements exist)
+function initializeTestimonialSlider() {
+  const track = document.getElementById("stories-track");
+  const dots = document.querySelectorAll(".slider-dot");
+  const nextBtn = document.getElementById("next");
+  const prevBtn = document.getElementById("prev");
 
-let currentIndex = 0;
-const slides = Array.from(track.children);
-let startX;
-let moveX;
-let isMouseDown = false;
+  // Only proceed if all required elements exist
+  if (!track || dots.length === 0 || !nextBtn || !prevBtn) {
+    console.log(
+      "Testimonial slider elements not found - skipping initialization"
+    );
+    return;
+  }
 
-// Set initial position
-const setSliderPosition = () => {
-  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  let currentIndex = 0;
+  const slides = Array.from(track.children);
+  let startX;
+  let moveX;
+  let isMouseDown = false;
 
-  // Update dots
-  dots.forEach((dot) => dot.classList.remove("active"));
-  dots[currentIndex].classList.add("active");
-};
+  // Set initial position
+  const setSliderPosition = () => {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-// Next button click
-nextBtn.addEventListener("click", () => {
-  currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
-  setSliderPosition();
-});
+    // Update dots
+    dots.forEach((dot) => dot.classList.remove("active"));
+    if (dots[currentIndex]) {
+      dots[currentIndex].classList.add("active");
+    }
+  };
 
-// Previous button click
-prevBtn.addEventListener("click", () => {
-  currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
-  setSliderPosition();
-});
-
-// Dot click
-dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    currentIndex = parseInt(dot.getAttribute("data-index"));
+  // Next button click
+  nextBtn.addEventListener("click", () => {
+    currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
     setSliderPosition();
   });
-});
 
-// Touch events for slider
-track.addEventListener(
-  "touchstart",
-  (e) => {
-    startX = e.touches[0].clientX;
-    isMouseDown = true;
-    track.style.transition = "none";
-  },
-  { passive: true }
-);
-
-track.addEventListener(
-  "touchmove",
-  (e) => {
-    if (!isMouseDown) {
-      return;
-    }
-    moveX = e.touches[0].clientX;
-    const diff = moveX - startX;
-    const move = (diff / window.innerWidth) * 100;
-    track.style.transform = `translateX(calc(-${
-      currentIndex * 100
-    }% + ${move}px))`;
-  },
-  { passive: true }
-);
-
-track.addEventListener("touchend", () => {
-  isMouseDown = false;
-  track.style.transition = "transform 0.5s ease";
-
-  if (moveX) {
-    const diff = moveX - startX;
-    if (diff > 50 && currentIndex > 0) {
-      // Swipe right - go to previous
-      currentIndex--;
-    } else if (diff < -50 && currentIndex < slides.length - 1) {
-      // Swipe left - go to next
-      currentIndex++;
-    }
+  // Previous button click
+  prevBtn.addEventListener("click", () => {
+    currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
     setSliderPosition();
-    moveX = null;
-  }
-});
+  });
 
-// Auto slider change every 5 seconds
-let autoSlideInterval = setInterval(() => {
-  currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
-  setSliderPosition();
-}, 5000);
-
-// Pause auto-slide on interaction
-[nextBtn, prevBtn, ...dots].forEach((element) => {
-  element.addEventListener("click", () => {
-    clearInterval(autoSlideInterval);
-    // Restart auto-slide after 10 seconds of inactivity
-    autoSlideInterval = setInterval(() => {
-      currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+  // Dot click
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      currentIndex = parseInt(dot.getAttribute("data-index"));
       setSliderPosition();
-    }, 5000);
+    });
   });
+
+  // Touch events for slider
+  track.addEventListener(
+    "touchstart",
+    (e) => {
+      startX = e.touches[0].clientX;
+      isMouseDown = true;
+      track.style.transition = "none";
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!isMouseDown) return;
+
+      moveX = e.touches[0].clientX;
+      const diff = moveX - startX;
+      const move = (diff / window.innerWidth) * 100;
+      track.style.transform = `translateX(calc(-${
+        currentIndex * 100
+      }% + ${move}px))`;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener("touchend", () => {
+    isMouseDown = false;
+    track.style.transition = "transform 0.5s ease";
+
+    if (moveX) {
+      const diff = moveX - startX;
+      if (diff > 50 && currentIndex > 0) {
+        currentIndex--;
+      } else if (diff < -50 && currentIndex < slides.length - 1) {
+        currentIndex++;
+      }
+      setSliderPosition();
+      moveX = null;
+    }
+  });
+
+  // Auto slider change every 5 seconds
+  let autoSlideInterval = setInterval(() => {
+    currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+    setSliderPosition();
+  }, 5000);
+
+  // Pause auto-slide on interaction
+  [nextBtn, prevBtn, ...dots].forEach((element) => {
+    element.addEventListener("click", () => {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(() => {
+        currentIndex =
+          currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+        setSliderPosition();
+      }, 5000);
+    });
+  });
+
+  console.log("✅ Testimonial slider initialized");
+}
+
+// Initialize slider after DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  initializeTestimonialSlider();
 });
 
 // Animation on scroll with Intersection Observer
-const animateElements = document.querySelectorAll(
-  ".legacy-pillar, .partner-card"
-);
+function initializeScrollAnimations() {
+  const animateElements = document.querySelectorAll(
+    ".legacy-pillar, .partner-card"
+  );
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("animated");
-        // Stop observing after animation
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    root: null,
-    threshold: 0.1,
-    rootMargin: "-50px",
-  }
-);
+  if (animateElements.length === 0) return;
 
-animateElements.forEach((element) => {
-  observer.observe(element);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animated");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "-50px",
+    }
+  );
+
+  animateElements.forEach((element) => {
+    observer.observe(element);
+  });
+}
+
+// Initialize scroll animations
+document.addEventListener("DOMContentLoaded", () => {
+  initializeScrollAnimations();
 });
 
 // Language Toggle
-const languageToggle = document.querySelectorAll(".language-toggle a");
+function initializeLanguageToggle() {
+  const languageToggle = document.querySelectorAll(".language-toggle a");
 
-const translations = {
-  en: {
-    "legacy-title": "Our Legacy",
-    "legacy-subtitle":
-      "Building a lasting impact beyond UEFA Women's Euro 2025",
-    "legacy-intro-title": "Legacy Beyond 2025",
-    "legacy-intro-text":
-      "Cymru Unleashed is not just a project - it's a movement designed to create lasting change in communities across Wales, with a focus on empowering the next generation of Welsh women through sport, art, and culture.",
-    "legacy-quote":
-      "From a single summer to lasting cultural change - by women, for women, in Wales.",
-    "permanent-art-title": "Permanent Public Art",
-    "permanent-art-desc":
-      "A lasting tribute to Welsh women in sport at Cardiff Bay Cultural Hub",
-    "permanent-art-text":
-      "This permanent piece will stand as a visual reminder of the power of women's sport and its cultural significance in Wales.",
-    "digital-archive-title": "Digital Archive",
-    "digital-archive-desc":
-      "Educational resources and VR content for schools across Wales",
-    "digital-archive-text":
-      "This archive will be freely available to schools across Wales, ensuring the project's impact continues in classrooms for years to come.",
-    "annual-workshops-title": "Annual Workshops",
-    "annual-workshops-desc":
-      "Ongoing sports and art programs in partner schools",
-    "annual-workshops-text-1":
-      "Through signed MOUs with partner schools, we will provide ongoing workshops that combine sports skills with creative expression.",
-    "annual-workshops-text-2":
-      "These annual programs will ensure that the connections between sport, identity, and culture continue to be explored by new generations of young Welsh women.",
-    "footer-tagline":
-      "Empowering the next generation of Welsh women through sport, art, and culture.",
-    "quick-links": "Quick Links",
-    home: "Home",
-    about: "About",
-    activities: "Activities",
-    legacy: "Legacy",
-    media: "Media",
-    "get-involved": "Get Involved",
-    contact: "Contact",
-    email: "Email",
-    phone: "Phone",
-    copyright: "© 2025 Cymru Unleashed. All rights reserved.",
-  },
-  cy: {
-    "legacy-title": "Ein Gwaddol",
-    "legacy-subtitle":
-      "Adeiladu effaith barhaol y tu hwnt i Gemau UEFA Menywod Euro 2025",
-    "legacy-intro-title": "Gwaddol y Tu Hwnt i 2025",
-    "legacy-intro-text":
-      "Nid prosiect yn unig yw Cymru Unleashed - mudiad ydyw wedi'i gynllunio i greu newid parhaol mewn cymunedau ar draws Cymru, gyda ffocws ar rymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
-    "legacy-quote":
-      "O haf unig i newid diwylliannol parhaol - gan ferched, i ferched, yng Nghymru.",
-    "permanent-art-title": "Celf Gyhoeddus Barhaol",
-    "permanent-art-desc":
-      "Teyrnged barhaol i fenywod Cymreig mewn chwaraeon yng Nghanolfan Ddiwylliannol Bae Caerdydd",
-    "permanent-art-text":
-      "Bydd y darn parhaol hwn yn sefyll fel atgof gweledol o rym chwaraeon menywod a'i arwyddocâd diwylliannol yng Nghymru.",
-    "digital-archive-title": "Archif Digidol",
-    "digital-archive-desc":
-      "Adnoddau addysgol a chynnwys VR ar gyfer ysgolion ar draws Cymru",
-    "digital-archive-text":
-      "Bydd yr archif hwn ar gael yn rhad ac am ddim i ysgolion ar draws Cymru, gan sicrhau bod effaith y prosiect yn parhau mewn ystafelloedd dosbarth am flynyddoedd i ddod.",
-    "annual-workshops-title": "Gweithdai Blynyddol",
-    "annual-workshops-desc":
-      "Rhaglenni chwaraeon a chelf parhaus mewn ysgolion partner",
-    "annual-workshops-text-1":
-      "Trwy MOUs wedi'u llofnodi gydag ysgolion partner, byddwn yn darparu gweithdai parhaus sy'n cyfuno sgiliau chwaraeon gyda mynegiant creadigol.",
-    "annual-workshops-text-2":
-      "Bydd y rhaglenni blynyddol hyn yn sicrhau bod y cysylltiadau rhwng chwaraeon, hunaniaeth, a diwylliant yn parhau i gael eu harchwilio gan genedlaethau newydd o fenywod ifanc Cymreig.",
-    "footer-tagline":
-      "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
-    "quick-links": "Dolenni Cyflym",
-    home: "Hafan",
-    about: "Amdanom",
-    activities: "Gweithgareddau",
-    legacy: "Gwaddol",
-    media: "Cyfryngau",
-    "get-involved": "Ymunwch â Ni",
-    contact: "Cysylltu",
-    email: "E-bost",
-    phone: "Rhif ffôn",
-    copyright: "© 2025 Cymru Unleashed. Cedwir pob hawl.",
-  },
-};
+  if (languageToggle.length === 0) return;
 
-function updateLanguage(lang) {
-  // Update all elements with data-translate attribute
-  document.querySelectorAll("[data-translate]").forEach((element) => {
-    const key = element.getAttribute("data-translate");
-    if (translations[lang][key]) {
-      element.textContent = translations[lang][key];
-    }
+  const translations = {
+    en: {
+      "legacy-title": "Our Legacy",
+      "legacy-subtitle":
+        "Building a lasting impact beyond UEFA Women's Euro 2025",
+      "legacy-intro-title": "Legacy Beyond 2025",
+      "legacy-intro-text":
+        "Cymru Unleashed is not just a project - it's a movement designed to create lasting change in communities across Wales, with a focus on empowering the next generation of Welsh women through sport, art, and culture.",
+      "legacy-quote":
+        "From a single summer to lasting cultural change - by women, for women, in Wales.",
+      "footer-tagline":
+        "Empowering the next generation of Welsh women through sport, art, and culture.",
+      "quick-links": "Quick Links",
+      home: "Home",
+      about: "About",
+      activities: "Activities",
+      legacy: "Legacy",
+      media: "Media",
+      "get-involved": "Get Involved",
+      contact: "Contact",
+      copyright: "© 2025 Cymru Unleashed. All rights reserved.",
+    },
+    cy: {
+      "legacy-title": "Ein Gwaddol",
+      "legacy-subtitle":
+        "Adeiladu effaith barhaol y tu hwnt i Gemau UEFA Menywod Euro 2025",
+      "legacy-intro-title": "Gwaddol y Tu Hwnt i 2025",
+      "legacy-intro-text":
+        "Nid prosiect yn unig yw Cymru Unleashed - mudiad ydyw wedi'i gynllunio i greu newid parhaol mewn cymunedau ar draws Cymru, gyda ffocws ar rymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+      "legacy-quote":
+        "O haf unig i newid diwylliannol parhaol - gan ferched, i ferched, yng Nghymru.",
+      "footer-tagline":
+        "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+      "quick-links": "Dolenni Cyflym",
+      home: "Hafan",
+      about: "Amdanom",
+      activities: "Gweithgareddau",
+      legacy: "Gwaddol",
+      media: "Cyfryngau",
+      "get-involved": "Ymunwch â Ni",
+      contact: "Cysylltu",
+      copyright: "© 2025 Cymru Unleashed. Cedwir pob hawl.",
+    },
+  };
+
+  function updateLanguage(lang) {
+    document.querySelectorAll("[data-translate]").forEach((element) => {
+      const key = element.getAttribute("data-translate");
+      if (translations[lang][key]) {
+        element.textContent = translations[lang][key];
+      }
+    });
+
+    document.title =
+      lang === "cy" ? "Gwaddol | Cymru Unleashed" : "Legacy | Cymru Unleashed";
+    localStorage.setItem("preferred-language", lang);
+  }
+
+  languageToggle.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      languageToggle.forEach((l) => l.classList.remove("active"));
+      link.classList.add("active");
+
+      const newLang =
+        link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
+      updateLanguage(newLang);
+    });
   });
 
-  // Update document title
-  document.title =
-    lang === "cy" ? "Gwaddol | Cymru Unleashed" : "Legacy | Cymru Unleashed";
-
-  // Store language preference
-  localStorage.setItem("preferred-language", lang);
+  // Set initial language
+  const initialLang = localStorage.getItem("preferred-language") || "en";
+  updateLanguage(initialLang);
 }
 
-languageToggle.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    // Remove active class from all links
-    languageToggle.forEach((l) => l.classList.remove("active"));
-
-    // Add active class to clicked link
-    link.classList.add("active");
-
-    // Determine which language to switch to
-    const newLang = link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
-
-    // Update the language
-    updateLanguage(newLang);
-  });
+// Initialize language toggle
+document.addEventListener("DOMContentLoaded", () => {
+  initializeLanguageToggle();
 });
 
-// Set initial language based on stored preference or default to English
-const initialLang = localStorage.getItem("preferred-language") || "en";
-updateLanguage(initialLang);
-
-// Handle touch events for mobile
-document.addEventListener("touchstart", () => {}, { passive: true });
-
-// Enhanced helper function to animate counting with easing
-function animateValue(element, start, end, duration) {
-  let startTimestamp = null;
-  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
-
-  const step = (timestamp) => {
-    if (!startTimestamp) {
-      startTimestamp = timestamp;
-    }
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    const easedProgress = easeOutQuart(progress);
-    const value = Math.floor(easedProgress * (end - start) + start);
-    element.textContent = value;
-
-    // Add pulse animation when value changes
-    element.classList.add("number-pulse");
-    setTimeout(() => {
-      element.classList.remove("number-pulse");
-    }, 200);
-
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
-  };
-  window.requestAnimationFrame(step);
-}
-
-// Enhanced parallax effect to shapes with smooth transitions
+// Enhanced parallax effect (only if shapes exist)
 document.addEventListener("mousemove", function (e) {
   const shapes = document.querySelectorAll(".shape");
+  if (shapes.length === 0) return;
+
   const mouseX = e.clientX / window.innerWidth;
   const mouseY = e.clientY / window.innerHeight;
 
@@ -723,8 +713,10 @@ document.addEventListener("mousemove", function (e) {
     const x = (mouseX - 0.5) * speed * 100;
     const y = (mouseY - 0.5) * speed * 100;
 
-    // Add smooth transition
     shape.style.transition = "transform 0.3s ease-out";
     shape.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.1}deg)`;
   });
 });
+
+// Handle touch events for mobile
+document.addEventListener("touchstart", () => {}, { passive: true });
