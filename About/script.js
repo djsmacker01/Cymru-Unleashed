@@ -1,591 +1,53 @@
-// Refined Mobile Navigation - Complete Working Solution
-class MobileNavigation {
-  constructor() {
-    this.nav = document.getElementById("nav");
-    this.hamburger = document.getElementById("hamburger");
-    this.overlay = document.getElementById("overlay");
-    this.body = document.body;
-    this.isMenuOpen = false;
-    this.isAnimating = false;
+// Mobile Navigation Toggle
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav");
+const overlay = document.getElementById("overlay");
 
-    this.init();
-  }
+const toggleMenu = () => {
+  nav.classList.toggle("active");
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
+  hamburger.innerHTML = nav.classList.contains("active")
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
 
-  init() {
-    if (!this.nav || !this.hamburger || !this.overlay) {
-      console.error("Navigation elements not found:", {
-        nav: !!this.nav,
-        hamburger: !!this.hamburger,
-        overlay: !!this.overlay,
-      });
-      return;
-    }
+  // Toggle body scroll
+  document.body.style.overflow = nav.classList.contains("active")
+    ? "hidden"
+    : "";
+};
 
-    this.setupEventListeners();
-    this.setupKeyboardNavigation();
-    this.preventBodyScroll();
-    console.log("🎯 Navigation system initialized successfully!");
-  }
+// Initialize navigation event listeners
+const initializeNavigation = () => {
+  hamburger.addEventListener("click", toggleMenu);
+  overlay.addEventListener("click", toggleMenu);
 
-  setupEventListeners() {
-    // Hamburger click handler
-    this.hamburger.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.toggleMenu();
-    });
-
-    // Overlay click handler
-    this.overlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (this.isMenuOpen) {
-        this.closeMenu();
+  // Close menu when clicking navigation links
+  document.querySelectorAll("nav a").forEach((item) => {
+    item.addEventListener("click", () => {
+      if (nav.classList.contains("active")) {
+        toggleMenu();
       }
     });
+  });
+};
 
-    // Navigation links - using event delegation for better performance
-    this.nav.addEventListener("click", (e) => {
-      const link = e.target.closest("a");
-
-      if (link) {
-        e.preventDefault(); // Prevent default initially
-
-        const href = link.getAttribute("href");
-        const isExternalLink =
-          href?.startsWith("http") ||
-          href?.startsWith("mailto") ||
-          href?.startsWith("tel");
-        const isHashLink = href?.startsWith("#");
-
-        console.log("🔗 Navigation link clicked:", href);
-
-        if (href && href !== "#") {
-          if (this.isMenuOpen) {
-            // Close menu first, then navigate
-            this.closeMenu();
-
-            // Wait for menu close animation to complete
-            setTimeout(() => {
-              if (isExternalLink) {
-                window.open(href, link.target || "_self");
-              } else if (isHashLink) {
-                // Handle anchor links
-                this.scrollToSection(href);
-              } else {
-                // Handle internal navigation
-                window.location.href = href;
-              }
-            }, 300); // Match CSS transition duration
-          } else {
-            // Menu not open, navigate immediately
-            if (isExternalLink) {
-              window.open(href, link.target || "_self");
-            } else if (isHashLink) {
-              this.scrollToSection(href);
-            } else {
-              window.location.href = href;
-            }
-          }
-        }
-      }
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (
-        this.isMenuOpen &&
-        !this.nav.contains(e.target) &&
-        !this.hamburger.contains(e.target)
-      ) {
-        this.closeMenu();
-      }
-    });
-
-    // Handle window resize
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 768 && this.isMenuOpen) {
-        this.closeMenu();
-      }
-    });
-  }
-
-  setupKeyboardNavigation() {
-    // ESC key to close menu
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.isMenuOpen) {
-        this.closeMenu();
-        this.hamburger.focus();
-      }
-    });
-
-    // Tab trapping within menu
-    this.nav.addEventListener("keydown", (e) => {
-      if (e.key === "Tab" && this.isMenuOpen) {
-        const focusableElements = this.nav.querySelectorAll(
-          'a, button, [tabindex]:not([tabindex="-1"])'
-        );
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey && document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        } else if (!e.shiftKey && document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
-      }
-    });
-  }
-
-  preventBodyScroll() {
-    // Prevent body scroll when menu is open
-    const preventScroll = (e) => {
-      if (this.isMenuOpen) {
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener("touchmove", preventScroll, { passive: false });
-    document.addEventListener("wheel", preventScroll, { passive: false });
-  }
-
-  toggleMenu() {
-    if (this.isAnimating) {
-      return;
-    }
-
-    if (this.isMenuOpen) {
-      this.closeMenu();
-    } else {
-      this.openMenu();
-    }
-  }
-
-  openMenu() {
-    if (this.isAnimating || this.isMenuOpen) {
-      return;
-    }
-
-    this.isAnimating = true;
-    this.isMenuOpen = true;
-
-    // Add classes
-    this.nav.classList.add("active");
-    this.hamburger.classList.add("active");
-    this.overlay.classList.add("active");
-
-    // Prevent body scroll
-    this.body.style.overflow = "hidden";
-
-    // Update hamburger icon
-    this.updateHamburgerIcon(true);
-
-    // Set focus to first navigation item
-    setTimeout(() => {
-      const firstLink = this.nav.querySelector("a");
-      if (firstLink) {
-        firstLink.focus();
-      }
-      this.isAnimating = false;
-    }, 300);
-
-    console.log("📱 Menu opened");
-  }
-
-  closeMenu() {
-    if (this.isAnimating || !this.isMenuOpen) {
-      return;
-    }
-
-    this.isAnimating = true;
-    this.isMenuOpen = false;
-
-    // Remove classes
-    this.nav.classList.remove("active");
-    this.hamburger.classList.remove("active");
-    this.overlay.classList.remove("active");
-
-    // Restore body scroll
-    this.body.style.overflow = "";
-
-    // Update hamburger icon
-    this.updateHamburgerIcon(false);
-
-    setTimeout(() => {
-      this.isAnimating = false;
-    }, 300);
-
-    console.log("❌ Menu closed");
-  }
-
-  updateHamburgerIcon(isOpen) {
-    const icon = this.hamburger.querySelector("i");
-    if (icon) {
-      if (isOpen) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-times");
-      } else {
-        icon.classList.remove("fa-times");
-        icon.classList.add("fa-bars");
-      }
-    }
-  }
-
-  scrollToSection(href) {
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      const headerHeight = document.getElementById("header")?.offsetHeight || 0;
-      const targetPosition =
-        targetElement.getBoundingClientRect().top +
-        window.pageYOffset -
-        headerHeight;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
-  }
-}
-
-// Sticky Header functionality
-class StickyHeader {
-  constructor() {
-    this.header = document.getElementById("header");
-    this.init();
-  }
-
-  init() {
-    if (!this.header) {
-      return;
-    }
-
-    let lastScrollY = window.scrollY;
-    let isScrolling = false;
-
-    const handleScroll = () => {
-      if (!isScrolling) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-
-          // Add scrolled class when scrolled down
-          this.header.classList.toggle("scrolled", currentScrollY > 50);
-
-          lastScrollY = currentScrollY;
-          isScrolling = false;
-        });
-
-        isScrolling = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-  }
-}
-
-// Helper function for animations
-function animateValue(element, start, end, duration) {
-  if (!element) return;
-
-  let startTimestamp = null;
-  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
-
-  const step = (timestamp) => {
-    if (!startTimestamp) {
-      startTimestamp = timestamp;
-    }
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    const easedProgress = easeOutQuart(progress);
-    const value = Math.floor(easedProgress * (end - start) + start);
-    element.textContent = value;
-
-    // Add pulse animation when value changes
-    element.classList.add("number-pulse");
-    setTimeout(() => {
-      element.classList.remove("number-pulse");
-    }, 200);
-
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
-  };
-  window.requestAnimationFrame(step);
-}
-
-// Initialize everything when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  try {
-    // Initialize mobile navigation
-    new MobileNavigation();
-
-    // Initialize sticky header
-    new StickyHeader();
-
-    console.log("🚀 All navigation systems initialized");
-
-    // Initialize stats counter animation (only if elements exist)
-    const stats = document.querySelectorAll(".stat-number");
-    if (stats.length > 0) {
-      const observerOptions = {
-        threshold: 0.5,
-      };
-
-      const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const target = entry.target;
-            const finalValue = parseInt(target.getAttribute("data-count"));
-            animateValue(target, 0, finalValue, 2000);
-            statsObserver.unobserve(target);
-          }
-        });
-      }, observerOptions);
-
-      stats.forEach((stat) => {
-        statsObserver.observe(stat);
-      });
-    }
-
-    // Smooth scrolling for hero buttons (only if they exist)
-    const exploreLegacyBtn = document.querySelector(
-      'a[href="#legacy-pillars"]'
+// Sticky Header on Scroll
+const initializeStickyHeader = () => {
+  window.addEventListener("scroll", () => {
+    const header = document.getElementById("header");
+    header.classList.toggle(
+      "scrolled",
+      window.scrollY > behaviorConfig.navigation.scrollThreshold
     );
-    const viewImpactBtn = document.querySelector('a[href="#impact-stories"]');
-
-    if (exploreLegacyBtn) {
-      exploreLegacyBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const legacySection = document.querySelector(".legacy-intro");
-        if (legacySection) {
-          legacySection.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
-
-    if (viewImpactBtn) {
-      viewImpactBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const impactSection = document.querySelector(".impact-stories");
-        if (impactSection) {
-          impactSection.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
-
-    // Smooth scroll functionality for other anchor links
-    const scrollLinks = document.querySelectorAll(
-      'a[href^="#"]:not(.btn-primary):not(.btn-secondary)'
-    );
-    scrollLinks.forEach((link) => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute("href");
-        const targetElement = document.querySelector(targetId);
-
-        if (targetElement) {
-          const headerOffset = 80;
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition =
-            elementPosition + window.pageYOffset - headerOffset;
-
-          // Add ripple effect to button
-          const ripple = document.createElement("span");
-          ripple.classList.add("btn-ripple");
-          this.appendChild(ripple);
-          setTimeout(() => ripple.remove(), 1000);
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-
-          // Add highlight animation to target section
-          targetElement.classList.add("section-highlight");
-          setTimeout(() => {
-            targetElement.classList.remove("section-highlight");
-          }, 1500);
-        }
-      });
-    });
-
-    // Scroll indicator functionality (only if it exists)
-    const scrollIndicator = document.querySelector(".hero-scroll-indicator");
-    if (scrollIndicator) {
-      scrollIndicator.addEventListener("click", function () {
-        const nextSection = document.querySelector("#legacy-pillars");
-        if (nextSection) {
-          const headerOffset = 80;
-          const elementPosition = nextSection.getBoundingClientRect().top;
-          const offsetPosition =
-            elementPosition + window.pageYOffset - headerOffset;
-
-          // Add bounce animation to scroll indicator
-          this.classList.add("scroll-bounce");
-          setTimeout(() => {
-            this.classList.remove("scroll-bounce");
-          }, 1000);
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-
-          // Add highlight animation to target section
-          nextSection.classList.add("section-highlight");
-          setTimeout(() => {
-            nextSection.classList.remove("section-highlight");
-          }, 1500);
-        }
-      });
-
-      // Enhanced fade out scroll indicator on scroll
-      window.addEventListener("scroll", function () {
-        const scrollPosition = window.scrollY;
-        if (scrollPosition > 100) {
-          scrollIndicator.style.opacity = "0";
-          scrollIndicator.style.pointerEvents = "none";
-          scrollIndicator.style.transform = "translateY(20px)";
-        } else {
-          scrollIndicator.style.opacity = "1";
-          scrollIndicator.style.pointerEvents = "auto";
-          scrollIndicator.style.transform = "translateY(0)";
-        }
-      });
-    }
-  } catch (error) {
-    console.error("Error initializing systems:", error);
-  }
-});
-
-// Testimonial Slider with Touch Support (only initialize if elements exist)
-function initializeTestimonialSlider() {
-  const track = document.getElementById("stories-track");
-  const dots = document.querySelectorAll(".slider-dot");
-  const nextBtn = document.getElementById("next");
-  const prevBtn = document.getElementById("prev");
-
-  // Only proceed if all required elements exist
-  if (!track || dots.length === 0 || !nextBtn || !prevBtn) {
-    console.log(
-      "Testimonial slider elements not found - skipping initialization"
-    );
-    return;
-  }
-
-  let currentIndex = 0;
-  const slides = Array.from(track.children);
-  let startX;
-  let moveX;
-  let isMouseDown = false;
-
-  // Set initial position
-  const setSliderPosition = () => {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-    // Update dots
-    dots.forEach((dot) => dot.classList.remove("active"));
-    if (dots[currentIndex]) {
-      dots[currentIndex].classList.add("active");
-    }
-  };
-
-  // Next button click
-  nextBtn.addEventListener("click", () => {
-    currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
-    setSliderPosition();
   });
-
-  // Previous button click
-  prevBtn.addEventListener("click", () => {
-    currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
-    setSliderPosition();
-  });
-
-  // Dot click
-  dots.forEach((dot) => {
-    dot.addEventListener("click", () => {
-      currentIndex = parseInt(dot.getAttribute("data-index"));
-      setSliderPosition();
-    });
-  });
-
-  // Touch events for slider
-  track.addEventListener(
-    "touchstart",
-    (e) => {
-      startX = e.touches[0].clientX;
-      isMouseDown = true;
-      track.style.transition = "none";
-    },
-    { passive: true }
-  );
-
-  track.addEventListener(
-    "touchmove",
-    (e) => {
-      if (!isMouseDown) return;
-
-      moveX = e.touches[0].clientX;
-      const diff = moveX - startX;
-      const move = (diff / window.innerWidth) * 100;
-      track.style.transform = `translateX(calc(-${
-        currentIndex * 100
-      }% + ${move}px))`;
-    },
-    { passive: true }
-  );
-
-  track.addEventListener("touchend", () => {
-    isMouseDown = false;
-    track.style.transition = "transform 0.5s ease";
-
-    if (moveX) {
-      const diff = moveX - startX;
-      if (diff > 50 && currentIndex > 0) {
-        currentIndex--;
-      } else if (diff < -50 && currentIndex < slides.length - 1) {
-        currentIndex++;
-      }
-      setSliderPosition();
-      moveX = null;
-    }
-  });
-
-  // Auto slider change every 5 seconds
-  let autoSlideInterval = setInterval(() => {
-    currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
-    setSliderPosition();
-  }, 5000);
-
-  // Pause auto-slide on interaction
-  [nextBtn, prevBtn, ...dots].forEach((element) => {
-    element.addEventListener("click", () => {
-      clearInterval(autoSlideInterval);
-      autoSlideInterval = setInterval(() => {
-        currentIndex =
-          currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
-        setSliderPosition();
-      }, 5000);
-    });
-  });
-
-  console.log("✅ Testimonial slider initialized");
-}
-
-// Initialize slider after DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  initializeTestimonialSlider();
-});
+};
 
 // Animation on scroll with Intersection Observer
-function initializeScrollAnimations() {
+const initializeAnimations = () => {
   const animateElements = document.querySelectorAll(
-    ".legacy-pillar, .partner-card"
+    behaviorConfig.animations.elements.join(", ")
   );
-
-  if (animateElements.length === 0) return;
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -598,125 +60,175 @@ function initializeScrollAnimations() {
     },
     {
       root: null,
-      threshold: 0.1,
-      rootMargin: "-50px",
+      threshold: behaviorConfig.navigation.animationThreshold,
+      rootMargin: behaviorConfig.navigation.animationMargin,
     }
   );
 
-  animateElements.forEach((element) => {
-    observer.observe(element);
-  });
-}
-
-// Initialize scroll animations
-document.addEventListener("DOMContentLoaded", () => {
-  initializeScrollAnimations();
-});
+  animateElements.forEach((element) => observer.observe(element));
+};
 
 // Language Toggle
-function initializeLanguageToggle() {
-  const languageToggle = document.querySelectorAll(".language-toggle a");
+const languageToggle = document.querySelectorAll(".language-toggle a");
 
-  if (languageToggle.length === 0) return;
+const translations = {
+  en: {
+    "about-title": "About Us",
+    "hero-subtitle":
+      "Learn more about our women-led initiative celebrating Wales in UEFA Euro 2025",
+    "our-story": "Our Story",
+    "story-text":
+      "Cymru Unleashed was born from a vision to celebrate Wales' historic participation in UEFA Women's Euro 2025 in a meaningful way that creates lasting impact. Founded by a diverse group of Welsh women in sports, arts, and community development, our initiative aims to use this momentous sporting event as a catalyst for positive change.",
+    "what-makes-different": "What Makes Us Different",
+    "different-text":
+      "What sets Cymru Unleashed apart is our unique approach that combines sport, creativity, and innovation to create pathways for young Welsh women and girls. We believe that by connecting these three powerful forces, we can inspire a new generation to take pride in their identity and discover their own potential.",
+    "grassroots-text":
+      "Our grassroots foundation ensures that we remain connected to the communities we serve, with a special focus on underrepresented voices and those with limited access to sport and cultural opportunities.",
+    "our-mission": "Our Mission",
+    "mission-text":
+      "To make sport and culture accessible to all — inspiring a generation of young Welsh girls to lead, play, and dream beyond boundaries.",
+    "our-objectives": "Our Objectives",
+    "objective-1":
+      "Increase sports participation among girls aged 12-18, with a focus on those from underrepresented communities",
+    "objective-2":
+      "Champion equality and inclusion with 50% of participants from marginalized communities",
+    "objective-3":
+      "Promote Wales and Welsh culture through bilingual digital storytelling and immersive content",
+    "objective-4":
+      "Build a lasting legacy via strategic partnerships, public art, and educational resources",
+    "meet-team": "Meet Our Team",
+    "core-values": "Our Core Values",
+    "footer-tagline":
+      "Empowering the next generation of Welsh women through sport, art, and culture.",
+    "quick-links": "Quick Links",
+    contact: "Contact",
+  },
+  cy: {
+    "about-title": "Amdanom Ni",
+    "hero-subtitle":
+      "Dysgwch fwy am ein menter arweinyddiaeth benywaidd yn dathlu Cymru yn UEFA Euro 2025",
+    "our-story": "Ein Stori",
+    "story-text":
+      "Cymru Unleashed a anwyd o weledigaeth i ddathlu cyfranogiad hanesyddol Cymru yn UEFA Euro 2025 Benywaidd mewn ffordd ystyrlon sy'n creu effaith parhaol. Wedi'i sefydlu gan grŵp amrywiol o fenywod Cymreig mewn chwaraeon, celfyddydau, a datblygu cymunedol, mae ein menter yn anelu at ddefnyddio'r digwyddiad chwaraeon pwysig hwn fel catalydd ar gyfer newid cadarnhaol.",
+    "what-makes-different": "Beth Sy'n Ein Gwneud yn Wahanol",
+    "different-text":
+      "Yr hyn sy'n gwneud Cymru Unleashed yn wahanol yw ein dull unigryw sy'n cyfuno chwaraeon, creadigrwydd, ac arloesi i greu llwybrau ar gyfer merched ifanc Cymreig. Rydym yn credu, trwy gysylltu'r tair grym pwerus hyn, y gallwn ysbrydoli cenhedlaeth newydd i ymfalchïo yn eu hunaniaeth a darganfod eu potensial eu hunain.",
+    "grassroots-text":
+      "Mae ein sylfaen gwreiddiol yn sicrhau ein bod yn parhau i fod yn gysylltiedig â'r cymunedau rydym yn eu gwasanaethu, gyda ffocws arbennig ar leisiau sydd heb gynrychiolaeth ddigonol a'r rhai sydd â mynediad cyfyngedig i gyfleoedd chwaraeon a diwylliannol.",
+    "our-mission": "Ein Cenhadaeth",
+    "mission-text":
+      "I wneud chwaraeon a diwylliant yn hygyrch i bawb - yn ysbrydoli cenhedlaeth o ferched ifanc Cymreig i arwain, chwarae, a breuddwydio y tu hwnt i ffiniau.",
+    "our-objectives": "Ein Nodau",
+    "objective-1":
+      "Cynyddu cyfranogiad chwaraeon ymhlith merched 12-18 oed, gyda ffocws ar y rhai o gymunedau sydd heb gynrychiolaeth ddigonol",
+    "objective-2":
+      "Hyrwyddo cydraddoldeb a chynhwysiant gyda 50% o gyfranogwyr o gymunedau ymylol",
+    "objective-3":
+      "Hyrwyddo Cymru a diwylliant Cymreig trwy straeon digidol dwyieithog a chynnwys ymlyniadol",
+    "objective-4":
+      "Adeiladu treftadaeth barhaol trwy bartneriaethau strategol, celf gyhoeddus, ac adnoddau addysgol",
+    "meet-team": "Cyfarfod â'n Tîm",
+    "core-values": "Ein Gwerthoedd Craidd",
+    "footer-tagline":
+      "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
+    "quick-links": "Dolenni Cyflym",
+    contact: "Cysylltu",
+  },
+};
 
-  const translations = {
-    en: {
-      "legacy-title": "Our Legacy",
-      "legacy-subtitle":
-        "Building a lasting impact beyond UEFA Women's Euro 2025",
-      "legacy-intro-title": "Legacy Beyond 2025",
-      "legacy-intro-text":
-        "Cymru Unleashed is not just a project - it's a movement designed to create lasting change in communities across Wales, with a focus on empowering the next generation of Welsh women through sport, art, and culture.",
-      "legacy-quote":
-        "From a single summer to lasting cultural change - by women, for women, in Wales.",
-      "footer-tagline":
-        "Empowering the next generation of Welsh women through sport, art, and culture.",
-      "quick-links": "Quick Links",
-      home: "Home",
-      about: "About",
-      activities: "Activities",
-      legacy: "Legacy",
-      media: "Media",
-      "get-involved": "Get Involved",
-      contact: "Contact",
-      copyright: "© 2025 Cymru Unleashed. All rights reserved.",
-    },
-    cy: {
-      "legacy-title": "Ein Gwaddol",
-      "legacy-subtitle":
-        "Adeiladu effaith barhaol y tu hwnt i Gemau UEFA Menywod Euro 2025",
-      "legacy-intro-title": "Gwaddol y Tu Hwnt i 2025",
-      "legacy-intro-text":
-        "Nid prosiect yn unig yw Cymru Unleashed - mudiad ydyw wedi'i gynllunio i greu newid parhaol mewn cymunedau ar draws Cymru, gyda ffocws ar rymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
-      "legacy-quote":
-        "O haf unig i newid diwylliannol parhaol - gan ferched, i ferched, yng Nghymru.",
-      "footer-tagline":
-        "Grymuso cenhedlaeth nesaf menywod Cymreig trwy chwaraeon, celf, a diwylliant.",
-      "quick-links": "Dolenni Cyflym",
-      home: "Hafan",
-      about: "Amdanom",
-      activities: "Gweithgareddau",
-      legacy: "Gwaddol",
-      media: "Cyfryngau",
-      "get-involved": "Ymunwch â Ni",
-      contact: "Cysylltu",
-      copyright: "© 2025 Cymru Unleashed. Cedwir pob hawl.",
-    },
-  };
+function updateLanguage(lang) {
+  // Update all elements with data-translate attribute
+  document.querySelectorAll("[data-translate]").forEach((element) => {
+    const key = element.getAttribute("data-translate");
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
 
-  function updateLanguage(lang) {
-    document.querySelectorAll("[data-translate]").forEach((element) => {
-      const key = element.getAttribute("data-translate");
-      if (translations[lang][key]) {
-        element.textContent = translations[lang][key];
-      }
-    });
+  // Update document title
+  document.title =
+    lang === "cy" ? "Amdanom | Cymru Unleashed" : "About | Cymru Unleashed";
 
-    document.title =
-      lang === "cy" ? "Gwaddol | Cymru Unleashed" : "Legacy | Cymru Unleashed";
-    localStorage.setItem("preferred-language", lang);
+  // Store language preference
+  localStorage.setItem("preferred-language", lang);
+
+  // Re-render core values with new language
+  const valuesGrid = document.querySelector(".values-grid");
+  if (valuesGrid) {
+    valuesGrid.innerHTML = siteConfig.coreValues
+      .map(
+        (value) => `
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="${value.icon}"></i>
+                </div>
+                <h3>${value.title[lang]}</h3>
+                <p>${value.description[lang]}</p>
+            </div>
+        `
+      )
+      .join("");
   }
 
-  languageToggle.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      languageToggle.forEach((l) => l.classList.remove("active"));
-      link.classList.add("active");
-
-      const newLang =
-        link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
-      updateLanguage(newLang);
-    });
-  });
-
-  // Set initial language
-  const initialLang = localStorage.getItem("preferred-language") || "en";
-  updateLanguage(initialLang);
+  // Re-render team members with new language
+  const teamGrid = document.querySelector(".team-grid");
+  if (teamGrid) {
+    teamGrid.innerHTML = siteConfig.teamMembers
+      .map(
+        (member) => `
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="${member.image}" alt="${member.name[lang]}">
+                </div>
+                <div class="member-info">
+                    <h3>${member.name[lang]}</h3>
+                    <span>${member.role[lang]}</span>
+                    <p>${member.description[lang]}</p>
+                    <div class="member-social">
+                        <a href="${member.social.twitter}"><i class="fab fa-twitter"></i></a>
+                        <a href="${member.social.linkedin}"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="${member.social.instagram}"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        `
+      )
+      .join("");
+  }
 }
 
-// Initialize language toggle
-document.addEventListener("DOMContentLoaded", () => {
-  initializeLanguageToggle();
-});
+languageToggle.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
 
-// Enhanced parallax effect (only if shapes exist)
-document.addEventListener("mousemove", function (e) {
-  const shapes = document.querySelectorAll(".shape");
-  if (shapes.length === 0) return;
+    // Remove active class from all links
+    languageToggle.forEach((l) => l.classList.remove("active"));
 
-  const mouseX = e.clientX / window.innerWidth;
-  const mouseY = e.clientY / window.innerHeight;
+    // Add active class to clicked link
+    link.classList.add("active");
 
-  shapes.forEach((shape, index) => {
-    const speed = (index + 1) * 0.1;
-    const x = (mouseX - 0.5) * speed * 100;
-    const y = (mouseY - 0.5) * speed * 100;
+    // Determine which language to switch to
+    const newLang = link.textContent.toLowerCase() === "cymraeg" ? "cy" : "en";
 
-    shape.style.transition = "transform 0.3s ease-out";
-    shape.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.1}deg)`;
+    // Update the language
+    updateLanguage(newLang);
   });
 });
 
+// Set initial language based on stored preference or default to English
+const initialLang = localStorage.getItem("preferred-language") || "en";
+updateLanguage(initialLang);
+
 // Handle touch events for mobile
-document.addEventListener("touchstart", () => {}, { passive: true });
+const initializeTouchEvents = () => {
+  document.addEventListener("touchstart", () => {}, { passive: true });
+};
+
+// Initialize all functionality
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
+  initializeStickyHeader();
+  initializeAnimations();
+  initializeLanguageToggle();
+  initializeTouchEvents();
+});
