@@ -15,8 +15,7 @@ class MobileNavigation {
   }
 
   init() {
-    const elements = [this.nav, this.hamburger, this.overlay];
-    if (elements.some((el) => !el)) {
+    if (!this.nav || !this.hamburger || !this.overlay) {
       console.error("Navigation elements not found");
       return;
     }
@@ -48,12 +47,15 @@ class MobileNavigation {
       const link = e.target.closest("a");
 
       if (link) {
+        e.preventDefault(); // Prevent default initially
+
         const href = link.getAttribute("href");
         const isExternalLink =
-          href?.startsWith("http") ||
-          href?.startsWith("mailto") ||
-          href?.startsWith("tel");
-        const isHashLink = href?.startsWith("#");
+          href &&
+          (href.startsWith("http") ||
+            href.startsWith("mailto") ||
+            href.startsWith("tel"));
+        const isHashLink = href && href.startsWith("#");
 
         console.log("Navigation link clicked:", href);
 
@@ -149,9 +151,7 @@ class MobileNavigation {
   }
 
   toggleMenu() {
-    if (this.isAnimating) {
-      return;
-    }
+    if (this.isAnimating) return;
 
     if (this.isMenuOpen) {
       this.closeMenu();
@@ -161,9 +161,7 @@ class MobileNavigation {
   }
 
   openMenu() {
-    if (this.isAnimating || this.isMenuOpen) {
-      return;
-    }
+    if (this.isAnimating || this.isMenuOpen) return;
 
     this.isAnimating = true;
     this.isMenuOpen = true;
@@ -192,9 +190,7 @@ class MobileNavigation {
   }
 
   closeMenu() {
-    if (this.isAnimating || !this.isMenuOpen) {
-      return;
-    }
+    if (this.isAnimating || !this.isMenuOpen) return;
 
     this.isAnimating = true;
     this.isMenuOpen = false;
@@ -255,9 +251,7 @@ class StickyHeader {
   }
 
   init() {
-    if (!this.header) {
-      return;
-    }
+    if (!this.header) return;
 
     let lastScrollY = window.scrollY;
     let isScrolling = false;
