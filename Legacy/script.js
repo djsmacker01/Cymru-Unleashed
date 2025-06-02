@@ -1,4 +1,4 @@
-// Refined Mobile Navigation - WORKING VERSION
+// Complete Fixed Mobile Navigation - WORKING VERSION
 class MobileNavigation {
   constructor() {
     this.nav = document.getElementById("nav");
@@ -37,7 +37,7 @@ class MobileNavigation {
       this.toggleMenu();
     });
 
-    // Overlay click
+    // Overlay click - close menu
     this.overlay.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -47,7 +47,7 @@ class MobileNavigation {
       }
     });
 
-    // Navigation links
+    // FIXED: Simplified navigation link handling
     this.nav.addEventListener("click", (e) => {
       const link = e.target.closest("a");
       if (!link) return;
@@ -55,47 +55,37 @@ class MobileNavigation {
       const href = link.getAttribute("href");
       console.log("🔗 Navigation link clicked:", href);
 
-      // Don't prevent default initially - let's see if link has valid href
+      // Check if this is a valid link
       if (!href || href === "#") {
         e.preventDefault();
+        console.log("❌ Invalid link href");
         return;
       }
 
-      const isExternalLink =
-        href.startsWith("http") ||
-        href.startsWith("mailto") ||
-        href.startsWith("tel");
-      const isHashLink = href.startsWith("#");
-
+      // For mobile menu - always close menu first, then navigate
       if (this.isMenuOpen) {
-        e.preventDefault(); // Now prevent default
-        console.log("📱 Closing menu before navigation");
+        e.preventDefault(); // Prevent immediate navigation
+        console.log("📱 Mobile menu is open - closing before navigation");
+
+        // Close menu immediately
         this.closeMenu();
 
+        // Navigate after menu closes
         setTimeout(() => {
-          if (isExternalLink) {
-            window.open(href, link.target || "_self");
-          } else if (isHashLink) {
-            this.scrollToSection(href);
-          } else {
-            console.log("🚀 Navigating to:", href);
-            window.location.href = href;
-          }
-        }, 250);
-      } else {
-        // Menu not open - let browser handle navigation naturally
-        console.log("🚀 Direct navigation to:", href);
-        // Don't prevent default - let browser navigate normally
+          this.handleNavigation(href, link);
+        }, 100); // Reduced timeout for better UX
       }
+      // If menu is not open, let browser handle navigation normally
     });
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside (but not on nav links)
     document.addEventListener("click", (e) => {
       if (
         this.isMenuOpen &&
         !this.nav.contains(e.target) &&
         !this.hamburger.contains(e.target)
       ) {
+        console.log("🖱️ Clicked outside menu - closing");
         this.closeMenu();
       }
     });
@@ -103,14 +93,45 @@ class MobileNavigation {
     // Close menu on window resize
     window.addEventListener("resize", () => {
       if (window.innerWidth > 768 && this.isMenuOpen) {
+        console.log("📱 Screen resized - closing mobile menu");
         this.closeMenu();
       }
     });
   }
 
+  // NEW: Separated navigation handling logic
+  handleNavigation(href, link) {
+    console.log("🚀 Handling navigation to:", href);
+
+    const isExternalLink =
+      href.startsWith("http") ||
+      href.startsWith("mailto") ||
+      href.startsWith("tel");
+    const isHashLink = href.startsWith("#");
+
+    try {
+      if (isExternalLink) {
+        const target = link.getAttribute("target") || "_self";
+        console.log("🌐 Opening external link:", href, "target:", target);
+        window.open(href, target);
+      } else if (isHashLink) {
+        console.log("⚓ Scrolling to section:", href);
+        this.scrollToSection(href);
+      } else {
+        console.log("📄 Navigating to page:", href);
+        window.location.href = href;
+      }
+    } catch (error) {
+      console.error("❌ Navigation failed:", error);
+      // Fallback - try direct navigation
+      window.location.href = href;
+    }
+  }
+
   setupKeyboardNavigation() {
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && this.isMenuOpen) {
+        console.log("⌨️ Escape key pressed - closing menu");
         this.closeMenu();
         this.hamburger.focus();
       }
@@ -118,7 +139,10 @@ class MobileNavigation {
   }
 
   toggleMenu() {
-    if (this.isAnimating) return;
+    if (this.isAnimating) {
+      console.log("⏳ Menu is animating - ignoring toggle");
+      return;
+    }
 
     if (this.isMenuOpen) {
       this.closeMenu();
@@ -141,6 +165,7 @@ class MobileNavigation {
 
     // Prevent body scroll
     this.body.style.overflow = "hidden";
+    this.body.classList.add("menu-open");
 
     // Update hamburger icon
     const icon = this.hamburger.querySelector("i");
@@ -149,10 +174,11 @@ class MobileNavigation {
       icon.classList.add("fa-times");
     }
 
+    // FIXED: Reduced timeout and better state management
     setTimeout(() => {
       this.isAnimating = false;
       console.log("✅ Menu opened");
-    }, 400);
+    }, 300);
   }
 
   closeMenu() {
@@ -169,6 +195,7 @@ class MobileNavigation {
 
     // Restore body scroll
     this.body.style.overflow = "";
+    this.body.classList.remove("menu-open");
 
     // Update hamburger icon
     const icon = this.hamburger.querySelector("i");
@@ -177,26 +204,34 @@ class MobileNavigation {
       icon.classList.add("fa-bars");
     }
 
+    // FIXED: Reduced timeout
     setTimeout(() => {
       this.isAnimating = false;
       console.log("✅ Menu closed");
-    }, 400);
+    }, 300);
   }
 
   scrollToSection(href) {
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      const headerHeight =
-        document.getElementById("header")?.offsetHeight || 80;
-      const targetPosition =
-        targetElement.getBoundingClientRect().top +
-        window.pageYOffset -
-        headerHeight;
+    try {
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        const headerHeight =
+          document.getElementById("header")?.offsetHeight || 80;
+        const targetPosition =
+          targetElement.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight;
 
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
+        console.log("📍 Scrolling to position:", targetPosition);
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+      } else {
+        console.warn("⚠️ Target element not found:", href);
+      }
+    } catch (error) {
+      console.error("❌ Scroll to section failed:", error);
     }
   }
 }
@@ -275,9 +310,9 @@ function animateValue(element, start, end, duration) {
   window.requestAnimationFrame(step);
 }
 
-// Scroll effects
+// FIXED: Enhanced scroll effects with better link handling
 function initializeScrollEffects() {
-  const scrollLinks = document.querySelectorAll('a[href^="#"]');
+  const scrollLinks = document.querySelectorAll('a[href^="#"]:not(nav a)'); // Exclude nav links
 
   scrollLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
