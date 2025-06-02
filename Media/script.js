@@ -28,6 +28,8 @@ function initializeNavigation() {
   const nav = document.getElementById("nav");
   const navLinks = document.querySelectorAll("nav ul li a");
 
+  console.log("Navigation links found:", navLinks.length); // Debug log
+
   // Hamburger click handler
   hamburger?.addEventListener("click", (e) => {
     e.preventDefault();
@@ -42,27 +44,63 @@ function initializeNavigation() {
     toggleMenu();
   });
 
-  // Navigation link click handlers
+  // Navigation link click handlers - Updated with better event handling
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      // Get the href before any potential menu closing
+      // Don't prevent default for navigation links
       const href = link.getAttribute("href");
+
+      console.log("Navigation link clicked:", href); // Debug log
 
       // Close menu if it's open
       if (nav.classList.contains("active")) {
         toggleMenu();
-      }
 
-      // Navigate to the page
-      if (href) {
-        window.location.href = href;
+        // Small delay to let menu close animation start
+        setTimeout(() => {
+          if (href && href !== "#") {
+            window.location.href = href;
+          }
+        }, 100);
+      } else {
+        // Menu not open, navigate immediately
+        if (href && href !== "#") {
+          window.location.href = href;
+        }
       }
     });
   });
 
-  // Prevent menu from closing when clicking inside nav
+  // Modified: Only prevent propagation for non-link clicks
   nav?.addEventListener("click", (e) => {
-    e.stopPropagation();
+    // Only stop propagation if the click is NOT on a link
+    if (!e.target.closest("a")) {
+      e.stopPropagation();
+    }
+  });
+
+  // Alternative approach: Use event delegation for better reliability
+  nav?.addEventListener("click", (e) => {
+    const clickedLink = e.target.closest("a");
+    if (clickedLink) {
+      const href = clickedLink.getAttribute("href");
+
+      if (href && href !== "#") {
+        console.log("Navigation via delegation:", href); // Debug log
+
+        // Close menu and navigate
+        if (nav.classList.contains("active")) {
+          toggleMenu();
+
+          // Navigate after a short delay to allow menu animation
+          setTimeout(() => {
+            window.location.href = href;
+          }, 150);
+        } else {
+          window.location.href = href;
+        }
+      }
+    }
   });
 }
 
