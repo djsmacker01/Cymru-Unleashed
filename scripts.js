@@ -48,30 +48,45 @@ const toggleMenu = () => {
   }
 };
 
-hamburger?.addEventListener("click", (e) => {
-  e.stopPropagation();
-  toggleMenu();
-});
-
-overlay?.addEventListener("click", (e) => {
-  e.stopPropagation();
-  toggleMenu();
-});
-
-// Close menu when clicking navigation links
-document.querySelectorAll("nav a").forEach((item) => {
-  item.addEventListener("click", (e) => {
+// Initialize navigation event listeners
+const initializeNavigation = () => {
+  hamburger?.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (nav?.classList.contains("active")) {
-      toggleMenu();
-    }
+    toggleMenu();
   });
-});
 
-// Prevent clicks inside nav from closing the menu
-nav?.addEventListener("click", (e) => {
-  e.stopPropagation();
-});
+  overlay?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  // Close menu when clicking navigation links
+  document.querySelectorAll("nav a").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const href = item.getAttribute("href");
+      if (nav?.classList.contains("active")) {
+        toggleMenu();
+      }
+      // Add a small delay before navigation
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    });
+  });
+
+  // Prevent clicks inside nav from closing the menu
+  nav?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+};
+
+// Initialize navigation when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeNavigation);
 
 // Sticky Header on Scroll
 window.addEventListener("scroll", () => {

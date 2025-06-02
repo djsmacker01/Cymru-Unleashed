@@ -844,6 +844,7 @@ footer {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        pointer-events: auto;
     }
 
     nav.active {
@@ -856,11 +857,13 @@ footer {
         align-items: center;
         position: relative;
         z-index: 1061;
+        pointer-events: auto;
     }
 
     nav ul li {
         margin: 15px 0;
         width: 100%;
+        pointer-events: auto;
     }
 
     nav ul li a {
@@ -872,6 +875,8 @@ footer {
         width: 100%;
         position: relative;
         z-index: 1061;
+        pointer-events: auto;
+        cursor: pointer;
     }
 
     .overlay {
