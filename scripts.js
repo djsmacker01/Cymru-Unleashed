@@ -28,74 +28,345 @@ const carouselSlides = [
 ];
 
 // Mobile Navigation Toggle
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-const overlay = document.getElementById("overlay");
+// REPLACE THE NAVIGATION SECTION IN YOUR scripts.js WITH THIS:
 
-const toggleMenu = () => {
-  nav.classList.toggle("active");
-  hamburger.classList.toggle("active");
-  overlay.classList.toggle("active");
-  hamburger.innerHTML = nav.classList.contains("active")
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
-
-  // Toggle body scroll
-  document.body.style.overflow = nav.classList.contains("active")
-    ? "hidden"
-    : "";
-};
-
-// Initialize navigation event listeners
-const initializeNavigation = () => {
-  // Hamburger click handler
-  if (hamburger) {
-    hamburger.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
+// Refined Mobile Navigation - Complete Working Solution
+class MobileNavigation {
+  constructor() {
+    this.nav = document.getElementById("nav");
+    this.hamburger = document.getElementById("hamburger");
+    this.overlay = document.getElementById("overlay");
+    this.body = document.body;
+    this.isMenuOpen = false;
+    this.isAnimating = false;
+    
+    this.init();
   }
 
-  // Overlay click handler
-  if (overlay) {
-    overlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
+  init() {
+    if (!this.nav || !this.hamburger || !this.overlay) {
+      console.error("Navigation elements not found");
+      return;
+    }
+
+    this.setupEventListeners();
+    this.setupKeyboardNavigation();
+    this.preventBodyScroll();
+    console.log("🎯 Navigation system initialized successfully!");
   }
 
-  // Navigation links click handler
-  const navLinks = document.querySelectorAll("nav a");
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
+  setupEventListeners() {
+    // Hamburger click handler
+    this.hamburger.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
+      this.toggleMenu();
+    });
 
-      const href = link.getAttribute("href");
-      if (nav && nav.classList.contains("active")) {
-        toggleMenu();
+    // Overlay click handler
+    this.overlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (this.isMenuOpen) {
+        this.closeMenu();
       }
-
-      // Navigate after menu closes
-      setTimeout(() => {
-        window.location.href = href;
-      }, 300);
     });
-  });
 
-  // Prevent menu from closing when clicking inside
-  if (nav) {
-    nav.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    // Navigation links - using event delegation for better performance
+    this.nav.addEventListener("click", (e) => {
+      const link = e.target.closest("a");
+      
+      if (link) {
+        e.preventDefault(); // Prevent default initially
+        
+        const href = link.getAttribute("href");
+        const isExternalLink = href && (href.startsWith("http") || href.startsWith("mailto") || href.startsWith("tel"));
+        const isHashLink = href && href.startsWith("#");
+        
+        console.log("🔗 Navigation link clicked:", href);
+        
+        // Update active link
+        this.updateActiveLink(link);
+        
+        if (href && href !== "#") {
+          if (this.isMenuOpen) {
+            // Close menu first, then navigate
+            this.closeMenu();
+            
+            // Wait for menu close animation to complete
+            setTimeout(() => {
+              if (isExternalLink) {
+                window.open(href, link.target || "_self");
+              } else if (isHashLink) {
+                // Handle anchor links
+                this.scrollToSection(href);
+              } else {
+                // Handle internal navigation
+                window.location.href = href;
+              }
+            }, 300); // Match CSS transition duration
+            
+          } else {
+            // Menu not open, navigate immediately
+            if (isExternalLink) {
+              window.open(href, link.target || "_self");
+            } else if (isHashLink) {
+              this.scrollToSection(href);
+            } else {
+              window.location.href = href;
+            }
+          }
+        }
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (this.isMenuOpen && !this.nav.contains(e.target) && !this.hamburger.contains(e.target)) {
+        this.closeMenu();
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768 && this.isMenuOpen) {
+        this.closeMenu();
+      }
     });
   }
-};
+
+  setupKeyboardNavigation() {
+    // ESC key to close menu
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.isMenuOpen) {
+        this.closeMenu();
+        this.hamburger.focus();
+      }
+    });
+
+    // Tab trapping within menu
+    this.nav.addEventListener("keydown", (e) => {
+      if (e.key === "Tab" && this.isMenuOpen) {
+        const focusableElements = this.nav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    });
+  }
+
+  preventBodyScroll() {
+    // Prevent body scroll when menu is open
+    const preventScroll = (e) => {
+      if (this.isMenuOpen) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+    document.addEventListener("wheel", preventScroll, { passive: false });
+  }
+
+  toggleMenu() {
+    if (this.isAnimating) return;
+    
+    if (this.isMenuOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
+  }
+
+  openMenu() {
+    if (this.isAnimating || this.isMenuOpen) return;
+    
+    this.isAnimating = true;
+    this.isMenuOpen = true;
+
+    // Add classes
+    this.nav.classList.add("active");
+    this.hamburger.classList.add("active");
+    this.overlay.classList.add("active");
+    
+    // Prevent body scroll
+    this.body.style.overflow = "hidden";
+    
+    // Update hamburger icon
+    this.updateHamburgerIcon(true);
+    
+    // Set focus to first navigation item
+    setTimeout(() => {
+      const firstLink = this.nav.querySelector("a");
+      if (firstLink) {
+        firstLink.focus();
+      }
+      this.isAnimating = false;
+    }, 300);
+
+    console.log("📱 Menu opened");
+  }
+
+  closeMenu() {
+    if (this.isAnimating || !this.isMenuOpen) return;
+    
+    this.isAnimating = true;
+    this.isMenuOpen = false;
+
+    // Remove classes
+    this.nav.classList.remove("active");
+    this.hamburger.classList.remove("active");
+    this.overlay.classList.remove("active");
+    
+    // Restore body scroll
+    this.body.style.overflow = "";
+    
+    // Update hamburger icon
+    this.updateHamburgerIcon(false);
+    
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 300);
+
+    console.log("❌ Menu closed");
+  }
+
+  updateHamburgerIcon(isOpen) {
+    const icon = this.hamburger.querySelector("i");
+    if (icon) {
+      if (isOpen) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-times");
+      } else {
+        icon.classList.remove("fa-times");
+        icon.classList.add("fa-bars");
+      }
+    }
+  }
+
+  updateActiveLink(activeLink) {
+    // Remove active class from all links
+    this.nav.querySelectorAll("a").forEach(link => {
+      link.classList.remove("active");
+    });
+    
+    // Add active class to clicked link
+    activeLink.classList.add("active");
+  }
+
+  scrollToSection(href) {
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      const headerHeight = document.getElementById("header")?.offsetHeight || 0;
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+      });
+      
+      console.log("🎯 Scrolled to section:", href);
+    }
+  }
+}
+
+// REMOVE THESE OLD FUNCTIONS COMPLETELY:
+// - toggleMenu
+// - initializeNavigation  
+// - The old navigation event listeners
+
+// KEEP ALL YOUR OTHER EXISTING CODE:
+// - Carousel Configuration
+// - Countdown Timer
+// - Language Toggle
+// - Lazy Loading
+// - etc.
 
 // Initialize navigation when DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeNavigation);
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize mobile navigation
+  new MobileNavigation();
+  
+  // Keep your existing initializations:
+  console.log("DOM loaded, initializing carousel...");
+  initializeCarousel();
+  
+  console.log("🚀 All systems initialized and ready!");
+});
+// const hamburger = document.getElementById("hamburger");
+// const nav = document.getElementById("nav");
+// const overlay = document.getElementById("overlay");
+
+// const toggleMenu = () => {
+//   nav.classList.toggle("active");
+//   hamburger.classList.toggle("active");
+//   overlay.classList.toggle("active");
+//   hamburger.innerHTML = nav.classList.contains("active")
+//     ? '<i class="fas fa-times"></i>'
+//     : '<i class="fas fa-bars"></i>';
+
+//   // Toggle body scroll
+//   document.body.style.overflow = nav.classList.contains("active")
+//     ? "hidden"
+//     : "";
+// };
+
+// Initialize navigation event listeners
+// const initializeNavigation = () => {
+//   // Hamburger click handler
+//   if (hamburger) {
+//     hamburger.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       e.stopPropagation();
+//       toggleMenu();
+//     });
+//   }
+
+//   // Overlay click handler
+//   if (overlay) {
+//     overlay.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       e.stopPropagation();
+//       toggleMenu();
+//     });
+//   }
+
+//   // Navigation links click handler
+//   const navLinks = document.querySelectorAll("nav a");
+//   navLinks.forEach((link) => {
+//     link.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       e.stopPropagation();
+
+//       const href = link.getAttribute("href");
+//       if (nav && nav.classList.contains("active")) {
+//         toggleMenu();
+//       }
+
+//       // Navigate after menu closes
+//       setTimeout(() => {
+//         window.location.href = href;
+//       }, 300);
+//     });
+//   });
+
+//   // Prevent menu from closing when clicking inside
+//   if (nav) {
+//     nav.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       e.stopPropagation();
+//     });
+//   }
+// };
+
+// Initialize navigation when DOM is loaded
+// document.addEventListener("DOMContentLoaded", initializeNavigation);
 
 // Sticky Header on Scroll
 window.addEventListener("scroll", () => {
