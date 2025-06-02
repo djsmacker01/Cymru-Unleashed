@@ -45,18 +45,11 @@ function initializeNavigation() {
   // Navigation link click handlers
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const href = link.getAttribute("href");
-
       // Close menu before navigation
       if (nav.classList.contains("active")) {
         toggleMenu();
       }
-
-      // Navigate to the page
-      if (href) {
-        window.location.href = href;
-      }
+      // Allow the default link behavior to continue
     });
   });
 
