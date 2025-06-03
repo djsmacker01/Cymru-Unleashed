@@ -6,8 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const heroSubtitle = document.querySelector(".hero-subtitle");
     const heroImage = document.querySelector(".hero-illustration img");
 
-    if (heroTitle) heroTitle.textContent = mediaData.hero.title;
-    if (heroSubtitle) heroSubtitle.textContent = mediaData.hero.subtitle;
+    if (heroTitle) {
+      heroTitle.textContent = mediaData.hero.title;
+    }
+    if (heroSubtitle) {
+      heroSubtitle.textContent = mediaData.hero.subtitle;
+    }
     if (heroImage) {
       heroImage.src = mediaData.hero.image;
       heroImage.alt = mediaData.hero.imageAlt;
@@ -20,9 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const pressDescription = document.querySelector(".press-intro p");
     const pressLogos = document.querySelector(".press-logos");
 
-    if (pressTitle) pressTitle.textContent = mediaData.pressCoverage.title;
-    if (pressDescription)
+    if (pressTitle) {
+      pressTitle.textContent = mediaData.pressCoverage.title;
+    }
+    if (pressDescription) {
       pressDescription.textContent = mediaData.pressCoverage.description;
+    }
     if (pressLogos) {
       pressLogos.innerHTML = mediaData.pressCoverage.logos
         .map(
@@ -61,7 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const newsTitle = newsSection.querySelector("h2");
       const newsGrid = newsSection.querySelector(".news-grid");
 
-      if (newsTitle) newsTitle.textContent = mediaData.latestNews.title;
+      if (newsTitle) {
+        newsTitle.textContent = mediaData.latestNews.title;
+      }
       if (newsGrid) {
         newsGrid.innerHTML = mediaData.latestNews.articles
           .map(
@@ -97,9 +106,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const socialContent = socialSection.querySelector(".social-content");
       const socialLinks = socialSection.querySelector(".social-links");
 
-      if (socialTitle) socialTitle.textContent = mediaData.socialMedia.title;
-      if (socialSubtitle)
+      if (socialTitle) {
+        socialTitle.textContent = mediaData.socialMedia.title;
+      }
+      if (socialSubtitle) {
         socialSubtitle.textContent = mediaData.socialMedia.subtitle;
+      }
 
       if (socialTabs) {
         socialTabs.innerHTML = mediaData.socialMedia.platforms
@@ -201,9 +213,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const featuredVideo = videoSection.querySelector(".featured-video");
       const videoThumbnails = videoSection.querySelector(".video-thumbnails");
 
-      if (videoTitle) videoTitle.textContent = mediaData.videos.title;
-      if (videoDescription)
+      if (videoTitle) {
+        videoTitle.textContent = mediaData.videos.title;
+      }
+      if (videoDescription) {
         videoDescription.textContent = mediaData.videos.description;
+      }
 
       if (featuredVideo) {
         featuredVideo.innerHTML = `
@@ -253,9 +268,12 @@ document.addEventListener("DOMContentLoaded", function () {
         ".media-kit-image img"
       );
 
-      if (mediaKitTitle) mediaKitTitle.textContent = mediaData.mediaKit.title;
-      if (mediaKitDescription)
+      if (mediaKitTitle) {
+        mediaKitTitle.textContent = mediaData.mediaKit.title;
+      }
+      if (mediaKitDescription) {
         mediaKitDescription.textContent = mediaData.mediaKit.description;
+      }
       if (mediaKitImage) {
         mediaKitImage.src = mediaData.mediaKit.previewImage;
         mediaKitImage.alt = "Media Kit Preview";
@@ -300,11 +318,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const contactDetails =
         pressContactSection.querySelector(".contact-details");
 
-      if (pressContactTitle)
+      if (pressContactTitle) {
         pressContactTitle.textContent = mediaData.pressContact.title;
-      if (pressContactDescription)
+      }
+      if (pressContactDescription) {
         pressContactDescription.textContent =
           mediaData.pressContact.description;
+      }
 
       if (contactDetails) {
         contactDetails.innerHTML = mediaData.pressContact.contacts
@@ -350,7 +370,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const contactInfo = footer.querySelector(".footer-links:last-child ul");
       const copyright = footer.querySelector(".copyright p");
 
-      if (footerTagline) footerTagline.textContent = mediaData.footer.tagline;
+      if (footerTagline) {
+        footerTagline.textContent = mediaData.footer.tagline;
+      }
 
       if (partnerLogos) {
         partnerLogos.innerHTML = mediaData.footer.partners
@@ -404,7 +426,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
       }
 
-      if (copyright) copyright.textContent = mediaData.footer.copyright;
+      if (copyright) {
+        copyright.textContent = mediaData.footer.copyright;
+      }
     }
   }
 
