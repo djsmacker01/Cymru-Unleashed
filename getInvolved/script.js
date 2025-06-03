@@ -356,3 +356,49 @@ window.addEventListener("load", () => {
 
 // Handle touch events for mobile
 document.addEventListener("touchstart", () => {}, { passive: true });
+
+// Intersection Observer for scroll animations
+const observerOptions = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.1,
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, observerOptions);
+
+// Observe all elements with animate-on-scroll class
+document.addEventListener("DOMContentLoaded", () => {
+  const animatedElements = document.querySelectorAll(".animate-on-scroll");
+  animatedElements.forEach((element) => observer.observe(element));
+
+  // Smooth scroll for hero buttons
+  const scrollIndicator = document.querySelector(".hero-scroll-indicator");
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener("click", () => {
+      const optionsSection = document.querySelector(".options-intro");
+      if (optionsSection) {
+        optionsSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  // Add hover effect to buttons
+  const buttons = document.querySelectorAll(".btn");
+  buttons.forEach((button) => {
+    button.addEventListener("mouseenter", () => {
+      button.style.transform = "translateY(-3px)";
+      button.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
+    });
+
+    button.addEventListener("mouseleave", () => {
+      button.style.transform = "translateY(0)";
+      button.style.boxShadow = "none";
+    });
+  });
+});

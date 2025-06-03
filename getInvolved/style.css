@@ -1,4 +1,3 @@
-
 /* Global Styles */
 :root {
     --primary: #D3071D;
@@ -160,32 +159,181 @@ nav ul li a.active {
     color: var(--dark);
 }
 
-/* Page Hero */
+/* Hero Section Styles */
 .page-hero {
-    height: 40vh;
-    min-height: 300px;
+    position: relative;
+    min-height: 80vh;
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/api/placeholder/1200/600") center/cover no-repeat;
-    color: var(--light);
-    text-align: center;
-    margin-top: 80px;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+    z-index: 1;
 }
 
 .page-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+}
+
+.hero-text-wrapper {
     max-width: 800px;
     margin: 0 auto;
 }
 
-.page-hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 20px;
-    text-transform: uppercase;
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
 }
 
-.page-hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+.hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    opacity: 0;
+}
+
+.btn-primary {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    padding: 1rem 2rem;
+    border: 2px solid white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: white;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/* Animation Classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-text {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.delay-3 {
+    animation-delay: 0.6s;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-20px);
+    }
+
+    60% {
+        transform: translateY(-10px);
+    }
 }
 
 /* Get Involved Page Specific Styles */
@@ -869,11 +1017,11 @@ footer {
     }
 
     .page-hero-content h1 {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
 
     .page-hero-content p {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     section {
@@ -909,5 +1057,25 @@ footer {
     .contact-info {
         flex-direction: column;
         align-items: center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
     }
 }
