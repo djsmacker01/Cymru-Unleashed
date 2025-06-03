@@ -320,49 +320,49 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="volunteer-name">Full Name</label>
-                                <input type="text" class="form-control" id="volunteer-name" required>
+                                <input type="text" class="form-control" id="volunteer-name" name="name" required>
                             </div>
                             <div class="form-group">
                                 <label for="volunteer-email">Email Address</label>
-                                <input type="email" class="form-control" id="volunteer-email" required>
+                                <input type="email" class="form-control" id="volunteer-email" name="email" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="volunteer-phone">Phone Number</label>
-                                <input type="tel" class="form-control" id="volunteer-phone">
+                                <input type="tel" class="form-control" id="volunteer-phone" name="phone">
                             </div>
                             <div class="form-group">
                                 <label for="volunteer-location">Location in Wales</label>
-                                <input type="text" class="form-control" id="volunteer-location" required>
+                                <input type="text" class="form-control" id="volunteer-location" name="location" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Areas of Interest</label>
                             <div class="form-check">
-                                <input type="checkbox" id="sports-events">
+                                <input type="checkbox" id="sports-events" name="interests[]" value="sports-events">
                                 <label for="sports-events">Sports Events & Workshops</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="art-installations">
+                                <input type="checkbox" id="art-installations" name="interests[]" value="art-installations">
                                 <label for="art-installations">Art Installations</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="digital-campaign">
+                                <input type="checkbox" id="digital-campaign" name="interests[]" value="digital-campaign">
                                 <label for="digital-campaign">Digital Campaign & Social Media</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="general-support">
+                                <input type="checkbox" id="general-support" name="interests[]" value="general-support">
                                 <label for="general-support">General Event Support</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="volunteer-experience">Relevant Experience</label>
-                            <textarea class="form-control" id="volunteer-experience"></textarea>
+                            <textarea class="form-control" id="volunteer-experience" name="experience"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="volunteer-availability">Availability</label>
-                            <textarea class="form-control" id="volunteer-availability"
+                            <textarea class="form-control" id="volunteer-availability" name="availability"
                                 placeholder="Please share your general availability (weekdays, weekends, specific dates)"></textarea>
                         </div>
                         <div class="form-submit">
@@ -383,55 +383,55 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="school-name">School Name</label>
-                                <input type="text" class="form-control" id="school-name" required>
+                                <input type="text" class="form-control" id="school-name" name="school_name" required>
                             </div>
                             <div class="form-group">
                                 <label for="contact-name">Contact Person</label>
-                                <input type="text" class="form-control" id="contact-name" required>
+                                <input type="text" class="form-control" id="contact-name" name="contact_name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="position">Position</label>
-                                <input type="text" class="form-control" id="position" required>
+                                <input type="text" class="form-control" id="position" name="position" required>
                             </div>
                             <div class="form-group">
                                 <label for="school-email">Email Address</label>
-                                <input type="email" class="form-control" id="school-email" required>
+                                <input type="email" class="form-control" id="school-email" name="email" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="school-phone">Phone Number</label>
-                                <input type="tel" class="form-control" id="school-phone" required>
+                                <input type="tel" class="form-control" id="school-phone" name="phone" required>
                             </div>
                             <div class="form-group">
                                 <label for="school-location">School Location</label>
-                                <input type="text" class="form-control" id="school-location" required>
+                                <input type="text" class="form-control" id="school-location" name="location" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Interested In</label>
                             <div class="form-check">
-                                <input type="checkbox" id="hosting-events">
+                                <input type="checkbox" id="hosting-events" name="interests[]" value="hosting-events">
                                 <label for="hosting-events">Hosting Events or Workshops</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="curriculum">
+                                <input type="checkbox" id="curriculum" name="interests[]" value="curriculum">
                                 <label for="curriculum">Curriculum Resources</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="vr-experience">
+                                <input type="checkbox" id="vr-experience" name="interests[]" value="vr-experience">
                                 <label for="vr-experience">VR Experience Showcase</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="partnership">
+                                <input type="checkbox" id="partnership" name="interests[]" value="partnership">
                                 <label for="partnership">Long-term Partnership</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="student-age">Student Age Range</label>
-                            <select class="form-control" id="student-age" required>
+                            <select class="form-control" id="student-age" name="student_age" required>
                                 <option value="">Select age range</option>
                                 <option value="primary">Primary (7-11)</option>
                                 <option value="lower-secondary">Lower Secondary (11-14)</option>
@@ -441,7 +441,7 @@
                         </div>
                         <div class="form-group">
                             <label for="additional-info">Additional Information</label>
-                            <textarea class="form-control" id="additional-info"
+                            <textarea class="form-control" id="additional-info" name="additional_info"
                                 placeholder="Please share any specific details or requests"></textarea>
                         </div>
                         <div class="form-submit">
@@ -462,11 +462,11 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="org-name">Organization Name</label>
-                                <input type="text" class="form-control" id="org-name" required>
+                                <input type="text" class="form-control" id="org-name" name="org_name" required>
                             </div>
                             <div class="form-group">
                                 <label for="org-type">Organization Type</label>
-                                <select class="form-control" id="org-type" required>
+                                <select class="form-control" id="org-type" name="org_type" required>
                                     <option value="">Select type</option>
                                     <option value="nonprofit">Non-profit / Charity</option>
                                     <option value="business">Business</option>
@@ -482,43 +482,43 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="contact-person">Contact Person</label>
-                                <input type="text" class="form-control" id="contact-person" required>
+                                <input type="text" class="form-control" id="contact-person" name="contact_name" required>
                             </div>
                             <div class="form-group">
                                 <label for="contact-email">Email Address</label>
-                                <input type="email" class="form-control" id="contact-email" required>
+                                <input type="email" class="form-control" id="contact-email" name="email" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="contact-phone">Phone Number</label>
-                            <input type="tel" class="form-control" id="contact-phone">
+                            <input type="tel" class="form-control" id="contact-phone" name="phone">
                         </div>
                         <div class="form-group">
                             <label>Partnership Interest</label>
                             <div class="form-check">
-                                <input type="checkbox" id="sponsorship">
+                                <input type="checkbox" id="sponsorship" name="interests[]" value="sponsorship">
                                 <label for="sponsorship">Sponsorship Opportunities</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="content-collab">
+                                <input type="checkbox" id="content-collab" name="interests[]" value="content-collab">
                                 <label for="content-collab">Content Collaboration</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="resource-sharing">
+                                <input type="checkbox" id="resource-sharing" name="interests[]" value="resource-sharing">
                                 <label for="resource-sharing">Resource Sharing</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="event-partnership">
+                                <input type="checkbox" id="event-partnership" name="interests[]" value="event-partnership">
                                 <label for="event-partnership">Event Partnership</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" id="other-partnership">
+                                <input type="checkbox" id="other-partnership" name="interests[]" value="other-partnership">
                                 <label for="other-partnership">Other</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="partnership-details">Partnership Details</label>
-                            <textarea class="form-control" id="partnership-details"
+                            <textarea class="form-control" id="partnership-details" name="details"
                                 placeholder="Please describe how you envision partnering with Cymru Unleashed"
                                 required></textarea>
                         </div>
