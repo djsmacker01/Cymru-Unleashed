@@ -66,7 +66,7 @@ const mediaData = {
     title: "Latest News",
     articles: [
       {
-        image: "Images/sportworkshop.jpg",
+        image: "/Images/sportworkshop.jpg",
         imageAlt:
           "Young women participating in a football training session at a Cymru Unleashed event",
         source: {
