@@ -402,3 +402,105 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// Hero Section Animations
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize particles
+  const particlesContainer = document.querySelector(".hero-particles");
+  if (particlesContainer) {
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      const size = Math.random() * 5 + 2;
+      const opacity = Math.random() * 0.5;
+      const duration = Math.random() * 10 + 5;
+      const delay = Math.random() * 5;
+      const position = {
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+      };
+
+      particle.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: rgba(255, 255, 255, ${opacity});
+                border-radius: 50%;
+                top: ${position.top};
+                left: ${position.left};
+                animation: float ${duration}s infinite ease-in-out;
+                animation-delay: ${delay}s;
+            `;
+      particlesContainer.appendChild(particle);
+    }
+  }
+
+  // Animate numbers in stats
+  const stats = document.querySelectorAll(".stat-number");
+  stats.forEach((stat) => {
+    const target = parseInt(stat.getAttribute("data-count") ?? "0", 10);
+    const duration = 2000; // 2 seconds
+    const step = target / (duration / 16); // 60fps
+    let current = 0;
+
+    const updateNumber = () => {
+      current += step;
+      if (current >= target) {
+        stat.textContent = target.toString();
+        return;
+      }
+      stat.textContent = Math.floor(current).toString();
+      requestAnimationFrame(updateNumber);
+    };
+
+    // Start animation when element is in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            updateNumber();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(stat);
+  });
+
+  // Enhanced scroll behavior
+  const scrollLinks = document.querySelectorAll(".scroll-link");
+  scrollLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) return;
+
+      const headerOffset = 80;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    });
+  });
+
+  // Parallax effect for hero shapes
+  const shapes = document.querySelectorAll(".shape");
+  window.addEventListener("mousemove", (e) => {
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+
+    shapes.forEach((shape, index) => {
+      const speed = (index + 1) * 0.1;
+      const x = (mouseX - 0.5) * speed * 100;
+      const y = (mouseY - 0.5) * speed * 100;
+      shape.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  });
+});
