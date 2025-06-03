@@ -448,6 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Enhanced scroll behavior for hero buttons
   const scrollLinks = document.querySelectorAll(".scroll-link");
+
   scrollLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -458,26 +459,56 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Add active class to the target tab if it's a form section
-      if (targetId.includes("-content")) {
-        const tabId = targetId.replace("-content", "");
-        const tabButton = document.querySelector(
-          `.form-tab[data-tab="${tabId}"]`
+      // Handle form section navigation
+      if (targetId === "#volunteer-content") {
+        // Activate the volunteer tab
+        const volunteerTab = document.querySelector(
+          '.form-tab[data-tab="volunteer"]'
         );
-        if (tabButton) {
-          tabButton.click();
+        if (volunteerTab) {
+          volunteerTab.click();
         }
       }
 
+      // Calculate scroll position
       const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
 
+      // Smooth scroll to the target
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
       });
+
+      // Add active class to the target section
+      document.querySelectorAll("section").forEach((section) => {
+        section.classList.remove("active");
+      });
+      targetElement.closest("section")?.classList.add("active");
+    });
+  });
+
+  // Initialize form tabs
+  const formTabs = document.querySelectorAll(".form-tab");
+  formTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const tabId = tab.getAttribute("data-tab");
+      const contentId = `${tabId}-content`;
+
+      // Remove active class from all tabs and contents
+      formTabs.forEach((t) => t.classList.remove("active"));
+      document.querySelectorAll(".form-content").forEach((content) => {
+        content.classList.remove("active");
+      });
+
+      // Add active class to clicked tab and corresponding content
+      tab.classList.add("active");
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.classList.add("active");
+      }
     });
   });
 
