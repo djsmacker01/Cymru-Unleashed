@@ -88,6 +88,25 @@ optionButtons.forEach((btn) => {
 const forms = document.querySelectorAll("form");
 
 forms.forEach((form) => {
+  // Add hidden fields for Web3Forms
+  const accessKeyInput = document.createElement("input");
+  accessKeyInput.type = "hidden";
+  accessKeyInput.name = "access_key";
+  accessKeyInput.value = "8e3668ca-c474-406c-bda3-77049a0704fa";
+  form.appendChild(accessKeyInput);
+
+  const botCheckInput = document.createElement("input");
+  botCheckInput.type = "checkbox";
+  botCheckInput.name = "botcheck";
+  botCheckInput.className = "hidden";
+  botCheckInput.style.display = "none";
+  form.appendChild(botCheckInput);
+
+  // Add result div for form submission feedback
+  const resultDiv = document.createElement("div");
+  resultDiv.id = `${form.id}-result`;
+  form.appendChild(resultDiv);
+
   // Real-time validation
   const requiredFields = form.querySelectorAll("[required]");
   requiredFields.forEach((field) => {
@@ -121,18 +140,13 @@ forms.forEach((form) => {
   });
 
   // Form submission
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Simple form validation
     let isValid = true;
-
     requiredFields.forEach((field) => {
-      if (field.value.trim()) {
-        field.classList.remove("invalid");
-        field.nextElementSibling?.classList.contains("error-message") &&
-          field.nextElementSibling.remove();
-      } else {
+      if (!field.value.trim()) {
         isValid = false;
         field.classList.add("invalid");
         if (!field.nextElementSibling?.classList.contains("error-message")) {
@@ -147,71 +161,65 @@ forms.forEach((form) => {
       }
     });
 
-    if (isValid) {
-      const submitButton = form.querySelector('[type="submit"]');
-      const originalText = submitButton.textContent;
-
-      submitButton.disabled = true;
-      submitButton.innerHTML =
-        '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
-      try {
-        // Get form data
-        const formData = new FormData(form);
-        const formType = form.id.split("-")[0]; // volunteer, school, or partner
-
-        // Add form type to the data
-        formData.append("form_type", formType);
-
-        // Send to webform endpoint
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer 8e3668ca-c474-406c-bda3-77049a0704fa",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            access_key: "8e3668ca-c474-406c-bda3-77049a0704fa",
-            ...Object.fromEntries(formData),
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Form submission failed");
-        }
-
-        // Show success message
-        form.innerHTML = `
-          <div class="form-success">
-            <div class="success-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <h3>Thank You!</h3>
-            <p>Your submission has been received. We'll be in touch soon.</p>
-          </div>
-        `;
-      } catch (error) {
-        console.error("Form submission error:", error);
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalText;
-
-        // Show error message
-        const errorDiv = document.createElement("div");
-        errorDiv.className = "error-message";
-        errorDiv.style.color = "var(--primary)";
-        errorDiv.style.marginTop = "10px";
-        errorDiv.textContent =
-          "There was an error submitting the form. Please try again.";
-        form.appendChild(errorDiv);
-      }
-    } else {
-      // Scroll to first error
+    if (!isValid) {
       const firstError = form.querySelector(".invalid");
       if (firstError) {
         firstError.scrollIntoView({ behavior: "smooth", block: "center" });
         firstError.focus();
       }
+      return;
     }
+
+    const submitButton = form.querySelector('[type="submit"]');
+    const originalText = submitButton.textContent;
+    const resultDiv = document.getElementById(`${form.id}-result`);
+
+    submitButton.disabled = true;
+    submitButton.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    resultDiv.innerHTML = "Please wait...";
+
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status === 200) {
+          resultDiv.innerHTML = `
+                    <div class="form-success">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Thank You!</h3>
+                        <p>Your submission has been received. We'll be in touch soon.</p>
+                    </div>
+                `;
+        } else {
+          console.log(response);
+          resultDiv.innerHTML = json.message;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        resultDiv.innerHTML = "Something went wrong! Please try again.";
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+      })
+      .then(function () {
+        form.reset();
+        setTimeout(() => {
+          resultDiv.style.display = "none";
+        }, 3000);
+      });
   });
 });
 
