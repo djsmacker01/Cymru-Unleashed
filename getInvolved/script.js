@@ -446,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(stat);
   });
 
-  // Enhanced scroll behavior
+  // Enhanced scroll behavior for hero buttons
   const scrollLinks = document.querySelectorAll(".scroll-link");
   scrollLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -456,6 +456,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!targetElement) {
         return;
+      }
+
+      // Add active class to the target tab if it's a form section
+      if (targetId.includes("-content")) {
+        const tabId = targetId.replace("-content", "");
+        const tabButton = document.querySelector(
+          `.form-tab[data-tab="${tabId}"]`
+        );
+        if (tabButton) {
+          tabButton.click();
+        }
       }
 
       const headerOffset = 80;
