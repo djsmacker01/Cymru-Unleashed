@@ -121,7 +121,7 @@ forms.forEach((form) => {
   });
 
   // Form submission
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     // Simple form validation
@@ -148,7 +148,6 @@ forms.forEach((form) => {
     });
 
     if (isValid) {
-      // Simulate form submission
       const submitButton = form.querySelector('[type="submit"]');
       const originalText = submitButton.textContent;
 
@@ -156,7 +155,32 @@ forms.forEach((form) => {
       submitButton.innerHTML =
         '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
-      setTimeout(() => {
+      try {
+        // Get form data
+        const formData = new FormData(form);
+        const formType = form.id.split("-")[0]; // volunteer, school, or partner
+
+        // Add form type to the data
+        formData.append("form_type", formType);
+
+        // Send to webform endpoint
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer 8e3668ca-c474-406c-bda3-77049a0704fa",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            access_key: "8e3668ca-c474-406c-bda3-77049a0704fa",
+            ...Object.fromEntries(formData),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Form submission failed");
+        }
+
+        // Show success message
         form.innerHTML = `
           <div class="form-success">
             <div class="success-icon">
@@ -166,7 +190,20 @@ forms.forEach((form) => {
             <p>Your submission has been received. We'll be in touch soon.</p>
           </div>
         `;
-      }, 1500);
+      } catch (error) {
+        console.error("Form submission error:", error);
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+
+        // Show error message
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.style.color = "var(--primary)";
+        errorDiv.style.marginTop = "10px";
+        errorDiv.textContent =
+          "There was an error submitting the form. Please try again.";
+        form.appendChild(errorDiv);
+      }
     } else {
       // Scroll to first error
       const firstError = form.querySelector(".invalid");
