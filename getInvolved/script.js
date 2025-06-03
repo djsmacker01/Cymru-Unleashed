@@ -459,6 +459,30 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Handle volunteer form navigation
+      if (targetId === "#volunteer-content") {
+        // First activate the volunteer tab
+        const volunteerTab = document.querySelector(
+          '.form-tab[data-tab="volunteer"]'
+        );
+        if (volunteerTab) {
+          // Remove active class from all tabs and contents
+          document
+            .querySelectorAll(".form-tab")
+            .forEach((tab) => tab.classList.remove("active"));
+          document
+            .querySelectorAll(".form-content")
+            .forEach((content) => content.classList.remove("active"));
+
+          // Activate volunteer tab and content
+          volunteerTab.classList.add("active");
+          const volunteerContent = document.getElementById("volunteer-content");
+          if (volunteerContent) {
+            volunteerContent.classList.add("active");
+          }
+        }
+      }
+
       // Calculate scroll position
       const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
@@ -470,16 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
         top: offsetPosition,
         behavior: "smooth",
       });
-
-      // Add animation class to testimonials when scrolled into view
-      if (targetId === "#testimonials-section") {
-        const testimonialCards = document.querySelectorAll(".testimonial-card");
-        testimonialCards.forEach((card, index) => {
-          setTimeout(() => {
-            card.classList.add("animated");
-          }, index * 200); // Stagger the animations
-        });
-      }
     });
   });
 
