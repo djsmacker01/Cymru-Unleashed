@@ -1,6 +1,3 @@
-// Import the SocialMediaAPI
-import SocialMediaAPI from "./socialMediaAPI.js";
-
 // Media page dynamic content renderer
 document.addEventListener("DOMContentLoaded", function () {
   // Render Hero Section
@@ -100,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Render Social Media Section
-  async function renderSocialMedia() {
+  function renderSocialMedia() {
     const socialSection = document.querySelector(".social-section");
     if (socialSection) {
       const socialTitle = socialSection.querySelector(".social-intro h2");
@@ -116,42 +113,16 @@ document.addEventListener("DOMContentLoaded", function () {
         socialSubtitle.textContent = mediaData.socialMedia.subtitle;
       }
 
-      // Initialize the social media API
-      const socialAPI = new SocialMediaAPI();
-
-      // Fetch posts from all platforms
-      const [instagramPosts, twitterPosts, tiktokPosts] = await Promise.all([
-        socialAPI.fetchInstagramPosts(),
-        socialAPI.fetchTwitterPosts(),
-        socialAPI.fetchTikTokPosts(),
-      ]);
-
-      // Update the platforms data with real-time posts
-      mediaData.socialMedia.platforms = mediaData.socialMedia.platforms.map(
-        (platform) => {
-          switch (platform.tabId) {
-            case "instagram":
-              return { ...platform, posts: instagramPosts };
-            case "twitter":
-              return { ...platform, posts: twitterPosts };
-            case "tiktok":
-              return { ...platform, posts: tiktokPosts };
-            default:
-              return platform;
-          }
-        }
-      );
-
       if (socialTabs) {
         socialTabs.innerHTML = mediaData.socialMedia.platforms
           .map(
             (platform) => `
-              <button class="social-tab ${
-                platform.tabId === "instagram" ? "active" : ""
-              }" data-tab="${platform.tabId}">
-                <i class="${platform.icon}"></i> ${platform.name}
-              </button>
-            `
+                    <button class="social-tab ${
+                      platform.tabId === "instagram" ? "active" : ""
+                    }" data-tab="${platform.tabId}">
+                        <i class="${platform.icon}"></i> ${platform.name}
+                    </button>
+                `
           )
           .join("");
       }
@@ -160,66 +131,61 @@ document.addEventListener("DOMContentLoaded", function () {
         socialContent.innerHTML = mediaData.socialMedia.platforms
           .map(
             (platform) => `
-              <div class="social-feed ${
-                platform.tabId === "instagram" ? "active" : ""
-              }" id="${platform.tabId}-feed">
-                ${platform.posts
-                  .map(
-                    (post) => `
-                      <div class="social-post">
-                        ${
-                          post.image
-                            ? `
-                            <div class="post-image">
-                              <img data-src="${post.image}" alt="${platform.name} Post" class="lazy-loading-placeholder">
+                    <div class="social-feed ${
+                      platform.tabId === "instagram" ? "active" : ""
+                    }" id="${platform.tabId}-feed">
+                        ${platform.posts
+                          .map(
+                            (post) => `
+                            <div class="social-post">
+                                ${
+                                  post.image
+                                    ? `
+                                    <div class="post-image">
+                                        <img data-src="${post.image}" alt="${platform.name} Post" class="lazy-loading-placeholder">
+                                    </div>
+                                `
+                                    : ""
+                                }
+                                <div class="post-content">
+                                    <div class="post-header">
+                                        <div class="post-avatar">
+                                            <img data-src="${
+                                              post.avatar
+                                            }" alt="Profile" class="lazy-loading-placeholder">
+                                        </div>
+                                        <div class="post-user">
+                                            <h4>${post.username}</h4>
+                                            <span>${post.timeAgo}</span>
+                                        </div>
+                                    </div>
+                                    <div class="post-text">
+                                        <p>${post.content}</p>
+                                    </div>
+                                    <div class="post-meta">
+                                        ${
+                                          post.retweets
+                                            ? `
+                                            <span>🔄 ${post.retweets} retweets</span>
+                                        `
+                                            : ""
+                                        }
+                                        <span>♥ ${post.likes} likes</span>
+                                        ${
+                                          post.comments
+                                            ? `
+                                            <span>💬 ${post.comments} comments</span>
+                                        `
+                                            : ""
+                                        }
+                                    </div>
+                                </div>
                             </div>
-                          `
-                            : ""
-                        }
-                        <div class="post-content">
-                          <div class="post-header">
-                            <div class="post-avatar">
-                              <img data-src="${
-                                post.avatar
-                              }" alt="Profile" class="lazy-loading-placeholder">
-                            </div>
-                            <div class="post-user">
-                              <h4>${post.username}</h4>
-                              <span>${post.timeAgo}</span>
-                            </div>
-                          </div>
-                          <div class="post-text">
-                            <p>${post.content}</p>
-                          </div>
-                          <div class="post-meta">
-                            ${
-                              post.retweets
-                                ? `
-                                <span>🔄 ${post.retweets} retweets</span>
-                              `
-                                : ""
-                            }
-                            <span>♥ ${post.likes} likes</span>
-                            ${
-                              post.comments
-                                ? `
-                                <span>💬 ${post.comments} comments</span>
-                              `
-                                : ""
-                            }
-                          </div>
-                          <a href="${
-                            post.link
-                          }" target="_blank" rel="noopener noreferrer" class="post-link">
-                            View on ${platform.name}
-                          </a>
-                        </div>
-                      </div>
-                    `
-                  )
-                  .join("")}
-              </div>
-            `
+                        `
+                          )
+                          .join("")}
+                    </div>
+                `
           )
           .join("");
       }
@@ -228,30 +194,13 @@ document.addEventListener("DOMContentLoaded", function () {
         socialLinks.innerHTML = mediaData.socialMedia.socialLinks
           .map(
             (link) => `
-              <a href="${link.url}" class="social-link" target="_blank" rel="noopener noreferrer">
-                <i class="${link.icon}"></i>
-              </a>
-            `
+                    <a href="${link.url}" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <i class="${link.icon}"></i>
+                    </a>
+                `
           )
           .join("");
       }
-
-      // Add event listeners for tab switching
-      const tabs = socialSection.querySelectorAll(".social-tab");
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          // Remove active class from all tabs and feeds
-          tabs.forEach((t) => t.classList.remove("active"));
-          socialSection
-            .querySelectorAll(".social-feed")
-            .forEach((f) => f.classList.remove("active"));
-
-          // Add active class to clicked tab and corresponding feed
-          tab.classList.add("active");
-          const feedId = `${tab.dataset.tab}-feed`;
-          socialSection.querySelector(`#${feedId}`).classList.add("active");
-        });
-      });
     }
   }
 
