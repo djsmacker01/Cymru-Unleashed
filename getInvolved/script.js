@@ -143,10 +143,6 @@ forms.forEach((form) => {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Clear any existing error messages
-    const existingErrors = form.querySelectorAll(".error-message");
-    existingErrors.forEach((error) => error.remove());
-
     // Simple form validation
     let isValid = true;
     requiredFields.forEach((field) => {
@@ -162,8 +158,6 @@ forms.forEach((form) => {
           errorMessage.style.marginTop = "5px";
           field.insertAdjacentElement("afterend", errorMessage);
         }
-      } else {
-        field.classList.remove("invalid");
       }
     });
 
@@ -180,12 +174,10 @@ forms.forEach((form) => {
     const originalText = submitButton.textContent;
     const resultDiv = document.getElementById(`${form.id}-result`);
 
-    // Disable submit button and show loading state
     submitButton.disabled = true;
     submitButton.innerHTML =
       '<i class="fas fa-spinner fa-spin"></i> Submitting...';
     resultDiv.innerHTML = "Please wait...";
-    resultDiv.style.display = "block";
 
     const formData = new FormData(form);
     const object = Object.fromEntries(formData);
