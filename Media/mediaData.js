@@ -100,8 +100,6 @@ const mediaData = {
           "Young participant experiencing the VR showcase of Welsh women's sports journey",
         source: {
           logo: "/Images/klat.jpg",
-          avatar: "/Images/seran.jpeg",
-
           name: "Voice.Wales",
         },
         date: "April 18, 2025",
@@ -135,7 +133,7 @@ const mediaData = {
           },
           {
             image: "/Images/Art_installation.jpg",
-            avatar: "Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "5 days ago",
             content:
@@ -145,7 +143,7 @@ const mediaData = {
           },
           {
             image: "/Images/Virtual_Reality_1.avif",
-            avatar: "Images/seran.jpeg",
+            avatar: "/Images/Virtual_Reality_1.avif",
             username: "@CymruUnleashed",
             timeAgo: "1 week ago",
             content:
