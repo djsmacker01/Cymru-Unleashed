@@ -99,7 +99,7 @@ const mediaData = {
         imageAlt:
           "Young participant experiencing the VR showcase of Welsh women's sports journey",
         source: {
-          logo: "Images/klat.jpg",
+          logo: "/Images/klat.jpg",
           name: "Voice.Wales",
         },
         date: "April 18, 2025",
@@ -122,8 +122,8 @@ const mediaData = {
         tabId: "instagram",
         posts: [
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "2 days ago",
             content:
@@ -132,8 +132,8 @@ const mediaData = {
             comments: 32,
           },
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "5 days ago",
             content:
@@ -142,8 +142,8 @@ const mediaData = {
             comments: 24,
           },
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 week ago",
             content:
@@ -159,8 +159,8 @@ const mediaData = {
         tabId: "tiktok",
         posts: [
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 day ago",
             content:
@@ -169,8 +169,8 @@ const mediaData = {
             comments: 87,
           },
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "3 days ago",
             content:
@@ -179,8 +179,8 @@ const mediaData = {
             comments: 56,
           },
           {
-            image: "Images/seran.jpeg",
-            avatar: "Images/seran.jpeg",
+            image: "/Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "6 days ago",
             content:
@@ -196,7 +196,7 @@ const mediaData = {
         tabId: "twitter",
         posts: [
           {
-            avatar: "Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "3 hours ago",
             content:
@@ -205,7 +205,7 @@ const mediaData = {
             likes: 68,
           },
           {
-            avatar: "Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "1 day ago",
             content:
@@ -214,7 +214,7 @@ const mediaData = {
             likes: 53,
           },
           {
-            avatar: "Images/seran.jpeg",
+            avatar: "/Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "2 days ago",
             content:
@@ -255,26 +255,26 @@ const mediaData = {
     description:
       "Watch stories and highlights from our events, workshops, and initiatives across Wales.",
     featured: {
-      image: "Images/hero1.jpg",
+      image: "/Images/hero1.jpg",
       title: "Cymru Unleashed: The Journey Begins",
       description:
         "Our flagship documentary exploring the stories of young Welsh women in sport and how the Cymru Unleashed initiative is creating pathways for the next generation.",
     },
     thumbnails: [
       {
-        image: "Images/communityWorkshop.jpg",
+        image: "/Images/communityWorkshop.jpg",
         title: "Butetown Workshop Highlights",
       },
       {
-        image: "Images/Art_installation.jpg",
+        image: "/Images/Art_installation.jpg",
         title: "Meet the Artists",
       },
       {
-        image: "Images/Virtual_Reality_1.avif",
+        image: "/Images/Virtual_Reality_1.avif",
         title: "VR Experience Preview",
       },
       {
-        image: "Images/hero2.jpg",
+        image: "/Images/hero2.jpg",
         title: "S4C Interview",
       },
     ],
@@ -285,31 +285,31 @@ const mediaData = {
     title: "Media Kit & Resources",
     description:
       "Download official Cymru Unleashed resources for press, partners, and supporters. Our media kit includes logos, photos, fact sheets, and other materials to help share our story.",
-    previewImage: "Images/media-kit-preview.jpg",
+    previewImage: "/Images/media-kit-preview.jpg",
     downloads: [
       {
         icon: "fas fa-image",
         title: "Logo Pack",
         format: "PNG, SVG, EPS formats (2.4MB)",
-        file: "Resources/logo-pack.zip",
+        file: "/Resources/logo-pack.zip",
       },
       {
         icon: "fas fa-file-pdf",
         title: "Press Release",
         format: "May 2025 (PDF, 340KB)",
-        file: "Resources/press-release.pdf",
+        file: "/Resources/press-release.pdf",
       },
       {
         icon: "fas fa-camera",
         title: "Photo Gallery",
         format: "High-resolution images (ZIP, 18MB)",
-        file: "Resources/photo-gallery.zip",
+        file: "/Resources/photo-gallery.zip",
       },
       {
         icon: "fas fa-file-alt",
         title: "Fact Sheet",
         format: "About Cymru Unleashed (PDF, 520KB)",
-        file: "Resources/fact-sheet.pdf",
+        file: "/Resources/fact-sheet.pdf",
       },
     ],
   },
