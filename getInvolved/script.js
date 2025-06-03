@@ -94,7 +94,7 @@ forms.forEach((form) => {
     field.addEventListener("blur", () => {
       if (field.value.trim()) {
         field.classList.remove("invalid");
-        field.nextElementSibling?.classList.contains("error-message") && 
+        field.nextElementSibling?.classList.contains("error-message") &&
           field.nextElementSibling.remove();
       } else {
         field.classList.add("invalid");
@@ -114,7 +114,7 @@ forms.forEach((form) => {
     field.addEventListener("input", () => {
       if (field.value.trim()) {
         field.classList.remove("invalid");
-        field.nextElementSibling?.classList.contains("error-message") && 
+        field.nextElementSibling?.classList.contains("error-message") &&
           field.nextElementSibling.remove();
       }
     });
@@ -130,7 +130,7 @@ forms.forEach((form) => {
     requiredFields.forEach((field) => {
       if (field.value.trim()) {
         field.classList.remove("invalid");
-        field.nextElementSibling?.classList.contains("error-message") && 
+        field.nextElementSibling?.classList.contains("error-message") &&
           field.nextElementSibling.remove();
       } else {
         isValid = false;
@@ -453,14 +453,15 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const targetId = link.getAttribute("href");
       const targetElement = document.querySelector(targetId);
-      
+
       if (!targetElement) {
         return;
       }
 
       const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
