@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                   post.image
                                     ? `
                                     <div class="post-image">
-                                        <img data-src="${post.image}" alt="${platform.name} Post" class="lazy-loading-placeholder">
+                                        <img src="${post.image}" alt="${platform.name} Post" class="lazy-loading-placeholder" onerror="this.onerror=null; this.src='/Images/placeholder.jpg';">
                                     </div>
                                 `
                                     : ""
@@ -150,9 +150,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="post-content">
                                     <div class="post-header">
                                         <div class="post-avatar">
-                                            <img data-src="${
+                                            <img src="${
                                               post.avatar
-                                            }" alt="Profile" class="lazy-loading-placeholder">
+                                            }" alt="Profile" class="lazy-loading-placeholder" onerror="this.onerror=null; this.src='/Images/placeholder.jpg';">
                                         </div>
                                         <div class="post-user">
                                             <h4>${post.username}</h4>
@@ -201,6 +201,23 @@ document.addEventListener("DOMContentLoaded", function () {
           )
           .join("");
       }
+
+      // Add event listeners for tab switching
+      const tabs = socialSection.querySelectorAll(".social-tab");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active class from all tabs and feeds
+          tabs.forEach((t) => t.classList.remove("active"));
+          socialSection
+            .querySelectorAll(".social-feed")
+            .forEach((f) => f.classList.remove("active"));
+
+          // Add active class to clicked tab and corresponding feed
+          tab.classList.add("active");
+          const feedId = `${tab.dataset.tab}-feed`;
+          socialSection.querySelector(`#${feedId}`).classList.add("active");
+        });
+      });
     }
   }
 

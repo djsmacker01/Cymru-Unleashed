@@ -122,8 +122,8 @@ const mediaData = {
         tabId: "instagram",
         posts: [
           {
-            image: "/Images/sportworkshop.jpg",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/sportworkshop.jpg",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "2 days ago",
             content:
@@ -132,8 +132,8 @@ const mediaData = {
             comments: 32,
           },
           {
-            image: "/Images/Art_installation.jpg",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/Art_installation.jpg",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "5 days ago",
             content:
@@ -142,8 +142,8 @@ const mediaData = {
             comments: 24,
           },
           {
-            image: "/Images/Virtual_Reality_1.avif",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/Virtual_Reality_1.avif",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 week ago",
             content:
@@ -159,8 +159,8 @@ const mediaData = {
         tabId: "tiktok",
         posts: [
           {
-            image: "/Images/communityWorkshop.jpg",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/communityWorkshop.jpg",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 day ago",
             content:
@@ -169,8 +169,8 @@ const mediaData = {
             comments: 87,
           },
           {
-            image: "/Images/Art_installation.jpg",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/Art_installation.jpg",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "3 days ago",
             content:
@@ -179,8 +179,8 @@ const mediaData = {
             comments: 56,
           },
           {
-            image: "/Images/sportworkshop.jpg",
-            avatar: "/Images/seran.jpeg",
+            image: "Images/sportworkshop.jpg",
+            avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "6 days ago",
             content:
@@ -196,7 +196,7 @@ const mediaData = {
         tabId: "twitter",
         posts: [
           {
-            avatar: "/Images/seran.jpeg",
+            avatar: "Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "3 hours ago",
             content:
@@ -205,7 +205,7 @@ const mediaData = {
             likes: 68,
           },
           {
-            avatar: "/Images/seran.jpeg",
+            avatar: "Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "1 day ago",
             content:
@@ -214,7 +214,7 @@ const mediaData = {
             likes: 53,
           },
           {
-            avatar: "/Images/seran.jpeg",
+            avatar: "Images/seran.jpeg",
             username: "@UnleashedWales",
             timeAgo: "2 days ago",
             content:
