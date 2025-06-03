@@ -204,10 +204,23 @@ forms.forEach((form) => {
             </div>
           `;
           form.reset();
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalText;
+
+          // Close the form tab after successful submission
+          const formContent = form.closest(".form-content");
+          if (formContent) {
+            setTimeout(() => {
+              formContent.classList.remove("active");
+              // Reset the active tab
+              document
+                .querySelectorAll(".form-tab")
+                .forEach((tab) => tab.classList.remove("active"));
+            }, 2000);
+          }
         } else {
           console.log(response);
-          resultDiv.innerHTML =
-            json.message || "An error occurred. Please try again.";
+          resultDiv.innerHTML = json.message;
           submitButton.disabled = false;
           submitButton.innerHTML = originalText;
         }
@@ -218,11 +231,10 @@ forms.forEach((form) => {
         submitButton.disabled = false;
         submitButton.innerHTML = originalText;
       })
-      .finally(() => {
-        // Hide result message after 5 seconds
+      .then(function () {
         setTimeout(() => {
           resultDiv.style.display = "none";
-        }, 5000);
+        }, 3000);
       });
   });
 });
