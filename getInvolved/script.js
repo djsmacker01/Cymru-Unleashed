@@ -461,12 +461,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Handle form section navigation
       if (targetId === "#volunteer-content") {
-        // Activate the volunteer tab
+        // Activate the volunteer tab and content
         const volunteerTab = document.querySelector(
           '.form-tab[data-tab="volunteer"]'
         );
+        const volunteerContent = document.getElementById("volunteer-content");
+
+        // Remove active class from all tabs and contents
+        document
+          .querySelectorAll(".form-tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelectorAll(".form-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        // Add active class to volunteer tab and content
         if (volunteerTab) {
-          volunteerTab.click();
+          volunteerTab.classList.add("active");
+        }
+        if (volunteerContent) {
+          volunteerContent.classList.add("active");
         }
       }
 
@@ -481,12 +495,6 @@ document.addEventListener("DOMContentLoaded", () => {
         top: offsetPosition,
         behavior: "smooth",
       });
-
-      // Add active class to the target section
-      document.querySelectorAll("section").forEach((section) => {
-        section.classList.remove("active");
-      });
-      targetElement.closest("section")?.classList.add("active");
     });
   });
 
