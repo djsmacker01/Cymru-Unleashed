@@ -122,7 +122,7 @@ const mediaData = {
         tabId: "instagram",
         posts: [
           {
-            image: "/Images/Virtual_Reality_1.avif",
+            image: "/Images/img3",
             avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "2 days ago",
