@@ -132,7 +132,7 @@ const mediaData = {
             comments: 32,
           },
           {
-            image: "Images/Art_installation.jpg",
+            image: "/Images/Art_installation.jpg",
             avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "5 days ago",
