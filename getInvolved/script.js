@@ -92,13 +92,13 @@ forms.forEach((form) => {
   const requiredFields = form.querySelectorAll("[required]");
   requiredFields.forEach((field) => {
     field.addEventListener("blur", () => {
-      if (!field.value.trim()) {
+      if (field.value.trim()) {
+        field.classList.remove("invalid");
+        field.nextElementSibling?.classList.contains("error-message") && 
+          field.nextElementSibling.remove();
+      } else {
         field.classList.add("invalid");
-        // Add error message
-        if (
-          !field.nextElementSibling ||
-          !field.nextElementSibling.classList.contains("error-message")
-        ) {
+        if (!field.nextElementSibling?.classList.contains("error-message")) {
           const errorMessage = document.createElement("div");
           errorMessage.className = "error-message";
           errorMessage.textContent = "This field is required";
@@ -107,15 +107,6 @@ forms.forEach((form) => {
           errorMessage.style.marginTop = "5px";
           field.insertAdjacentElement("afterend", errorMessage);
         }
-      } else {
-        field.classList.remove("invalid");
-        // Remove error message if exists
-        if (
-          field.nextElementSibling &&
-          field.nextElementSibling.classList.contains("error-message")
-        ) {
-          field.nextElementSibling.remove();
-        }
       }
     });
 
@@ -123,13 +114,8 @@ forms.forEach((form) => {
     field.addEventListener("input", () => {
       if (field.value.trim()) {
         field.classList.remove("invalid");
-        // Remove error message if exists
-        if (
-          field.nextElementSibling &&
-          field.nextElementSibling.classList.contains("error-message")
-        ) {
+        field.nextElementSibling?.classList.contains("error-message") && 
           field.nextElementSibling.remove();
-        }
       }
     });
   });
@@ -142,14 +128,14 @@ forms.forEach((form) => {
     let isValid = true;
 
     requiredFields.forEach((field) => {
-      if (!field.value.trim()) {
+      if (field.value.trim()) {
+        field.classList.remove("invalid");
+        field.nextElementSibling?.classList.contains("error-message") && 
+          field.nextElementSibling.remove();
+      } else {
         isValid = false;
         field.classList.add("invalid");
-        // Add error message if not exists
-        if (
-          !field.nextElementSibling ||
-          !field.nextElementSibling.classList.contains("error-message")
-        ) {
+        if (!field.nextElementSibling?.classList.contains("error-message")) {
           const errorMessage = document.createElement("div");
           errorMessage.className = "error-message";
           errorMessage.textContent = "This field is required";
@@ -157,15 +143,6 @@ forms.forEach((form) => {
           errorMessage.style.fontSize = "0.8rem";
           errorMessage.style.marginTop = "5px";
           field.insertAdjacentElement("afterend", errorMessage);
-        }
-      } else {
-        field.classList.remove("invalid");
-        // Remove error message if exists
-        if (
-          field.nextElementSibling &&
-          field.nextElementSibling.classList.contains("error-message")
-        ) {
-          field.nextElementSibling.remove();
         }
       }
     });
@@ -181,14 +158,14 @@ forms.forEach((form) => {
 
       setTimeout(() => {
         form.innerHTML = `
-                    <div class="form-success">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3>Thank You!</h3>
-                        <p>Your submission has been received. We'll be in touch soon.</p>
-                    </div>
-                `;
+          <div class="form-success">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p>Your submission has been received. We'll be in touch soon.</p>
+          </div>
+        `;
       }, 1500);
     } else {
       // Scroll to first error
@@ -217,7 +194,7 @@ accordionItems.forEach((item) => {
 
     // Set max-height to enable animation
     if (item.classList.contains("active")) {
-      content.style.maxHeight = contentHeight + "px";
+      content.style.maxHeight = `${contentHeight}px`;
     } else {
       content.style.maxHeight = "0";
     }
@@ -229,13 +206,13 @@ const animateElements = document.querySelectorAll(
   ".option-card, .testimonial-card, .accordion-item"
 );
 
-const observer = new IntersectionObserver(
+const scrollObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("animated");
         // Stop observing after animation
-        observer.unobserve(entry.target);
+        scrollObserver.unobserve(entry.target);
       }
     });
   },
@@ -247,7 +224,7 @@ const observer = new IntersectionObserver(
 );
 
 animateElements.forEach((element) => {
-  observer.observe(element);
+  scrollObserver.observe(element);
 });
 
 // Language Toggle
@@ -476,12 +453,14 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const targetId = link.getAttribute("href");
       const targetElement = document.querySelector(targetId);
-      if (!targetElement) return;
+      
+      if (!targetElement) {
+        return;
+      }
 
       const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition =
-        elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
