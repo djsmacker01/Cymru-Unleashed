@@ -132,7 +132,7 @@ const mediaData = {
             comments: 32,
           },
           {
-            image: "/Images/seran.jpeg",
+            image: "/Images/Art_installation.jpg",
             avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "5 days ago",
@@ -142,7 +142,7 @@ const mediaData = {
             comments: 24,
           },
           {
-            image: "/Images/seran.jpeg",
+            image: "/Images/Virtual_Reality_1.avif",
             avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 week ago",
@@ -159,7 +159,7 @@ const mediaData = {
         tabId: "tiktok",
         posts: [
           {
-            image: "/Images/seran.jpeg",
+            image: "/Images/communityWorkshop.jpg",
             avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 day ago",
@@ -169,7 +169,7 @@ const mediaData = {
             comments: 87,
           },
           {
-            image: "/Images/seran.jpeg",
+            image: "/Images/Art_installation.jpg",
             avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "3 days ago",
@@ -179,7 +179,7 @@ const mediaData = {
             comments: 56,
           },
           {
-            image: "/Images/seran.jpeg",
+            image: "/Images/sportworkshop.jpg",
             avatar: "/Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "6 days ago",
