@@ -69,10 +69,10 @@ const mediaData = {
         image: "/Images/sportworkshop.jpg",
         imageAlt:
           "Young women participating in a football training session at a Cymru Unleashed event",
-        // source: {
-        //   logo: "/Images/BBC_Cymru_Wales_2022.png",
-        //   name: "BBC Cymru Wales",
-        // },
+        source: {
+          logo: "/Images/BBC_Cymru_Wales_2022.png",
+          name: "BBC Cymru Wales",
+        },
         date: "May 2, 2025",
         title:
           "Welsh Football Initiative Empowers Young Women Ahead of Euro 2025",
