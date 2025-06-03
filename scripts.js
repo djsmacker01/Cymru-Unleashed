@@ -12,8 +12,8 @@ const carouselSlides = [
   },
   {
     image: "./Images/musicSport.jpg",
-    // title: "Celebrate Welsh Heritage",
-    // description: "Discover the rich culture and traditions of Wales",
+    title: "Celebrate Welsh Heritage",
+    description: "Discover the rich culture and traditions of Wales",
   },
   {
     image: "./Images/cymru_team.jpg",
