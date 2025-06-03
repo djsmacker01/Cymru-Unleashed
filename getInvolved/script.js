@@ -456,6 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetElement = document.querySelector(targetId);
 
       if (!targetElement) {
+        console.error(`Target element not found: ${targetId}`);
         return;
       }
 
@@ -483,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Calculate scroll position
+      // Calculate scroll position with header offset
       const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition =
@@ -494,6 +495,9 @@ document.addEventListener("DOMContentLoaded", () => {
         top: offsetPosition,
         behavior: "smooth",
       });
+
+      // Log for debugging
+      console.log(`Scrolling to ${targetId} at position ${offsetPosition}`);
     });
   });
 
