@@ -142,7 +142,7 @@ const mediaData = {
             comments: 24,
           },
           {
-            image: "Images/Virtual_Reality_1.avif",
+            image: "/Images/Virtual_Reality_1.avif",
             avatar: "Images/seran.jpeg",
             username: "@CymruUnleashed",
             timeAgo: "1 week ago",
