@@ -99,7 +99,7 @@ const mediaData = {
         imageAlt:
           "Young participant experiencing the VR showcase of Welsh women's sports journey",
         source: {
-          //   logo: "/Images/klat.jpg",
+          logo: "/Images/klat.jpg",
           avatar: "/Images/seran.jpeg",
 
           name: "Voice.Wales",
