@@ -69,10 +69,10 @@ const mediaData = {
         image: "/Images/sportworkshop.jpg",
         imageAlt:
           "Young women participating in a football training session at a Cymru Unleashed event",
-        source: {
-          logo: "/Images/BBC_Cymru_Wales_2022.png",
-          name: "BBC Cymru Wales",
-        },
+        // source: {
+        //   logo: "/Images/BBC_Cymru_Wales_2022.png",
+        //   name: "BBC Cymru Wales",
+        // },
         date: "May 2, 2025",
         title:
           "Welsh Football Initiative Empowers Young Women Ahead of Euro 2025",
@@ -81,11 +81,11 @@ const mediaData = {
         link: "#",
       },
       {
-        image: "Images/Art_installation.jpg",
+        image: "/Images/Art_installation.jpg",
         imageAlt:
           "Community art installation created by Cymru Unleashed participants",
         source: {
-          logo: "Images/S4C_logo_2014.png",
+          logo: "/Images/S4C_logo_2014.png",
           name: "S4C",
         },
         date: "April 25, 2025",
@@ -95,7 +95,7 @@ const mediaData = {
         link: "#",
       },
       {
-        image: "Images/Virtual_Reality_1.avif",
+        image: "/Images/Virtual_Reality_1.avif",
         imageAlt:
           "Young participant experiencing the VR showcase of Welsh women's sports journey",
         source: {
