@@ -143,6 +143,10 @@ forms.forEach((form) => {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    // Clear any existing error messages
+    const existingErrors = form.querySelectorAll(".error-message");
+    existingErrors.forEach((error) => error.remove());
+
     // Simple form validation
     let isValid = true;
     requiredFields.forEach((field) => {
@@ -158,6 +162,8 @@ forms.forEach((form) => {
           errorMessage.style.marginTop = "5px";
           field.insertAdjacentElement("afterend", errorMessage);
         }
+      } else {
+        field.classList.remove("invalid");
       }
     });
 
@@ -174,10 +180,12 @@ forms.forEach((form) => {
     const originalText = submitButton.textContent;
     const resultDiv = document.getElementById(`${form.id}-result`);
 
+    // Disable submit button and show loading state
     submitButton.disabled = true;
     submitButton.innerHTML =
       '<i class="fas fa-spinner fa-spin"></i> Submitting...';
     resultDiv.innerHTML = "Please wait...";
+    resultDiv.style.display = "block";
 
     const formData = new FormData(form);
     const object = Object.fromEntries(formData);
@@ -195,17 +203,21 @@ forms.forEach((form) => {
         let json = await response.json();
         if (response.status === 200) {
           resultDiv.innerHTML = `
-                    <div class="form-success">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3>Thank You!</h3>
-                        <p>Your submission has been received. We'll be in touch soon.</p>
-                    </div>
-                `;
+            <div class="form-success">
+              <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <h3>Thank You!</h3>
+              <p>Your submission has been received. We'll be in touch soon.</p>
+            </div>
+          `;
+          form.reset();
         } else {
           console.log(response);
-          resultDiv.innerHTML = json.message;
+          resultDiv.innerHTML =
+            json.message || "An error occurred. Please try again.";
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalText;
         }
       })
       .catch((error) => {
@@ -214,11 +226,11 @@ forms.forEach((form) => {
         submitButton.disabled = false;
         submitButton.innerHTML = originalText;
       })
-      .then(function () {
-        form.reset();
+      .finally(() => {
+        // Hide result message after 5 seconds
         setTimeout(() => {
           resultDiv.style.display = "none";
-        }, 3000);
+        }, 5000);
       });
   });
 });
