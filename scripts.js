@@ -16,7 +16,7 @@ const carouselSlides = [
     description: "Discover the rich culture and traditions of Wales",
   },
   {
-    image: "./Images/cymru_team.jpg",
+    image: "./Images/cymru_team.webp",
     title: "Team Wales",
     description: "Supporting Welsh Women in Football",
   },
