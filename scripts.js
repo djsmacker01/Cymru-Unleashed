@@ -21,7 +21,7 @@ const carouselSlides = [
     description: "Supporting Welsh Women in Football",
   },
   {
-    image: "./Images/CULTURAL FOOTBALL RHYTHMS-fot.jpg",
+    image: "./Images/CULTURAL FOOTBALL RHYTHMS-fot.webp",
     title: "Team Wales",
     description: "Supporting Welsh Women in Football",
   },
