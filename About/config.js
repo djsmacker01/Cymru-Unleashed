@@ -30,7 +30,7 @@ const siteConfig = {
         en: "Founder & Director",
         cy: "Sefydlydd a Chyfarwyddwr",
       },
-      image: "/Images/lady1.jpg",
+      image: "/Images/lady1.webp",
       description: {
         en: "Former Wales international footballer and community coach with over 15 years of experience in sports development.",
         cy: "Chwaraewr pêl-droed rhyngwladol Cymru a hyfforddwr cymunedol gyda dros 15 mlynedd o brofiad mewn datblygu chwaraeon.",
@@ -50,7 +50,7 @@ const siteConfig = {
         en: "Creative Director",
         cy: "Cyfarwyddwr Creadigol",
       },
-      image: "/Images/Megan.jpg",
+      image: "/Images/image.webp",
       description: {
         en: "Artist and educator specialized in community-based art projects and digital media storytelling.",
         cy: "Artist ac addysgwr wedi'i arbenigo mewn prosiectau celf wedi'u seilio ar gymunedau a straeon cyfryngau digidol.",
@@ -70,7 +70,7 @@ const siteConfig = {
         en: "Community Engagement",
         cy: "Ymgysylltu â'r Gymuned",
       },
-      image: "/Images/seran.jpeg",
+      image: "/Images/image.webp",
       description: {
         en: "Community organizer with expertise in youth development and social inclusion programs.",
         cy: "Trefnydd cymunedol gydag arbenigedd mewn rhaglenni datblygu ieuenctid a chynhwysiant cymdeithasol.",
@@ -136,14 +136,14 @@ const siteConfig = {
       youtube: "https://www.youtube.com/@CymruUnleashed",
     },
     partners: [
-      { name: "OTID Entertainment", logo: "Images/otid.png" },
-      { name: "Afrowales", logo: "Images/afrowales.jpeg" },
+      { name: "OTID Entertainment", logo: "Images/otid.webp" },
+      { name: "Afrowales", logo: "Images/afrowales.webp" },
       {
         name: "Race Council Cymru",
-        logo: "Images/race-council-cymru-rcc-logo.png",
+        logo: "Images/race-council-cymru-rcc-logo.webp",
       },
-      { name: "Klat", logo: "Images/klat.jpg" },
-      { name: "Native Radio", logo: "Images/nativeradio.jpg" },
+      { name: "Klat", logo: "Images/klat.webp" },
+      { name: "Native Radio", logo: "Images/nativeradio.webp" },
     ],
     contact: {
       email1: "samuel.habu@otidentertainment.com",
