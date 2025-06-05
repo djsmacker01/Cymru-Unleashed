@@ -11,7 +11,7 @@ const carouselSlides = [
     description: "Be part of something special in Wales",
   },
   {
-    image: "./Images/musicSport.jpg",
+    image: "./Images/musicSport.webp",
     title: "Celebrate Welsh Heritage",
     description: "Discover the rich culture and traditions of Wales",
   },
