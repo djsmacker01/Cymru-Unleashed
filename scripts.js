@@ -1,12 +1,12 @@
 // Carousel Configuration
 const carouselSlides = [
   {
-    image: "./Images/youngcoach.jpg",
+    image: "./Images/youngcoach.webp",
     title: "Welcome to Cymru Unleashed",
     description: "Empowering Welsh Communities Through Sports and Culture",
   },
   {
-    image: "./Images/hero2.jpg",
+    image: "./Images/hero2.webp",
     title: "Join Our Movement",
     description: "Be part of something special in Wales",
   },
