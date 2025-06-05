@@ -1,0 +1,19 @@
+.partner-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-logos img {
+    width: 80px;
+    height: 30px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.partner-logos img:hover {
+    transform: scale(1.05);
+}

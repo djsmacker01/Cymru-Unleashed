@@ -1268,20 +1268,21 @@ footer {
 .partner-logos {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     margin-top: 30px;
     align-items: center;
+    justify-content: center;
 }
 
-.partner-logo {
-    height: 40px;
-    filter: brightness(0) invert(1);
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+.partner-logos img {
+    width: 80px;
+    height: 30px;
+    object-fit: contain;
+    transition: all 0.3s ease;
 }
 
-.partner-logo:hover {
-    opacity: 1;
+.partner-logos img:hover {
+    transform: scale(1.05);
 }
 
 .copyright {
