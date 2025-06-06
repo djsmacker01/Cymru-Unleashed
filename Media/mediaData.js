@@ -159,7 +159,7 @@ const mediaData = {
         tabId: "tiktok",
         posts: [
           {
-            image: "/Images/communityWorkshop.webp",
+            image: "/Images/musicSport.webp",
             avatar: "/Images/seran.webp",
             username: "@CymruUnleashed",
             timeAgo: "1 day ago",
