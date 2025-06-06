@@ -262,7 +262,7 @@ const mediaData = {
     },
     thumbnails: [
       {
-        image: "/Images/communityWorkshop.webp",
+        image: "/Images/youngCoach.webp",
         title: "Butetown Workshop Highlights",
       },
       {
