@@ -23,12 +23,12 @@ const siteConfig = {
   teamMembers: [
     {
       name: {
-        en: "Rhiannon Davies",
-        cy: "Rhiannon Davies",
+        en: "OTID Entertainment (Afrowales) ",
+        cy: "OTID Entertainment (Afrowales) ",
       },
       role: {
-        en: "Founder & Director",
-        cy: "Sefydlydd a Chyfarwyddwr",
+        en: "Lead Partner",
+        cy: "Lead Partner",
       },
       image: "/Images/lady1.webp",
       description: {
