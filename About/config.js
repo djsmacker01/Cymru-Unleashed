@@ -43,11 +43,11 @@ const siteConfig = {
     },
     {
       name: {
-        en: "Megan Thomas",
-        cy: "Megan Thomas",
+        en: "KLAT ",
+        cy: "KLAT ",
       },
       role: {
-        en: "Creative Director",
+        en: "Arts and Creative Direction",
         cy: "Cyfarwyddwr Creadigol",
       },
       image: "/Images/image.webp",
