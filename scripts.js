@@ -1,17 +1,17 @@
 // Carousel Configuration
 const carouselSlides = [
-  {
-    image: "./Images/youngcoach.webp",
-    title: "Welcome to Cymru Unleashed",
-    description: "Empowering Welsh Communities Through Sports and Culture",
-  },
+  // {
+  //   image: "./Images/youngcoach.webp",
+  //   title: "Welcome to Cymru Unleashed",
+  //   description: "Empowering Welsh Communities Through Sports and Culture",
+  // },
   {
     image: "./Images/hero2.webp",
     title: "Join Our Movement",
     description: "Be part of something special in Wales",
   },
   {
-    image: "./Images/musicSport.webp",
+    image: "./Images/hero3.webp",
     title: "Celebrate Welsh Heritage",
     description: "Discover the rich culture and traditions of Wales",
   },
@@ -21,9 +21,10 @@ const carouselSlides = [
     description: "Supporting Welsh Women in Football",
   },
   {
-    image: "./Images/CULTURAL FOOTBALL RHYTHMS-fot.webp",
-    title: "Team Wales",
-    description: "Supporting Welsh Women in Football",
+    image: "./Images/pp.webp",
+    title: "Art Installation",
+    description:
+      "A striking tribute to the strength, pride, and passion of Welsh women in football—capturing their impact through bold and inspiring visual art.",
   },
 ];
 
@@ -499,7 +500,7 @@ const translations = {
     "explore-btn": "Explore the Movement",
     "about-title": "About Cymru Unleashed",
     "about-text":
-      "Cymru Unleashed is a women-led, grassroots initiative built to celebrate Wales' historic participation in UEFA Women's Euro 2025. We use sport, creativity, and innovation to empower girls aged 12-18 - especially from underrepresented communities - to take pride in their identity, explore leadership through football, and express themselves through art and digital storytelling.",
+      "Cymru Unleashed is a women-led, grassroots initiative built to celebrate Wales' historic participation in UEFA Women's Euro 2025. We use sport, creativity, and innovation to empower girls - especially from underrepresented communities - to take pride in their identity, explore leadership through football, and express themselves through art and digital storytelling.",
     "mission-text":
       "To make sport and culture accessible to all - inspiring a generation of young Welsh girls to lead, play, and dream beyond boundaries.",
     "learn-more": "Learn More",
@@ -557,7 +558,7 @@ const translations = {
     "explore-btn": "Archwilio'r Mudiad",
     "about-title": "Am Cymru Unleashed",
     "about-text":
-      "Mae Cymru Unleashed yn fenter ar lawr gwlad a arweinir gan fenywod i ddathlu cyfranogiad hanesyddol Cymru yng Ngemau UEFA Menywod Euro 2025. Rydym yn defnyddio chwaraeon, creadigrwydd ac arloesedd i rymuso merched 12-18 oed - yn enwedig o gymunedau sydd ddim yn cael eu cynrychioli - i ymfalchïo yn eu hunaniaeth, archwilio arweinyddiaeth trwy bêl-droed, a mynegi eu hunain trwy gelf a stori digidol.",
+      "Mae Cymru Unleashed yn fenter ar lawr gwlad a arweinir gan fenywod i ddathlu cyfranogiad hanesyddol Cymru yng Ngemau UEFA Menywod Euro 2025. Rydym yn defnyddio chwaraeon, creadigrwydd ac arloesedd i rymuso merched - yn enwedig o gymunedau sydd ddim yn cael eu cynrychioli - i ymfalchïo yn eu hunaniaeth, archwilio arweinyddiaeth trwy bêl-droed, a mynegi eu hunain trwy gelf a stori digidol.",
     "mission-text":
       "Gwneud chwaraeon a diwylliant yn hygyrch i bawb - ysbrydoli cenhedlaeth o ferched Cymreig ifanc i arwain, chwarae a breuddwydio y tu hwnt i ffiniau.",
     "learn-more": "Dysgu Mwy",
