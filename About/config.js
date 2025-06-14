@@ -17,8 +17,8 @@ const siteConfig = {
   ],
   heroStats: [
     { number: "50%", label: "Women Leadership" },
-    { number: "1000+", label: "Girls Empowered" },
-    { number: "15+", label: "Communities" },
+    { number: "1000", label: "Girls Empowered" },
+    { number: "10", label: "Communities" },
   ],
   teamMembers: [
     {
