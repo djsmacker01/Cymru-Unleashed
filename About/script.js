@@ -313,13 +313,13 @@ const translations = {
     "different-text":
       "What sets Cymru Unleashed apart is our unique approach that combines sport, creativity, and innovation to create pathways for young Welsh women and girls. We believe that by connecting these three powerful forces, we can inspire a new generation to take pride in their identity and discover their own potential.",
     "grassroots-text":
-      "Our grassroots foundation ensures that we remain connected to the communities we serve, with a special focus on underrepresented voices and those with limited access to sport and cultural opportunities.",
+      "Our grassroots outreach ensures that we remain connected to the communities we serve, with a special focus on underrepresented voices and those with limited access to sport and cultural opportunities.",
     "our-mission": "Our Mission",
     "mission-text":
       "To make sport and culture accessible to all — inspiring a generation of young Welsh girls to lead, play, and dream beyond boundaries.",
     "our-objectives": "Our Objectives",
     "objective-1":
-      "Increase sports participation among girls aged 12-18, with a focus on those from underrepresented communities",
+      "Increase sports participation among girls, with a focus on those from underrepresented communities",
     "objective-2":
       "Champion equality and inclusion with 50% of participants from marginalized communities",
     "objective-3":
@@ -350,7 +350,7 @@ const translations = {
       "I wneud chwaraeon a diwylliant yn hygyrch i bawb - yn ysbrydoli cenhedlaeth o ferched ifanc Cymreig i arwain, chwarae, a breuddwydio y tu hwnt i ffiniau.",
     "our-objectives": "Ein Nodau",
     "objective-1":
-      "Cynyddu cyfranogiad chwaraeon ymhlith merched 12-18 oed, gyda ffocws ar y rhai o gymunedau sydd heb gynrychiolaeth ddigonol",
+      "Cynyddu cyfranogiad chwaraeon ymhlith merched, gyda ffocws ar y rhai o gymunedau sydd heb gynrychiolaeth ddigonol",
     "objective-2":
       "Hyrwyddo cydraddoldeb a chynhwysiant gyda 50% o gyfranogwyr o gymunedau ymylol",
     "objective-3":
