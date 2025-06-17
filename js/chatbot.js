@@ -5,8 +5,9 @@ class Chatbot {
     this.chatInput = null;
     this.sendButton = null;
     this.isOpen = false;
-    // Use a CORS proxy to handle the CORS issue
-    this.n8nUrl = "https://corsproxy.io/?https://djsmacker.app.n8n.cloud/webhook/ac9919d2-7cb8-411a-91e4-96d024bf3b0a/chat";
+    // Use direct n8n URL since CORS is configured for cymruunleashed.com
+    this.n8nUrl =
+      "https://djsmacker.app.n8n.cloud/webhook/ac9919d2-7cb8-411a-91e4-96d024bf3b0a/chat";
 
     // Initialize immediately if DOM is already loaded
     if (document.readyState === "loading") {
