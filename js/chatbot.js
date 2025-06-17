@@ -94,10 +94,15 @@ class Chatbot {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({
+          // sessionId,
+          chatInput: message,
+        }),
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server response:", errorText);
         throw new Error(
           `Server error: ${response.status} ${response.statusText}`
         );
@@ -111,17 +116,18 @@ class Chatbot {
       );
     } catch (error) {
       console.error("Chatbot API error:", error);
+      let errorMessage = "We're having trouble connecting to our chat system. ";
+
       if (error.message.includes("500")) {
-        this.addMessage(
-          "We're currently experiencing technical difficulties with our chat system. Please call us at 07459253102 for immediate assistance.",
-          "bot"
-        );
-      } else {
-        this.addMessage(
-          "We're having trouble connecting to our chat system. Please call us at 07459253102 for immediate assistance.",
-          "bot"
-        );
+        errorMessage += "Our chat service is temporarily unavailable. ";
+      } else if (error.message.includes("404")) {
+        errorMessage += "The chat service endpoint could not be found. ";
+      } else if (error.message.includes("403")) {
+        errorMessage += "Access to the chat service is currently restricted. ";
       }
+
+      errorMessage += "Please call us at 07459253102 for immediate assistance.";
+      this.addMessage(errorMessage, "bot");
     }
   }
 
