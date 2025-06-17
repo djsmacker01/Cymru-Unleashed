@@ -98,7 +98,9 @@ class Chatbot {
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
       }
 
       const data = await response.json();
@@ -109,10 +111,17 @@ class Chatbot {
       );
     } catch (error) {
       console.error("Chatbot API error:", error);
-      this.addMessage(
-        "We're experiencing technical difficulties. Please call us at 07459253102 for immediate assistance.",
-        "bot"
-      );
+      if (error.message.includes("500")) {
+        this.addMessage(
+          "We're currently experiencing technical difficulties with our chat system. Please call us at 07459253102 for immediate assistance.",
+          "bot"
+        );
+      } else {
+        this.addMessage(
+          "We're having trouble connecting to our chat system. Please call us at 07459253102 for immediate assistance.",
+          "bot"
+        );
+      }
     }
   }
 
