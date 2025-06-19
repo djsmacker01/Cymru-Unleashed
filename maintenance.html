@@ -310,6 +310,163 @@
             transform: translateY(-3px) rotate(360deg);
         }
 
+        /* Football Game */
+        .game-section {
+            margin-top: 40px;
+        }
+
+        .football-game {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.4) 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .goal {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .goal-net {
+            width: 100%;
+            height: 100%;
+            border: 3px solid #fff;
+            border-bottom: none;
+            background-image:
+                linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
+            background-size: 10px 10px;
+            background-position: 0 0, 0 0;
+        }
+
+        .goalkeeper {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: #f59e0b;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px 10px 0 0;
+            transition: left 0.3s ease;
+        }
+
+        .goalkeeper::before {
+            content: '🧤';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+
+        .ball {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #fff, #000);
+            border-radius: 50%;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: none;
+            cursor: pointer;
+        }
+
+        .ball::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-image:
+                linear-gradient(45deg, transparent 40%, #000 40%, #000 60%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, #000 40%, #000 60%, transparent 60%);
+            opacity: 0.3;
+        }
+
+        .ball.shooting {
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .power-meter {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            width: 150px;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .power-meter.active {
+            opacity: 1;
+        }
+
+        .power-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
+            transition: width 0.1s;
+        }
+
+        .score-display {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .game-message.show {
+            animation: messagePopup 1.5s ease-out;
+        }
+
+        @keyframes messagePopup {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             h1 {
@@ -328,6 +485,10 @@
 
             .time-value {
                 font-size: 1.5em;
+            }
+
+            .football-game {
+                height: 250px;
             }
         }
     </style>
@@ -370,6 +531,22 @@
         </div>
 
         <button class="notify-btn" onclick="handleNotify()">Notify Me When Ready</button>
+
+        <div class="game-section">
+            <p style="margin: 30px 0 20px; opacity: 0.8;">While you wait, try to score some goals! ⚽</p>
+            <div class="football-game" id="gameCanvas">
+                <div class="goal">
+                    <div class="goal-net"></div>
+                    <div class="goalkeeper" id="goalkeeper"></div>
+                </div>
+                <div class="score-display">Score: <span id="score">0</span></div>
+                <div class="ball" id="ball"></div>
+                <div class="power-meter">
+                    <div class="power-fill" id="powerFill"></div>
+                </div>
+                <div class="game-message" id="gameMessage"></div>
+            </div>
+        </div>
 
         <div class="social-links">
             <a href="#" class="social-link">📧</a>
@@ -439,6 +616,129 @@
                 }, 200);
             });
         });
+
+        // Football Game
+        let score = 0;
+        let isCharging = false;
+        let power = 0;
+        let canShoot = true;
+
+        const gameCanvas = document.getElementById('gameCanvas');
+        const ball = document.getElementById('ball');
+        const goalkeeper = document.getElementById('goalkeeper');
+        const powerFill = document.getElementById('powerFill');
+        const powerMeter = document.querySelector('.power-meter');
+        const scoreDisplay = document.getElementById('score');
+        const gameMessage = document.getElementById('gameMessage');
+
+        // Goalkeeper AI movement
+        let goalkeeperDirection = 1;
+        let goalkeeperPosition = 50;
+
+        function moveGoalkeeper() {
+            goalkeeperPosition += goalkeeperDirection * 2;
+            if (goalkeeperPosition > 70 || goalkeeperPosition < 30) {
+                goalkeeperDirection *= -1;
+            }
+            goalkeeper.style.left = goalkeeperPosition + '%';
+        }
+
+        setInterval(moveGoalkeeper, 50);
+
+        // Power charging
+        gameCanvas.addEventListener('mousedown', startCharging);
+        gameCanvas.addEventListener('mouseup', shoot);
+        gameCanvas.addEventListener('touchstart', startCharging);
+        gameCanvas.addEventListener('touchend', shoot);
+
+        function startCharging(e) {
+            if (!canShoot) return;
+            e.preventDefault();
+            isCharging = true;
+            powerMeter.classList.add('active');
+            chargePower();
+        }
+
+        function chargePower() {
+            if (!isCharging) return;
+            power = Math.min(power + 2, 100);
+            powerFill.style.width = power + '%';
+            if (power < 100) {
+                requestAnimationFrame(chargePower);
+            }
+        }
+
+        function shoot(e) {
+            if (!isCharging || !canShoot) return;
+            e.preventDefault();
+
+            isCharging = false;
+            canShoot = false;
+            powerMeter.classList.remove('active');
+
+            // Get click/touch position
+            const rect = gameCanvas.getBoundingClientRect();
+            const x = (e.clientX || e.changedTouches[0].clientX) - rect.left;
+            const targetX = (x / rect.width) * 100;
+
+            // Calculate trajectory
+            const ballBottom = 20 + (power * 2);
+            const duration = 800 - (power * 3);
+
+            // Animate ball
+            ball.classList.add('shooting');
+            ball.style.bottom = ballBottom + 'px';
+            ball.style.left = targetX + '%';
+            ball.style.transform = `translateX(-50%) rotate(${power * 7.2}deg)`;
+
+            // Check for goal
+            setTimeout(() => {
+                const ballPos = targetX;
+                const goalLeft = 35;
+                const goalRight = 65;
+                const goalkeeperLeft = goalkeeperPosition - 5;
+                const goalkeeperRight = goalkeeperPosition + 5;
+
+                let message = '';
+
+                if (ballPos > goalLeft && ballPos < goalRight) {
+                    if (ballBottom > 100 && (ballPos < goalkeeperLeft || ballPos > goalkeeperRight)) {
+                        score++;
+                        scoreDisplay.textContent = score;
+                        message = 'GOAL! 🎉';
+                    } else if (ballPos >= goalkeeperLeft && ballPos <= goalkeeperRight) {
+                        message = 'SAVED! 🧤';
+                    } else {
+                        message = 'MISS! 😅';
+                    }
+                } else {
+                    message = 'WIDE! 😬';
+                }
+
+                showMessage(message);
+                resetBall();
+            }, duration);
+        }
+
+        function showMessage(text) {
+            gameMessage.textContent = text;
+            gameMessage.classList.add('show');
+            setTimeout(() => {
+                gameMessage.classList.remove('show');
+            }, 1500);
+        }
+
+        function resetBall() {
+            setTimeout(() => {
+                ball.classList.remove('shooting');
+                ball.style.bottom = '20px';
+                ball.style.left = '50%';
+                ball.style.transform = 'translateX(-50%)';
+                power = 0;
+                powerFill.style.width = '0%';
+                canShoot = true;
+            }, 1000);
+        }
     </script>
 </body>
 
