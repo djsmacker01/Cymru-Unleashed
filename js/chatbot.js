@@ -38,14 +38,23 @@ class Chatbot {
             <div class="chatbot-messages"></div>
             <div class="chatbot-input-container">
                 <input type="text" class="chatbot-input" placeholder="Type your message...">
-                <button class="chatbot-send">Send</button>
+                <button class="chatbot-send">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
             </div>
         `;
 
     // Create chat button
     const chatButton = document.createElement("button");
     chatButton.className = "chatbot-button";
-    chatButton.innerHTML = "💬";
+    chatButton.innerHTML = `
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    `;
 
     // Add elements to the page
     document.body.appendChild(this.chatContainer);
@@ -55,6 +64,9 @@ class Chatbot {
     this.chatMessages = this.chatContainer.querySelector(".chatbot-messages");
     this.chatInput = this.chatContainer.querySelector(".chatbot-input");
     this.sendButton = this.chatContainer.querySelector(".chatbot-send");
+
+    // Add initial welcome message
+    this.addMessage("Hello! How can I help you today?", "bot");
   }
 
   setupEventListeners() {
@@ -78,6 +90,14 @@ class Chatbot {
   toggleChat() {
     this.isOpen = !this.isOpen;
     this.chatContainer.style.display = this.isOpen ? "flex" : "none";
+    if (this.isOpen) {
+      this.chatInput.focus();
+    }
+  }
+
+  formatTimestamp() {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
   async sendMessage() {
@@ -95,11 +115,11 @@ class Chatbot {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // sessionId,
           chatInput: message,
         }),
       });
 
+      // console.log("rES", response.output);
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Server response:", errorText);
@@ -110,7 +130,7 @@ class Chatbot {
 
       const data = await response.json();
       this.addMessage(
-        data.response ||
+        data.output ||
           "Thank you for your message. Please call us at 07459253102 for immediate assistance.",
         "bot"
       );
@@ -134,7 +154,18 @@ class Chatbot {
   addMessage(text, sender) {
     const messageElement = document.createElement("div");
     messageElement.className = `chatbot-message ${sender}-message`;
-    messageElement.textContent = text;
+
+    const messageContent = document.createElement("div");
+    messageContent.className = "message-content";
+    messageContent.textContent = text;
+
+    const timestamp = document.createElement("div");
+    timestamp.className = "message-timestamp";
+    timestamp.textContent = this.formatTimestamp();
+
+    messageElement.appendChild(messageContent);
+    messageElement.appendChild(timestamp);
+
     this.chatMessages.appendChild(messageElement);
     this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
   }
