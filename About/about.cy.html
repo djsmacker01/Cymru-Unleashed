@@ -171,9 +171,31 @@
                     <a href="#">English</a> | <a href="#" class="active">Cymraeg</a>
                 </div>
             </div>
-            <div style="text-align:center; margin-top: 20px; font-size: 1rem; color: var(--grey);">
-                Powered by <a href="https://saanhub.netlify.app/" target="_blank" rel="noopener">SAAN-HUB Solutions</a>
+            <div
+                style="text-align:center; margin-top: 20px; font-size: 1rem; color: #fff; position: relative; font-weight: bold;">
+                <span id="saanhub-credit"
+                    style="cursor:pointer; transition: color 0.3s; color: #fff; font-weight: bold;">Powered by <a
+                        href="https://saanhub.netlify.app/" target="_blank" rel="noopener"
+                        style="color: #fff; text-decoration: underline; font-weight: bold;">SAAN-HUB
+                        Solutions</a></span>
+                <span id="saanhub-tooltip"
+                    style="visibility:hidden; opacity:0; background:#222; color:#fff; border-radius:4px; padding:6px 12px; position:absolute; left:50%; transform:translateX(-50%); bottom:120%; font-size:0.95rem; transition:opacity 0.3s; z-index:10;">Visit
+                    SAAN-HUB Solutions for digital innovation!</span>
             </div>
+            <script>
+                const credit = document.getElementById('saanhub-credit');
+                const tooltip = document.getElementById('saanhub-tooltip');
+                if (credit && tooltip) {
+                    credit.addEventListener('mouseenter', () => {
+                        tooltip.style.visibility = 'visible';
+                        tooltip.style.opacity = '1';
+                    });
+                    credit.addEventListener('mouseleave', () => {
+                        tooltip.style.visibility = 'hidden';
+                        tooltip.style.opacity = '0';
+                    });
+                }
+            </script>
         </div>
     </footer>
 
