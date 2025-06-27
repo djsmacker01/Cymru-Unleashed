@@ -15,11 +15,11 @@ const siteConfig = {
       icon: "fas fa-hands-helping",
     },
   ],
-  heroStats: [
-    { number: "50%", label: "Women Leadership" },
-    { number: "1000", label: "Girls Empowered" },
-    { number: "10", label: "Communities" },
-  ],
+  // heroStats: [
+  //   { number: "50%", label: "Women Leadership" },
+  //   { number: "1000", label: "Girls Empowered" },
+  //   { number: "10", label: "Communities" },
+  // ],
   teamMembers: [
     {
       name: {

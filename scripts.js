@@ -7,7 +7,7 @@ const carouselSlides = [
   // },
   {
     image: "./Images/hero2.webp",
-    title: "Join Our Movement",
+    title: "Be a part of History ",
     description: "Be part of something special in Wales",
   },
   {
