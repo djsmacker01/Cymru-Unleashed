@@ -1,4 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Dynamically insert Team Section if not present
+  if (!document.querySelector(".team-section")) {
+    const aboutSection = document.querySelector("section"); // Insert after first main section
+    const teamSection = document.createElement("section");
+    teamSection.className = "team-section";
+    teamSection.innerHTML = `
+      <div class="container">
+        <h2 data-translate="meet-team">Meet Our Team</h2>
+        <div class="team-grid"></div>
+      </div>
+    `;
+    aboutSection.parentNode.insertBefore(teamSection, aboutSection.nextSibling);
+  }
+
+  // Dynamically insert Core Values Section if not present
+  if (!document.querySelector(".values-section")) {
+    const teamSection = document.querySelector(".team-section");
+    const valuesSection = document.createElement("section");
+    valuesSection.className = "values-section";
+    valuesSection.innerHTML = `
+      <div class="container">
+        <h2 data-translate="core-values">Our Core Values</h2>
+        <div class="values-grid"></div>
+      </div>
+    `;
+    teamSection.parentNode.insertBefore(valuesSection, teamSection.nextSibling);
+  }
+
   // Render Navigation
   const navList = document.querySelector("#nav ul");
   if (navList) {
@@ -17,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Render Hero Stats
   const heroStats = document.querySelector(".hero-stats");
-  if (heroStats) {
+  if (heroStats && Array.isArray(siteConfig.heroStats)) {
     heroStats.innerHTML = siteConfig.heroStats
       .map(
         (stat) => `

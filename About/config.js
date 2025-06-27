@@ -23,62 +23,102 @@ const siteConfig = {
   teamMembers: [
     {
       name: {
-        en: "OTID Entertainment (Afrowales) ",
-        cy: "OTID Entertainment (Afrowales) ",
+        en: "Alys Morgan",
+        cy: "Alys Morgan",
       },
       role: {
-        en: "Lead Partner",
-        cy: "Lead Partner",
+        en: "Project Director",
+        cy: "Cyfarwyddwr Prosiect",
       },
       image: "/Images/lady1.webp",
       description: {
-        en: "Former Wales international footballer and community coach with over 15 years of experience in sports development.",
-        cy: "Chwaraewr pêl-droed rhyngwladol Cymru a hyfforddwr cymunedol gyda dros 15 mlynedd o brofiad mewn datblygu chwaraeon.",
+        en: "Alys is a passionate advocate for girls' empowerment in Wales, with a background in sports leadership and community engagement.",
+        cy: "Mae Alys yn eiriolwr brwd dros rymuso merched yng Nghymru, gyda chefndir mewn arweinyddiaeth chwaraeon ac ymgysylltu cymunedol.",
       },
       social: {
-        twitter: "#",
-        linkedin: "#",
-        instagram: "#",
+        twitter: "https://twitter.com/alysmorgan",
+        linkedin: "https://linkedin.com/in/alysmorgan",
+        instagram: "https://instagram.com/alysmorgan",
       },
     },
     {
       name: {
-        en: "KLAT ",
-        cy: "KLAT ",
+        en: "Dafydd Evans",
+        cy: "Dafydd Evans",
       },
       role: {
-        en: "Arts and Creative Direction",
-        cy: "Cyfarwyddwr Creadigol",
+        en: "Creative Lead",
+        cy: "Arweinydd Creadigol",
       },
-      image: "/Images/image.webp",
+      image: "/Images/seran.jpeg",
       description: {
-        en: "Artist and educator specialized in community-based art projects and digital media storytelling.",
-        cy: "Artist ac addysgwr wedi'i arbenigo mewn prosiectau celf wedi'u seilio ar gymunedau a straeon cyfryngau digidol.",
+        en: "Dafydd brings a wealth of experience in digital storytelling and visual arts, inspiring young people to express themselves.",
+        cy: "Mae gan Dafydd brofiad helaeth mewn adrodd straeon digidol a chelf weledol, gan ysbrydoli pobl ifanc i fynegi eu hunain.",
       },
       social: {
-        twitter: "#",
-        linkedin: "#",
-        instagram: "#",
+        twitter: "https://twitter.com/dafyddevans",
+        linkedin: "https://linkedin.com/in/dafyddevans",
+        instagram: "https://instagram.com/dafyddevans",
       },
     },
     {
       name: {
-        en: "Seren Jones",
-        cy: "Seren Jones",
+        en: "Sara Ahmed",
+        cy: "Sara Ahmed",
       },
       role: {
         en: "Community Engagement",
-        cy: "Ymgysylltu â'r Gymuned",
+        cy: "Ymgysylltu Cymunedol",
       },
-      image: "/Images/image.webp",
+      image: "/Images/afrowales.jpeg",
       description: {
-        en: "Community organizer with expertise in youth development and social inclusion programs.",
-        cy: "Trefnydd cymunedol gydag arbenigedd mewn rhaglenni datblygu ieuenctid a chynhwysiant cymdeithasol.",
+        en: "Sara specializes in outreach and inclusion, ensuring every voice is heard and valued in our programs.",
+        cy: "Mae Sara yn arbenigo mewn allgymorth a chynhwysiant, gan sicrhau bod pob llais yn cael ei glywed a'i werthfawrogi yn ein rhaglenni.",
       },
       social: {
-        twitter: "#",
-        linkedin: "#",
-        instagram: "#",
+        twitter: "https://twitter.com/saraahmed",
+        linkedin: "https://linkedin.com/in/saraahmed",
+        instagram: "https://instagram.com/saraahmed",
+      },
+    },
+    {
+      name: {
+        en: "Tomos Hughes",
+        cy: "Tomos Hughes",
+      },
+      role: {
+        en: "Sports Coordinator",
+        cy: "Cydlynydd Chwaraeon",
+      },
+      image: "/Images/img1.jpg",
+      description: {
+        en: "Tomos is dedicated to making sports accessible and fun for all, with a focus on youth development.",
+        cy: "Mae Tomos yn ymroddedig i wneud chwaraeon yn hygyrch ac yn hwyl i bawb, gyda ffocws ar ddatblygiad ieuenctid.",
+      },
+      social: {
+        twitter: "https://twitter.com/tomoshughes",
+        linkedin: "https://linkedin.com/in/tomoshughes",
+        instagram: "https://instagram.com/tomoshughes",
+      },
+    },
+    {
+      name: {
+        en: "Catrin Lloyd",
+        cy: "Catrin Lloyd",
+      },
+      role: {
+        en: "Art & Culture Facilitator",
+        cy: "Hwylusydd Celf a Diwylliant",
+      },
+      image: "/Images/Art_installation.jpg",
+      description: {
+        en: "Catrin curates creative workshops and cultural events, celebrating Welsh heritage and diversity.",
+        cy: "Mae Catrin yn guradu gweithdai creadigol a digwyddiadau diwylliannol, gan ddathlu treftadaeth a amrywiaeth Cymru.",
+      },
+      social: {
+        twitter: "https://twitter.com/catrinlloyd",
+        linkedin: "https://linkedin.com/in/catrinlloyd",
+        instagram: "https://instagram.com/catrinlloyd",
       },
     },
   ],
@@ -125,6 +165,28 @@ const siteConfig = {
       description: {
         en: "We honor Welsh culture, language, and heritage while embracing the diversity within our communities. We celebrate genuine expression in all forms.",
         cy: "Rydym yn parchu diwylliant, iaith, a threftadaeth Cymru wrth gofleidio amrywiaeth o fewn ein cymunedau. Rydym yn dathlu mynegiant dilys ym mhob ffurf.",
+      },
+    },
+    {
+      icon: "fas fa-seedling",
+      title: {
+        en: "Growth",
+        cy: "Twf",
+      },
+      description: {
+        en: "We are committed to continuous learning and development, empowering individuals and communities to reach their full potential.",
+        cy: "Rydym yn ymrwymedig i ddysgu a datblygu'n barhaus, gan rymuso unigolion a chymunedau i gyrraedd eu potensial llawn.",
+      },
+    },
+    {
+      icon: "fas fa-globe-europe",
+      title: {
+        en: "Global Citizenship",
+        cy: "Dinasyddiaeth Fyd-eang",
+      },
+      description: {
+        en: "We encourage a sense of responsibility to the world, promoting respect, understanding, and positive action beyond borders.",
+        cy: "Rydym yn annog ymdeimlad o gyfrifoldeb i'r byd, gan hyrwyddo parch, dealltwriaeth, a gweithredu cadarnhaol y tu hwnt i ffiniau.",
       },
     },
   ],
