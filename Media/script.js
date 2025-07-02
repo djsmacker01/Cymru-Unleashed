@@ -1,194 +1,40 @@
-// FINAL CLEAN NAVIGATION - Production Ready
-document.addEventListener("DOMContentLoaded", function () {
-  const nav = document.getElementById("nav");
-  const hamburger = document.getElementById("hamburger");
-  const overlay = document.getElementById("overlay");
+// Mobile Navigation Toggle
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav");
+const overlay = document.getElementById("overlay");
 
-  if (!nav || !hamburger || !overlay) {
-    console.error("Navigation elements not found");
-    return;
-  }
+const toggleMenu = () => {
+  nav.classList.toggle("active");
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
+  hamburger.innerHTML = nav.classList.contains("active")
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
 
-  let isMenuOpen = false;
+  // Toggle body scroll
+  document.body.style.overflow = nav.classList.contains("active")
+    ? "hidden"
+    : "";
+};
 
-  // Hamburger menu toggle
-  hamburger.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+// Initialize navigation event listeners
+const initializeNavigation = () => {
+  hamburger.addEventListener("click", toggleMenu);
+  overlay.addEventListener("click", toggleMenu);
 
-    if (isMenuOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  // Open menu function
-  function openMenu() {
-    isMenuOpen = true;
-
-    nav.classList.add("active");
-    hamburger.classList.add("active");
-    overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-
-    // Update hamburger icon
-    const icon = hamburger.querySelector("i");
-    if (icon) {
-      icon.classList.remove("fa-bars");
-      icon.classList.add("fa-times");
-    }
-
-    // Focus first link for accessibility
-    setTimeout(() => {
-      const firstLink = nav.querySelector("a");
-      if (firstLink) {
-        firstLink.focus();
-      }
-    }, 300);
-  }
-
-  // Close menu function
-  function closeMenu() {
-    isMenuOpen = false;
-
-    nav.classList.remove("active");
-    hamburger.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.style.overflow = "";
-
-    // Update hamburger icon
-    const icon = hamburger.querySelector("i");
-    if (icon) {
-      icon.classList.remove("fa-times");
-      icon.classList.add("fa-bars");
-    }
-  }
-
-  // Overlay click to close menu
-  overlay.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isMenuOpen) {
-      closeMenu();
-    }
-  });
-
-  // Navigation link handling
-  const navLinks = nav.querySelectorAll("a");
-
-  navLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      const href = link.getAttribute("href");
-
-      // Update active states
-      navLinks.forEach((l) => l.classList.remove("active"));
-      link.classList.add("active");
-
-      if (href && href !== "#") {
-        if (isMenuOpen) {
-          // Mobile menu is open - close it first, then navigate
-          e.preventDefault();
-          closeMenu();
-
-          setTimeout(() => {
-            if (href.startsWith("#")) {
-              // Hash link - smooth scroll
-              const targetElement = document.querySelector(href);
-              if (targetElement) {
-                const headerHeight =
-                  document.getElementById("header")?.offsetHeight || 80;
-                const targetPosition =
-                  targetElement.getBoundingClientRect().top +
-                  window.pageYOffset -
-                  headerHeight;
-                window.scrollTo({
-                  top: targetPosition,
-                  behavior: "smooth",
-                });
-              }
-            } else if (href.startsWith("mailto:") || href.startsWith("tel:")) {
-              // Email/phone links
-              window.location.href = href;
-            } else if (href.startsWith("http")) {
-              // External links
-              window.open(href, link.target || "_self");
-            } else {
-              // Internal page links
-              window.location.href = href;
-            }
-          }, 350);
-        } else {
-          // Desktop mode - handle hash links with smooth scroll
-          if (href.startsWith("#")) {
-            e.preventDefault();
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-              const headerHeight =
-                document.getElementById("header")?.offsetHeight || 80;
-              const targetPosition =
-                targetElement.getBoundingClientRect().top +
-                window.pageYOffset -
-                headerHeight;
-              window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth",
-              });
-            }
-          }
-          // For regular page links, let browser handle naturally
-        }
-      } else {
-        e.preventDefault();
+  // Close menu when clicking navigation links
+  document.querySelectorAll("nav a").forEach((item) => {
+    item.addEventListener("click", () => {
+      if (nav.classList.contains("active")) {
+        toggleMenu();
       }
     });
   });
+};
 
-  // Close menu when clicking outside
-  document.addEventListener("click", function (e) {
-    if (
-      isMenuOpen &&
-      !nav.contains(e.target) &&
-      !hamburger.contains(e.target) &&
-      !overlay.contains(e.target)
-    ) {
-      closeMenu();
-    }
-  });
-
-  // Close menu on window resize to desktop
-  window.addEventListener("resize", function () {
-    if (window.innerWidth > 768 && isMenuOpen) {
-      closeMenu();
-    }
-  });
-
-  // ESC key to close menu
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && isMenuOpen) {
-      closeMenu();
-      hamburger.focus();
-    }
-  });
-
-  // Tab trapping for accessibility
-  nav.addEventListener("keydown", function (e) {
-    if (e.key === "Tab" && isMenuOpen) {
-      const focusableElements = nav.querySelectorAll(
-        'a, button, [tabindex]:not([tabindex="-1"])'
-      );
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
-
-      if (e.shiftKey && document.activeElement === firstElement) {
-        e.preventDefault();
-        lastElement.focus();
-      } else if (!e.shiftKey && document.activeElement === lastElement) {
-        e.preventDefault();
-        firstElement.focus();
-      }
-    }
-  });
+// Initialize all functionality
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
 });
 
 // Sticky Header
