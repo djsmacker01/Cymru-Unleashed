@@ -1769,3 +1769,553 @@ footer {
         max-width: 150px;
     }
 }
+
+/* Enhanced Mobile Responsiveness for Legacy Page */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .page-hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .legacy-pillars {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .page-hero {
+        min-height: 80vh;
+    }
+    
+    .page-hero-content h1 {
+        font-size: 3rem;
+        line-height: 1.1;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .stat-item {
+        margin: 10px;
+        flex: 0 0 calc(50% - 20px);
+    }
+    
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .stories-slider {
+        padding: 0 20px;
+    }
+    
+    .story-slide {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 10px 0;
+    }
+    
+    .header-container {
+        padding: 0 15px;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: min(350px, 85%);
+        height: 100vh;
+        background: var(--light);
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+        z-index: 1060;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    nav.active {
+        right: 0;
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        padding: 80px 0 40px 0;
+        margin: 0;
+        width: 100%;
+        min-height: 100vh;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+    
+    nav ul li {
+        margin: 0;
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+    
+    nav ul li a {
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        color: var(--dark);
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+        pointer-events: auto !important;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+        min-height: 60px;
+    }
+    
+    nav ul li a:hover,
+    nav ul li a:focus {
+        background: var(--grey);
+        color: var(--primary);
+        padding-left: 40px;
+    }
+    
+    nav ul li a.active {
+        background: linear-gradient(90deg, var(--primary), transparent);
+        color: var(--primary);
+        font-weight: 600;
+        border-left: 4px solid var(--primary);
+    }
+    
+    nav ul li a i {
+        font-size: 1.2rem;
+        width: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    nav ul li a:hover i,
+    nav ul li a.active i {
+        transform: scale(1.1);
+    }
+    
+    nav ul li a:focus {
+        outline: none;
+        background: var(--grey);
+    }
+    
+    .page-hero-content h1 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+    
+    .page-hero-content p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat-item {
+        margin: 10px 0;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+    }
+    
+    section {
+        padding: 60px 0;
+    }
+    
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .legacy-pillar {
+        text-align: center;
+    }
+    
+    .pillar-image {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 20px;
+    }
+    
+    .stories-slider {
+        padding: 0 10px;
+    }
+    
+    .story-slide {
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .story-card {
+        padding: 25px 20px;
+    }
+    
+    .story-quote {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .slider-nav {
+        margin-top: 20px;
+    }
+    
+    .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .slider-dots {
+        margin-top: 15px;
+    }
+    
+    .slider-dot {
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .footer-info {
+        order: 1;
+    }
+    
+    .welsh-government-support {
+        margin-top: 30px;
+    }
+    
+    .welsh-gov-logo {
+        max-width: 150px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .legacy-quote {
+        font-size: 1.1rem;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        width: 100%;
+        right: -100%;
+    }
+    
+    nav ul li a {
+        font-size: 1rem;
+        padding: 18px 20px;
+    }
+    
+    .hamburger {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .page-hero {
+        min-height: 70vh;
+    }
+    
+    .page-hero-content h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    section {
+        padding: 40px 0;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .footer-logo {
+        font-size: 1.3rem;
+    }
+    
+    .legacy-pillar {
+        padding: 25px 20px;
+    }
+    
+    .pillar-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .story-card {
+        padding: 20px 15px;
+    }
+    
+    .story-quote {
+        font-size: 0.9rem;
+    }
+    
+    .partner-card {
+        padding: 25px 20px;
+    }
+    
+    .partner-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .slider-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet Landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page-hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .stat-item {
+        margin: 8px;
+        padding: 20px 15px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+}
+
+/* Large Mobile */
+@media (min-width: 481px) and (max-width: 767px) {
+    .page-hero-content h1 {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .stat-item {
+        margin: 8px;
+        padding: 15px 12px;
+        flex: 0 0 calc(50% - 16px);
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .legacy-pillar:hover {
+        transform: none;
+    }
+    
+    .partner-card:hover {
+        transform: none;
+    }
+    
+    .slider-btn:hover {
+        transform: none;
+    }
+    
+    nav ul li a:hover {
+        padding-left: 30px;
+    }
+}
+
+/* Slider-specific mobile optimizations */
+@media (max-width: 768px) {
+    .stories-track {
+        gap: 20px;
+    }
+    
+    .story-slide {
+        flex-shrink: 0;
+    }
+    
+    .story-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .story-avatar img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .story-details h4 {
+        font-size: 1rem;
+    }
+    
+    .story-details span {
+        font-size: 0.8rem;
+    }
+}
+
+/* Legacy pillars mobile optimizations */
+@media (max-width: 768px) {
+    .pillar-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .pillar-content {
+        padding: 0 10px;
+    }
+    
+    .pillar-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .pillar-content p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
