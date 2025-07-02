@@ -1695,3 +1695,141 @@ h2 {
         color: #000;
     }
 }
+
+/* Event Status Section */
+.event-status {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.event-status-content {
+    text-align: center;
+}
+
+.event-status-icon {
+    margin-bottom: 20px;
+}
+
+.event-status-icon i {
+    font-size: 4rem;
+    color: var(--primary);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.event-status-content h3 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--light);
+}
+
+.event-status-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: var(--light);
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.event-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.highlight-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.highlight-item i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.highlight-item span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.event-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--light);
+    border: 2px solid var(--light);
+}
+
+.btn-secondary:hover {
+    background: var(--light);
+    color: var(--dark);
+}
+
+/* Responsive styles for event status */
+@media (max-width: 768px) {
+    .event-status {
+        padding: 30px 20px;
+    }
+
+    .event-status-content h3 {
+        font-size: 2rem;
+    }
+
+    .event-status-content p {
+        font-size: 1.1rem;
+    }
+
+    .event-highlights {
+        gap: 20px;
+    }
+
+    .highlight-item i {
+        font-size: 1.5rem;
+    }
+
+    .event-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}

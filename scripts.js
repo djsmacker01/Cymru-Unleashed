@@ -80,7 +80,7 @@ const initializeStickyHeader = () => {
 document.addEventListener("DOMContentLoaded", () => {
   initializeNavigation();
   initializeStickyHeader();
-  
+
   // Keep your existing initializations:
   console.log("DOM loaded, initializing carousel...");
   initializeCarousel();
@@ -127,50 +127,21 @@ animateElements.forEach((element) => {
   observer.observe(element);
 });
 
-// Countdown Timer
-const countdownDate = new Date("July 2, 2025 00:00:00").getTime();
-
-const updateCountdown = () => {
-  const now = new Date().getTime();
-  const distance = countdownDate - now;
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  const daysEl = document.getElementById("days");
-  const hoursEl = document.getElementById("hours");
-  const minutesEl = document.getElementById("minutes");
-  const secondsEl = document.getElementById("seconds");
-
-  if (daysEl) {
-    daysEl.innerText = days;
-  }
-  if (hoursEl) {
-    hoursEl.innerText = hours;
-  }
-  if (minutesEl) {
-    minutesEl.innerText = minutes;
-  }
-  if (secondsEl) {
-    secondsEl.innerText = seconds;
-  }
-
-  if (distance < 0) {
-    clearInterval(countdownInterval);
-    const countdownEl = document.getElementById("countdown");
-    if (countdownEl) {
-      countdownEl.innerHTML = "<h3>UEFA Women's Euro 2025 Has Begun!</h3>";
+// Event Status - UEFA Women's Euro 2025 is Live
+const initializeEventStatus = () => {
+  // The event is now live, so we can add any dynamic content or animations here
+  const eventStatusEl = document.getElementById("eventStatus");
+  if (eventStatusEl) {
+    // Add a subtle animation to the trophy icon
+    const trophyIcon = eventStatusEl.querySelector(".event-status-icon i");
+    if (trophyIcon) {
+      trophyIcon.style.animation = "pulse 2s infinite";
     }
   }
 };
 
-// Update countdown every second
-updateCountdown();
-const countdownInterval = setInterval(updateCountdown, 1000);
+// Initialize event status
+initializeEventStatus();
 
 // Language Toggle
 const languageToggle = document.querySelectorAll(".language-toggle a");
@@ -222,12 +193,15 @@ const translations = {
     "join-text":
       "Whether you want to volunteer, register your school, or partner with us as an organization, there are many ways to get involved with Cymru Unleashed.",
     "get-involved-btn": "Get Involved",
-    "countdown-title": "Countdown to UEFA Women's Euro 2025",
-    days: "Days",
-    hours: "Hours",
-    minutes: "Minutes",
-    seconds: "Seconds",
-    "upcoming-events": "Upcoming Events",
+    "event-status-title": "UEFA Women's Euro 2025 is Here!",
+    "event-live": "The Tournament is Live!",
+    "event-description":
+      "Wales is making history at UEFA Women's Euro 2025. Join us in celebrating this historic moment and supporting our amazing Welsh team!",
+    "highlight-matches": "Live Matches",
+    "highlight-wales": "Team Wales",
+    "highlight-community": "Community Spirit",
+    "view-activities": "View Our Activities",
+    "get-involved-now": "Get Involved Now",
     "footer-tagline":
       "Empowering the next generation of Welsh women through sport, art, and culture.",
     "quick-links": "Quick Links",
@@ -281,12 +255,15 @@ const translations = {
     "join-text":
       "P'un a ydych chi eisiau gwirfoddoli, cofrestru eich ysgol, neu bartneru gyda ni fel sefydliad, mae sawl ffordd o ymuno â Cymru Unleashed.",
     "get-involved-btn": "Ymunwch â Ni",
-    "countdown-title": "Cyfrif i Lawr i Gemau UEFA Menywod Euro 2025",
-    days: "Dyddiau",
-    hours: "Oriau",
-    minutes: "Munudau",
-    seconds: "Eiliadau",
-    "upcoming-events": "Digwyddiadau i Ddod",
+    "event-status-title": "Mae Gemau UEFA Menywod Euro 2025 Yma!",
+    "event-live": "Mae'r Twrnamaint yn Fyw!",
+    "event-description":
+      "Mae Cymru yn gwneud hanes yng Ngemau UEFA Menywod Euro 2025. Ymunwch â ni i ddathlu'r foment hanesyddol hwn a chefnogi ein tîm Cymreig anhygoel!",
+    "highlight-matches": "Gemau Byw",
+    "highlight-wales": "Tîm Cymru",
+    "highlight-community": "Ysbryd Cymunedol",
+    "view-activities": "Gweld Ein Gweithgareddau",
+    "get-involved-now": "Ymunwch â Ni Nawr",
     "footer-tagline":
       "Grymuso'r genhedlaeth nesaf o fenywod Cymreig trwy chwaraeon, celf a diwylliant.",
     "quick-links": "Dolenni Cyflym",
