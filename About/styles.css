@@ -971,3 +971,71 @@ footer {
         padding-left: 30px;
     }
 }
+
+/* Welsh Government Support Section */
+.welsh-government-support {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.support-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.welsh-gov-logo {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.welsh-government-support p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.welsh-government-support .welsh-text {
+    font-style: italic;
+    color: var(--text-light);
+    opacity: 0.9;
+}
+
+/* --- Welsh Government Support Section (synced with main styles.css, forced override) --- */
+.welsh-government-support {
+    margin-top: 2rem !important;
+    padding: 1.5rem !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+}
+
+.support-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem !important;
+}
+
+.welsh-gov-logo {
+    max-width: 200px !important;
+    height: auto !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.welsh-government-support p {
+    margin: 0 !important;
+    color: var(--text-light) !important;
+    font-size: 0.9rem !important;
+}
+
+.welsh-government-support .welsh-text {
+    font-style: italic !important;
+    color: var(--text-light) !important;
+    opacity: 0.9 !important;
+}
