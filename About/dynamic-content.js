@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Render Navigation
+  // Commented out to prevent conflicts with hamburger menu
+  /*
   const navList = document.querySelector("#nav ul");
   if (navList) {
     navList.innerHTML = siteConfig.navigation
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
       .join("");
   }
+  */
 
   // Render Hero Stats
   const heroStats = document.querySelector(".hero-stats");
