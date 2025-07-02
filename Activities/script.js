@@ -104,9 +104,6 @@ const translations = {
     "sports-title": "Sports Workshops",
     "sports-desc":
       "Join our skill-building workshops and mini-tournaments across Wales",
-    "art-title": "Art Installations",
-    "art-desc":
-      "Experience our travelling pop-up exhibitions celebrating Welsh women in sport",
     "digital-title": "Digital Campaign",
     "digital-desc":
       "Explore our bilingual content and immersive VR experiences",
@@ -125,9 +122,6 @@ const translations = {
     "sports-title": "Gweithdai Chwaraeon",
     "sports-desc":
       "Ymunwch â'n gweithdai adeiladu sgiliau a thwrnamaint bach ar draws Cymru",
-    "art-title": "Gosodiadau Celf",
-    "art-desc":
-      "Profiwch ein arddangosfeydd pop-up teithiol sy'n dathlu menywod Cymreig mewn chwaraeon",
     "digital-title": "Ymgyrch Ddigidol",
     "digital-desc":
       "Archwiliwch ein cynnwys dwyieithog a phrofiadau VR ymlyniadol",
@@ -191,15 +185,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // Check URL hash for direct tab access
 window.addEventListener("load", () => {
   const hash = window.location.hash.substring(1);
-  const validTabs = [
-    "sports-content",
-    "art-content",
-    "digital-content",
-    "timeline-content",
-  ];
+  const validTabs = ["sports-content", "digital-content", "timeline-content"];
 
   if (validTabs.includes(hash)) {
-    const tab = document.querySelector(`[data-tab="${hash.split('-')[0]}"]`);
+    const tab = document.querySelector(`[data-tab="${hash.split("-")[0]}"]`);
     if (tab) {
       tab.click();
     }
@@ -297,11 +286,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (activitiesSection) {
         const headerOffset = 100;
         const elementPosition = activitiesSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     });
