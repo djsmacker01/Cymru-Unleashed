@@ -1246,6 +1246,16 @@ h2 {
         grid-template-columns: 1fr;
     }
 
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
     .countdown-item {
         width: 80px;
         height: 80px;
@@ -1286,10 +1296,6 @@ h2 {
     .countdown-item {
         width: 70px;
         height: 70px;
-    }
-
-    .countdown-number {
-        font-size: 1.5rem;
     }
 
     h2 {
@@ -1342,345 +1348,6 @@ h2 {
 
     h2 {
         font-size: 1.8rem;
-    }
-}
-
-/* Lazy Loading Styles */
-.lazy-content {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.lazy-content.loaded {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-img[data-src] {
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
-}
-
-img[src] {
-    opacity: 1;
-}
-
-img[data-src] {
-    background: #f0f0f0;
-    min-height: 100px;
-}
-
-/* Enhanced Mobile Responsiveness */
-@media (max-width: 1200px) {
-    .container {
-        max-width: 100%;
-        padding: 0 15px;
-    }
-
-    .hero-content h1 {
-        font-size: 3rem;
-    }
-
-    .hero-content p {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 991px) {
-    .about-home-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .about-home-text {
-        margin-bottom: 30px;
-    }
-
-    .about-home-image {
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .mission-box {
-        margin: 20px auto;
-    }
-
-    .activities-home-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .legacy-home-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .legacy-home-text {
-        margin-bottom: 30px;
-    }
-
-    .legacy-home-image {
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .press-home-logos {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .countdown-timer {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .countdown-item {
-        margin: 10px;
-    }
-
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-}
-
-@media (max-width: 768px) {
-    header {
-        padding: 10px 0;
-    }
-
-    .header-container {
-        padding: 0 15px;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: min(350px, 85%);
-        height: 100vh;
-        background: var(--light);
-        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-        z-index: 1060;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    nav.active {
-        right: 0;
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    nav ul {
-        flex-direction: column;
-        padding: 80px 0 40px 0;
-        margin: 0;
-        width: 100%;
-        min-height: 100vh;
-        justify-content: flex-start;
-        align-items: stretch;
-    }
-
-    nav ul li {
-        margin: 0;
-        width: 100%;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    nav ul li:last-child {
-        border-bottom: none;
-    }
-
-    nav ul li a {
-        font-size: 1.1rem;
-        font-weight: 500;
-        padding: 20px 30px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        color: var(--dark);
-        transition: all 0.3s ease;
-        position: relative;
-        cursor: pointer;
-        text-decoration: none;
-        pointer-events: auto !important;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-        min-height: 60px;
-    }
-
-    nav ul li a:hover,
-    nav ul li a:focus {
-        background: var(--grey);
-        color: var(--primary);
-        padding-left: 40px;
-    }
-
-    nav ul li a.active {
-        background: linear-gradient(90deg, var(--primary), transparent);
-        color: var(--primary);
-        font-weight: 600;
-        border-left: 4px solid var(--primary);
-    }
-
-    nav ul li a i {
-        font-size: 1.2rem;
-        width: 20px;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    nav ul li a:hover i,
-    nav ul li a.active i {
-        transform: scale(1.1);
-    }
-
-    nav ul li a:focus {
-        outline: none;
-        background: var(--grey);
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-        line-height: 1.1;
-    }
-
-    .hero-content p {
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-
-    .carousel-control {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .carousel-control.prev {
-        left: 10px;
-    }
-
-    .carousel-control.next {
-        right: 10px;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    h2 {
-        font-size: 2rem;
-        margin-bottom: 15px;
-    }
-
-    .activities-home-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .countdown-item {
-        margin: 5px;
-        padding: 15px 10px;
-    }
-
-    .countdown-number {
-        font-size: 1.8rem;
-    }
-
-    .countdown-label {
-        font-size: 0.8rem;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-    }
-
-    .footer-info {
-        order: 1;
-    }
-
-    .welsh-government-support {
-        margin-top: 30px;
-    }
-
-    .welsh-gov-logo {
-        max-width: 150px;
-    }
-
-    .legacy-quote {
-        font-size: 1.1rem;
-        padding: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    nav {
-        width: 100%;
-        right: -100%;
-    }
-
-    nav ul li a {
-        font-size: 1rem;
-        padding: 18px 20px;
-    }
-
-    .hamburger {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-        line-height: 1.2;
-    }
-
-    .hero-content p {
-        font-size: 0.9rem;
-        margin-bottom: 15px;
-    }
-
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-
-    .countdown-timer {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .countdown-item {
-        margin: 5px 0;
-        padding: 10px;
-        min-width: 80px;
-    }
-
-    .countdown-number {
-        font-size: 1.5rem;
-    }
-
-    h2 {
-        font-size: 1.8rem;
         margin-bottom: 10px;
     }
 
@@ -1725,6 +1392,16 @@ img[data-src] {
         gap: 25px;
     }
 
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
     .countdown-item {
         margin: 8px;
         padding: 20px 15px;
@@ -1755,6 +1432,16 @@ img[data-src] {
         gap: 25px;
     }
 
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
     .countdown-timer {
         flex-wrap: wrap;
         justify-content: center;
@@ -1769,6 +1456,134 @@ img[data-src] {
         grid-template-columns: 1fr;
         gap: 25px;
     }
+}
+
+/* Team Section Styles */
+.team-section {
+    background-color: var(--grey);
+    padding: 80px 0;
+}
+
+.team-section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.team-section h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.team-member {
+    background: var(--light);
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.member-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.team-member:hover .member-image img {
+    transform: scale(1.1);
+}
+
+.member-info {
+    padding: 20px;
+}
+
+.member-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: var(--primary);
+}
+
+.member-info span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.member-info p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.member-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.member-social a {
+    color: var(--dark);
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.member-social a:hover {
+    color: var(--primary);
+}
+
+/* Values Section Styles */
+.values-section {
+    padding: 80px 0;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.value-card {
+    background: var(--light);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    border-left: 4px solid var(--primary);
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.value-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--primary);
 }
 
 /* Touch Device Optimizations */
