@@ -1,16 +1,11 @@
 /* Global Styles */
 :root {
     --primary: #D3071D;
-    /* Welsh Red from brief */
     --secondary: #1E5631;
-    /* Welsh Green from brief */
     --accent: #D3071D;
-    /* Red accent */
     --dark: #333;
     --light: #FFFFFF;
-    /* White from brief */
     --grey: #F6F6F6;
-    /* Off-white from brief */
 }
 
 * {
@@ -201,7 +196,7 @@ nav ul li a.active {
     pointer-events: auto;
 }
 
-/* FIXED Mobile Navigation Styles */
+/* COMPLETE Mobile Navigation Styles */
 @media (max-width: 768px) {
     header {
         padding: 15px 0;
@@ -225,7 +220,6 @@ nav ul li a.active {
         position: relative;
         border: none;
         cursor: pointer;
-        /* FIXED: Ensure button is clickable */
         pointer-events: auto;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
         touch-action: manipulation;
@@ -251,27 +245,18 @@ nav ul li a.active {
         width: min(350px, 85%);
         height: 100vh;
         background: var(--light);
-        transition: right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
         z-index: 1060;
-        /* FIXED: Increased z-index */
         display: flex;
         flex-direction: column;
         padding: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        visibility: hidden;
-        opacity: 0;
-        /* FIXED: Ensure nav is not blocking when closed */
-        pointer-events: none;
     }
 
     nav.active {
         right: 0;
-        visibility: visible;
-        opacity: 1;
-        /* FIXED: Enable pointer events when active */
-        pointer-events: auto;
     }
 
     nav ul {
@@ -282,15 +267,12 @@ nav ul li a.active {
         min-height: 100vh;
         justify-content: flex-start;
         align-items: stretch;
-        list-style: none;
     }
 
     nav ul li {
         margin: 0;
         width: 100%;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        /* FIXED: Ensure list items don't interfere with clicks */
-        pointer-events: none;
     }
 
     nav ul li:last-child {
@@ -298,7 +280,6 @@ nav ul li a.active {
     }
 
     nav ul li a {
-        /* FIXED: Simplified and more reliable link styles */
         font-size: 1.1rem;
         font-weight: 500;
         padding: 20px 30px;
@@ -311,34 +292,20 @@ nav ul li a.active {
         position: relative;
         cursor: pointer;
         text-decoration: none;
-        min-height: 60px;
-
-        /* FIXED: Critical pointer event settings */
-        pointer-events: auto !important;
+        pointer-events: auto;
         touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(211, 7, 29, 0.1);
-
-        /* FIXED: Ensure text is selectable and clickable */
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-
-        /* FIXED: Better tap handling */
-        -webkit-touch-callout: none;
-        -webkit-user-drag: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+        min-height: 60px;
+        z-index: 1070;
     }
 
-    /* FIXED: Ensure hover states work properly */
     nav ul li a:hover,
     nav ul li a:focus {
         background: var(--grey);
         color: var(--primary);
         padding-left: 40px;
-        outline: none;
     }
 
-    /* FIXED: Active state styling */
     nav ul li a.active {
         background: linear-gradient(90deg, var(--primary), transparent);
         color: var(--primary);
@@ -346,96 +313,23 @@ nav ul li a.active {
         border-left: 4px solid var(--primary);
     }
 
-    /* FIXED: Icon styling */
     nav ul li a i {
         font-size: 1.2rem;
         width: 20px;
         text-align: center;
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
-        /* FIXED: Ensure icons don't interfere with clicks */
-        pointer-events: none;
+        transition: all 0.3s ease;
     }
 
     nav ul li a:hover i,
     nav ul li a.active i {
-        opacity: 1;
+        transform: scale(1.1);
     }
 
-    /* FIXED: Focus state for accessibility */
     nav ul li a:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: -2px;
-    }
-
-    nav ul li a:focus-visible {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-    }
-
-    /* FIXED: Better overlay handling */
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1050;
-        /* FIXED: Below nav but above content */
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(2px);
-        pointer-events: none;
-        cursor: pointer;
-    }
-
-    .overlay.active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    .page-hero-content h1 {
-        font-size: 1.8rem;
-    }
-
-    .page-hero-content p {
-        font-size: 1rem;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    .news-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .social-feed.active {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .social-tabs {
-        flex-wrap: wrap;
-    }
-
-    .social-tab {
-        margin-bottom: 10px;
+        outline: none;
+        background: var(--grey);
     }
 }
-
-/* FIXED: Additional improvements for better interaction */
 
 /* Prevent scroll when menu is open */
 body.menu-open {
@@ -444,21 +338,7 @@ body.menu-open {
     width: 100%;
 }
 
-/* FIXED: Media query for very small screens */
 @media (max-width: 480px) {
-    nav {
-        width: 95%;
-        /* Wider on very small screens */
-    }
-
-    nav ul li a {
-        padding: 18px 20px;
-        /* Slightly less padding */
-        font-size: 1rem;
-        min-height: 48px;
-        /* Minimum touch target size */
-    }
-
     .hamburger {
         width: 40px;
         height: 40px;
@@ -703,174 +583,6 @@ body.menu-open {
     animation: lineReveal 1s forwards 1.2s;
 }
 
-.hero-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s forwards 0.9s;
-}
-
-.btn {
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.btn-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-    transform: scale(0);
-    transition: transform 0.3s ease;
-}
-
-.btn:hover .btn-glow {
-    transform: scale(2);
-}
-
-.btn-primary {
-    background: #ff6b6b;
-    color: white;
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    animation: buttonShine 3s infinite linear;
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 2px solid #ff6b6b;
-    color: #ff6b6b;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.hero-stats {
-    display: flex;
-    gap: 3rem;
-    margin-top: 2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s forwards 1.2s;
-}
-
-.stat-item {
-    text-align: center;
-    position: relative;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stat-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-}
-
-.stat-item:hover::before {
-    transform: translateX(100%);
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.stat-decoration {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.stat-item:hover .stat-decoration {
-    transform: scaleX(1);
-}
-
-.stat-icon {
-    font-size: 2rem;
-    color: #ff6b6b;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
-}
-
-.stat-item:hover .stat-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.stat-content {
-    position: relative;
-    z-index: 1;
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    display: block;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(45deg, #ffffff, #ff6b6b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: numberPulse 2s infinite ease-in-out;
-}
-
-.stat-label {
-    font-size: 1rem;
-    color: #ffffff;
-    opacity: 0.8;
-}
-
 .hero-scroll-indicator {
     position: absolute;
     bottom: 2rem;
@@ -902,17 +614,6 @@ body.menu-open {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.scroll-arrow::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    animation: arrowShine 2s infinite linear;
-}
-
 .hero-scroll-indicator:hover .scroll-arrow {
     transform: translateY(5px);
     background: rgba(255, 255, 255, 0.2);
@@ -936,6 +637,12 @@ body.menu-open {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
     }
 }
 
@@ -1018,67 +725,6 @@ body.menu-open {
 
     100% {
         transform: translateX(100%) rotate(45deg);
-    }
-}
-
-@keyframes buttonShine {
-    0% {
-        transform: translateX(-100%) rotate(45deg);
-    }
-
-    100% {
-        transform: translateX(100%) rotate(45deg);
-    }
-}
-
-@keyframes arrowShine {
-    0% {
-        transform: translateX(-100%) rotate(45deg);
-    }
-
-    100% {
-        transform: translateX(100%) rotate(45deg);
-    }
-}
-
-@keyframes numberPulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.8;
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .hero-stats {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .hero-cta {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .shape {
-        display: none;
     }
 }
 
@@ -1361,7 +1007,7 @@ body.menu-open {
     margin-bottom: 15px;
 }
 
-/* Join Legacy CTA */
+/* Legacy CTA */
 .legacy-cta {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/api/placeholder/1200/600") center/cover no-repeat;
     color: var(--light);
@@ -1511,221 +1157,6 @@ footer {
     font-weight: bold;
 }
 
-/* Responsive Styles */
-@media (max-width: 991px) {
-
-    .legacy-pillars,
-    .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .page-hero-content h1 {
-        font-size: 2.2rem;
-    }
-}
-
-/* Enhanced Animation Styles */
-.btn-ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0);
-    animation: ripple 1s linear;
-    pointer-events: none;
-}
-
-@keyframes ripple {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-
-.section-highlight {
-    animation: sectionHighlight 1.5s ease-out;
-}
-
-@keyframes sectionHighlight {
-    0% {
-        background: rgba(255, 107, 107, 0.1);
-    }
-
-    100% {
-        background: transparent;
-    }
-}
-
-.scroll-bounce {
-    animation: bounce 1s ease;
-}
-
-@keyframes bounce {
-
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateY(0);
-    }
-
-    40% {
-        transform: translateY(-20px);
-    }
-
-    60% {
-        transform: translateY(-10px);
-    }
-}
-
-.number-pulse {
-    animation: numberPulse 0.2s ease-in-out;
-}
-
-@keyframes numberPulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Enhanced Stat Item Styles */
-.stat-item {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.stat-item:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.stat-number {
-    position: relative;
-    display: inline-block;
-}
-
-.stat-number::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.stat-item:hover .stat-number::after {
-    transform: scaleX(1);
-}
-
-/* Enhanced Button Styles */
-.btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-}
-
-.btn:hover::before {
-    transform: translateX(100%);
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-    border: none;
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 2px solid #ff6b6b;
-    color: #ff6b6b;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.btn-secondary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ff6b6b;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
-}
-
-.btn-secondary:hover {
-    color: white;
-}
-
-.btn-secondary:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-/* Enhanced Scroll Indicator Styles */
-.hero-scroll-indicator {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-arrow {
-    position: relative;
-    overflow: hidden;
-}
-
-.scroll-arrow::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transform: translateX(-100%);
-    animation: arrowShine 2s infinite;
-}
-
-@keyframes arrowShine {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-/* Welsh Government Support Section */
 .welsh-government-support {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -1749,17 +1180,72 @@ footer {
 
 .welsh-government-support p {
     margin: 0;
-    color: var(--text-light);
+    color: var(--grey);
     font-size: 0.9rem;
 }
 
 .welsh-government-support .welsh-text {
     font-style: italic;
-    color: var(--text-light);
+    color: var(--grey);
     opacity: 0.9;
 }
 
+/* Responsive Styles */
+@media (max-width: 991px) {
+
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .legacy-pillars,
+    .partners-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .legacy-quote {
+        font-size: 1.1rem;
+        padding: 20px;
+    }
+
     .welsh-government-support {
         margin-top: 1.5rem;
         padding: 1rem;
@@ -1770,552 +1256,145 @@ footer {
     }
 }
 
-/* Enhanced Mobile Responsiveness for Legacy Page */
-@media (max-width: 1200px) {
-    .container {
-        max-width: 100%;
-        padding: 0 15px;
-    }
-    
-    .page-hero-content h1 {
-        font-size: 3.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-    
-    .legacy-pillars {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-    
-    .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-}
-
-@media (max-width: 991px) {
-    .page-hero {
-        min-height: 80vh;
-    }
-    
-    .page-hero-content h1 {
-        font-size: 3rem;
-        line-height: 1.1;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .hero-stats {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .stat-item {
-        margin: 10px;
-        flex: 0 0 calc(50% - 20px);
-    }
-    
-    .legacy-pillars,
-    .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-    .stories-slider {
-        padding: 0 20px;
-    }
-    
-    .story-slide {
-        width: 100%;
-        max-width: 400px;
-    }
-    
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-}
-
-@media (max-width: 768px) {
-    header {
-        padding: 10px 0;
-    }
-    
-    .header-container {
-        padding: 0 15px;
-    }
-    
-    .hamburger {
-        display: flex;
-    }
-    
-    nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: min(350px, 85%);
-        height: 100vh;
-        background: var(--light);
-        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-        z-index: 1060;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-    }
-    
-    nav.active {
-        right: 0;
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        padding: 80px 0 40px 0;
-        margin: 0;
-        width: 100%;
-        min-height: 100vh;
-        justify-content: flex-start;
-        align-items: stretch;
-    }
-    
-    nav ul li {
-        margin: 0;
-        width: 100%;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    
-    nav ul li:last-child {
-        border-bottom: none;
-    }
-    
-    nav ul li a {
-        font-size: 1.1rem;
-        font-weight: 500;
-        padding: 20px 30px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        color: var(--dark);
-        transition: all 0.3s ease;
-        position: relative;
-        cursor: pointer;
-        text-decoration: none;
-        pointer-events: auto !important;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-        min-height: 60px;
-    }
-    
-    nav ul li a:hover,
-    nav ul li a:focus {
-        background: var(--grey);
-        color: var(--primary);
-        padding-left: 40px;
-    }
-    
-    nav ul li a.active {
-        background: linear-gradient(90deg, var(--primary), transparent);
-        color: var(--primary);
-        font-weight: 600;
-        border-left: 4px solid var(--primary);
-    }
-    
-    nav ul li a i {
-        font-size: 1.2rem;
-        width: 20px;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-    
-    nav ul li a:hover i,
-    nav ul li a.active i {
-        transform: scale(1.1);
-    }
-    
-    nav ul li a:focus {
-        outline: none;
-        background: var(--grey);
-    }
-    
-    .page-hero-content h1 {
-        font-size: 2.5rem;
-        line-height: 1.1;
-    }
-    
-    .page-hero-content p {
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
-    .hero-stats {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .stat-item {
-        margin: 10px 0;
-        flex: 0 0 auto;
-        width: 100%;
-        max-width: 200px;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
-    }
-    
-    .stat-label {
-        font-size: 0.9rem;
-    }
-    
-    section {
-        padding: 60px 0;
-    }
-    
-    h2 {
-        font-size: 2rem;
-        margin-bottom: 15px;
-    }
-    
-    .legacy-pillars,
-    .partners-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .legacy-pillar {
-        text-align: center;
-    }
-    
-    .pillar-image {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto 20px;
-    }
-    
-    .stories-slider {
-        padding: 0 10px;
-    }
-    
-    .story-slide {
-        width: 100%;
-        max-width: 350px;
-    }
-    
-    .story-card {
-        padding: 25px 20px;
-    }
-    
-    .story-quote {
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-    
-    .slider-nav {
-        margin-top: 20px;
-    }
-    
-    .slider-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .slider-dots {
-        margin-top: 15px;
-    }
-    
-    .slider-dot {
-        width: 10px;
-        height: 10px;
-        margin: 0 5px;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-    }
-    
-    .footer-info {
-        order: 1;
-    }
-    
-    .welsh-government-support {
-        margin-top: 30px;
-    }
-    
-    .welsh-gov-logo {
-        max-width: 150px;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
-    .hero-cta {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .legacy-quote {
-        font-size: 1.1rem;
-        padding: 20px;
-    }
-}
-
 @media (max-width: 480px) {
-    nav {
-        width: 100%;
-        right: -100%;
-    }
-    
-    nav ul li a {
-        font-size: 1rem;
-        padding: 18px 20px;
-    }
-    
-    .hamburger {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .page-hero {
-        min-height: 70vh;
-    }
-    
-    .page-hero-content h1 {
+    .hero-title {
         font-size: 2rem;
-        line-height: 1.2;
     }
-    
+
     .hero-subtitle {
         font-size: 0.9rem;
     }
-    
-    .stat-number {
-        font-size: 1.8rem;
-    }
-    
-    .stat-label {
-        font-size: 0.8rem;
-    }
-    
+
     h2 {
         font-size: 1.8rem;
-        margin-bottom: 10px;
     }
-    
+
     .container {
         padding: 0 10px;
     }
-    
+
     section {
         padding: 40px 0;
     }
-    
-    .logo {
-        font-size: 1.3rem;
-    }
-    
-    .footer-logo {
-        font-size: 1.3rem;
-    }
-    
-    .legacy-pillar {
-        padding: 25px 20px;
-    }
-    
-    .pillar-content h3 {
-        font-size: 1.3rem;
-    }
-    
-    .story-card {
-        padding: 20px 15px;
-    }
-    
-    .story-quote {
-        font-size: 0.9rem;
-    }
-    
-    .partner-card {
-        padding: 25px 20px;
-    }
-    
-    .partner-card h3 {
-        font-size: 1.3rem;
-    }
-    
-    .slider-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-    }
-    
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
 }
 
-/* Tablet Landscape */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .page-hero-content h1 {
-        font-size: 3.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.3rem;
-    }
-    
-    .legacy-pillars,
-    .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-    
-    .stat-item {
-        margin: 8px;
-        padding: 20px 15px;
-    }
-    
-    .stat-number {
-        font-size: 2.5rem;
-    }
-    
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
-}
+/* URGENT FIX - Add this to the very end of your styles.css */
 
-/* Large Mobile */
-@media (min-width: 481px) and (max-width: 767px) {
-    .page-hero-content h1 {
-        font-size: 2.8rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .legacy-pillars,
-    .partners-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    
-    .hero-stats {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .stat-item {
-        margin: 8px;
-        padding: 15px 12px;
-        flex: 0 0 calc(50% - 16px);
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-}
-
-/* Touch Device Optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .legacy-pillar:hover {
-        transform: none;
-    }
-    
-    .partner-card:hover {
-        transform: none;
-    }
-    
-    .slider-btn:hover {
-        transform: none;
-    }
-    
-    nav ul li a:hover {
-        padding-left: 30px;
-    }
-}
-
-/* Slider-specific mobile optimizations */
+/* Fix blurry menu and non-working links */
 @media (max-width: 768px) {
-    .stories-track {
-        gap: 20px;
-    }
-    
-    .story-slide {
-        flex-shrink: 0;
-    }
-    
-    .story-avatar {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .story-avatar img {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .story-details h4 {
-        font-size: 1rem;
-    }
-    
-    .story-details span {
-        font-size: 0.8rem;
-    }
-}
 
-/* Legacy pillars mobile optimizations */
-@media (max-width: 768px) {
-    .pillar-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
+    /* Remove blur effects that cause menu to look blurry */
+    nav {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
-    
-    .pillar-content {
-        padding: 0 10px;
+
+    nav.active {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
-    
-    .pillar-content h3 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
+
+    /* Force navigation links to be clickable */
+    nav ul li a,
+    #nav ul li a,
+    nav a,
+    #nav a {
+        pointer-events: auto !important;
+        z-index: 99999 !important;
+        position: relative !important;
+        display: flex !important;
+        background: transparent !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(211, 7, 29, 0.2) !important;
+        color: #333 !important;
+        text-decoration: none !important;
+        padding: 20px 30px !important;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        border: none !important;
+        outline: none !important;
+        min-height: 60px !important;
+        width: 100% !important;
+        align-items: center !important;
+        gap: 12px !important;
     }
-    
-    .pillar-content p {
-        font-size: 0.9rem;
-        line-height: 1.5;
+
+    /* Fix link hover states */
+    nav ul li a:hover,
+    nav ul li a:focus,
+    nav ul li a:active,
+    #nav ul li a:hover,
+    #nav ul li a:focus,
+    #nav ul li a:active {
+        background: #F6F6F6 !important;
+        color: #D3071D !important;
+        padding-left: 40px !important;
+    }
+
+    /* Fix active link state */
+    nav ul li a.active,
+    #nav ul li a.active {
+        background: linear-gradient(90deg, #D3071D, transparent) !important;
+        color: #D3071D !important;
+        font-weight: 600 !important;
+        border-left: 4px solid #D3071D !important;
+    }
+
+    /* Remove any conflicting transforms or filters */
+    nav ul li a *,
+    #nav ul li a * {
+        pointer-events: none !important;
+    }
+
+    nav ul li a i,
+    #nav ul li a i {
+        pointer-events: none !important;
+        font-size: 1.2rem !important;
+        width: 20px !important;
+        text-align: center !important;
+        color: inherit !important;
+    }
+
+    /* Ensure nav container is properly positioned */
+    nav ul {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: transparent !important;
+    }
+
+    nav ul li {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: transparent !important;
+    }
+
+    /* Fix overlay to not interfere */
+    .overlay {
+        backdrop-filter: blur(2px) !important;
+        pointer-events: auto !important;
+    }
+
+    .overlay.active {
+        backdrop-filter: blur(2px) !important;
+        pointer-events: auto !important;
+    }
+
+    /* Ensure hamburger works */
+    .hamburger {
+        pointer-events: auto !important;
+        z-index: 9999 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 }
