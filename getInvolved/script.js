@@ -1,4 +1,4 @@
-// Mobile Navigation Toggle
+// Mobile Navigation Toggle - Activities Working Implementation
 const hamburger = document.getElementById("hamburger");
 const nav = document.getElementById("nav");
 const overlay = document.getElementById("overlay");
@@ -22,11 +22,15 @@ const initializeNavigation = () => {
   hamburger.addEventListener("click", toggleMenu);
   overlay.addEventListener("click", toggleMenu);
 
-  // Close menu when clicking navigation links
+  // Close menu when clicking navigation links - allow navigation to happen
   document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", () => {
+    item.addEventListener("click", (e) => {
+      // Allow the link to navigate normally
+      // Just close the menu after a small delay
       if (nav.classList.contains("active")) {
-        toggleMenu();
+        setTimeout(() => {
+          toggleMenu();
+        }, 100);
       }
     });
   });
