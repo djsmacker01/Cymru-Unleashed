@@ -1,68 +1,4 @@
-// Mobile Navigation Toggle
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-const overlay = document.getElementById("overlay");
-
-// Add error checking for elements
-const elementsExist = hamburger && nav && overlay;
-if (!elementsExist) {
-  console.error("Navigation elements not found:", { hamburger, nav, overlay });
-}
-
-const toggleMenu = () => {
-  if (!elementsExist) {
-    console.error("Cannot toggle menu - elements not found");
-    return;
-  }
-
-  nav.classList.toggle("active");
-  hamburger.classList.toggle("active");
-  overlay.classList.toggle("active");
-  hamburger.innerHTML = nav.classList.contains("active")
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
-
-  // Toggle body scroll
-  document.body.style.overflow = nav.classList.contains("active")
-    ? "hidden"
-    : "";
-};
-
-// Initialize navigation event listeners
-const initializeNavigation = () => {
-  if (!elementsExist) {
-    console.error("Cannot initialize navigation - elements not found");
-    return;
-  }
-
-  console.log("Initializing navigation...");
-
-  hamburger.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("Hamburger clicked");
-    toggleMenu();
-  });
-
-  overlay.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("Overlay clicked");
-    toggleMenu();
-  });
-
-  // Close menu when clicking navigation links
-  document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", () => {
-      if (nav.classList.contains("active")) {
-        console.log("Nav link clicked, closing menu");
-        toggleMenu();
-      }
-    });
-  });
-
-  console.log("Navigation initialized successfully");
-};
+// Navigation is now handled by mobile-nav.js
 
 // Sticky Header on Scroll
 const initializeStickyHeader = () => {
@@ -235,6 +171,44 @@ updateLanguage(initialLang);
 // Handle touch events for mobile
 const initializeTouchEvents = () => {
   document.addEventListener("touchstart", () => {}, { passive: true });
+};
+
+// Mobile Navigation Toggle - Activities Working Implementation
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav");
+const overlay = document.getElementById("overlay");
+
+const toggleMenu = () => {
+  nav.classList.toggle("active");
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
+  hamburger.innerHTML = nav.classList.contains("active")
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
+
+  // Toggle body scroll
+  document.body.style.overflow = nav.classList.contains("active")
+    ? "hidden"
+    : "";
+};
+
+// Initialize navigation event listeners
+const initializeNavigation = () => {
+  hamburger.addEventListener("click", toggleMenu);
+  overlay.addEventListener("click", toggleMenu);
+
+  // Close menu when clicking navigation links - allow navigation to happen
+  document.querySelectorAll("nav a").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      // Allow the link to navigate normally
+      // Just close the menu after a small delay
+      if (nav.classList.contains("active")) {
+        setTimeout(() => {
+          toggleMenu();
+        }, 100);
+      }
+    });
+  });
 };
 
 // Initialize all functionality
