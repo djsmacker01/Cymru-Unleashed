@@ -1,10 +1,5 @@
 // Carousel Configuration
 const carouselSlides = [
-  // {
-  //   image: "./Images/youngcoach.webp",
-  //   title: "Welcome to Cymru Unleashed",
-  //   description: "Empowering Welsh Communities Through Sports and Culture",
-  // },
   {
     image: "./Images/hero2.webp",
     title: "Be a part of History ",
@@ -28,7 +23,8 @@ const carouselSlides = [
   },
 ];
 
-// Mobile Navigation Toggle
+// AGGRESSIVE NAVIGATION FIX - Replace your navigation section
+
 const hamburger = document.getElementById("hamburger");
 const nav = document.getElementById("nav");
 const overlay = document.getElementById("overlay");
@@ -41,25 +37,134 @@ const toggleMenu = () => {
     ? '<i class="fas fa-times"></i>'
     : '<i class="fas fa-bars"></i>';
 
-  // Toggle body scroll
   document.body.style.overflow = nav.classList.contains("active")
     ? "hidden"
     : "";
 };
 
-// Initialize navigation event listeners
-const initializeNavigation = () => {
-  hamburger.addEventListener("click", toggleMenu);
-  overlay.addEventListener("click", toggleMenu);
+const closeMenu = () => {
+  nav.classList.remove("active");
+  hamburger.classList.remove("active");
+  overlay.classList.remove("active");
+  hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+  document.body.style.overflow = "";
+};
 
-  // Close menu when clicking navigation links
-  document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", () => {
-      if (nav.classList.contains("active")) {
-        toggleMenu();
+const initializeNavigation = () => {
+  // Hamburger click
+  hamburger.addEventListener("click", toggleMenu);
+
+  // Overlay click
+  overlay.addEventListener("click", closeMenu);
+
+  // AGGRESSIVE LINK FIX - Multiple approaches
+
+  // Approach 1: Direct link selection and fixing
+  setTimeout(() => {
+    const allLinks = document.querySelectorAll(
+      "a[href], nav a, #nav a, [href*='html'], [href*='/']"
+    );
+
+    allLinks.forEach((link) => {
+      // Check if it's a navigation link
+      if (link.closest("nav") || link.closest("#nav")) {
+        console.log("🔧 Fixing navigation link:", link.href);
+
+        // Force the link to be clickable
+        link.style.pointerEvents = "auto";
+        link.style.zIndex = "9999";
+        link.style.position = "relative";
+        link.style.cursor = "pointer";
+        link.style.display = "flex";
+        link.style.alignItems = "center";
+
+        // Remove any existing click handlers and add new one
+        link.onclick = null;
+
+        link.addEventListener("click", (e) => {
+          e.stopPropagation();
+          console.log("🔗 Link clicked:", link.href);
+
+          // Close menu
+          if (nav?.classList.contains("active")) {
+            closeMenu();
+          }
+
+          // Navigate after a short delay
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 200);
+        });
+
+        // Also handle touch events for mobile
+        link.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("📱 Touch on link:", link.href);
+
+          if (nav?.classList.contains("active")) {
+            closeMenu();
+          }
+
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 200);
+        });
       }
     });
-  });
+  }, 300);
+
+  // Approach 2: Global click handler
+  document.addEventListener(
+    "click",
+    (e) => {
+      const target = e.target;
+      const link = target.closest("a[href]");
+
+      if (link && (link.closest("nav") || link.closest("#nav"))) {
+        console.log("🌐 Global handler - Navigation link:", link.href);
+        e.stopPropagation();
+
+        if (nav?.classList.contains("active")) {
+          closeMenu();
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 200);
+        }
+      }
+    },
+    true
+  ); // Use capture phase
+
+  // Approach 3: Force click handlers on common navigation elements
+  setTimeout(() => {
+    const navSelectors = [
+      "nav a[href]",
+      "#nav a[href]",
+      "a[href*='index.html']",
+      "a[href*='about.html']",
+      "a[href*='activities.html']",
+      "a[href*='legacy.html']",
+      "a[href*='get-involved.html']",
+    ];
+
+    navSelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((link) => {
+        link.addEventListener("click", (e) => {
+          console.log("🎯 Forced handler:", link.href);
+          if (nav?.classList.contains("active")) {
+            closeMenu();
+            e.preventDefault();
+            setTimeout(() => {
+              window.location.href = link.href;
+            }, 200);
+          }
+        });
+      });
+    });
+  }, 500);
+
+  console.log("✅ Aggressive navigation setup complete");
 };
 
 // Sticky Header on Scroll
@@ -75,18 +180,6 @@ const initializeStickyHeader = () => {
     }
   });
 };
-
-// Initialize all functionality
-document.addEventListener("DOMContentLoaded", () => {
-  initializeNavigation();
-  initializeStickyHeader();
-
-  // Keep your existing initializations:
-  console.log("DOM loaded, initializing carousel...");
-  initializeCarousel();
-
-  console.log("🚀 All systems initialized and ready!");
-});
 
 // Smooth Scrolling for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -129,16 +222,39 @@ animateElements.forEach((element) => {
 
 // Event Status - UEFA Women's Euro 2025 is Live
 const initializeEventStatus = () => {
-  // The event is now live, so we can add any dynamic content or animations here
   const eventStatusEl = document.getElementById("eventStatus");
   if (eventStatusEl) {
-    // Add a subtle animation to the trophy icon
     const trophyIcon = eventStatusEl.querySelector(".event-status-icon i");
     if (trophyIcon) {
       trophyIcon.style.animation = "pulse 2s infinite";
     }
   }
 };
+
+// TEMPORARY DEBUG - Add this after initializeNavigation()
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    // Force click handlers on ALL possible navigation elements
+    document
+      .querySelectorAll("a[href*='html'], a[href*='/'], nav a, #nav a")
+      .forEach((link) => {
+        link.style.pointerEvents = "auto";
+        link.style.zIndex = "9999";
+        link.style.position = "relative";
+
+        link.addEventListener("click", (e) => {
+          console.log("FORCED CLICK:", link.href);
+          if (nav?.classList.contains("active")) {
+            nav.classList.remove("active");
+            overlay.classList.remove("active");
+            hamburger.classList.remove("active");
+            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.style.overflow = "";
+          }
+        });
+      });
+  }, 500);
+});
 
 // Initialize event status
 initializeEventStatus();
@@ -280,14 +396,6 @@ function updateLanguage(lang) {
     }
   });
 
-  // Update navigation links
-  document.querySelectorAll("nav a").forEach((link) => {
-    const key = link.getAttribute("data-translate");
-    if (key && translations[lang][key]) {
-      link.textContent = translations[lang][key];
-    }
-  });
-
   // Update document title
   document.title =
     lang === "cy"
@@ -350,7 +458,6 @@ function initializeCarousel() {
           };
           img.onerror = () => {
             console.error(`Failed to load image: ${slide.image}`);
-            // Still resolve to continue with other images
             resolve(slide);
           };
           img.src = slide.image;
@@ -487,12 +594,6 @@ function initializeCarousel() {
     });
 }
 
-// Initialize carousel when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM loaded, initializing carousel...");
-  initializeCarousel();
-});
-
 // Lazy Loading Implementation
 const lazyLoadOptions = {
   root: null,
@@ -546,4 +647,12 @@ window.addEventListener("load", () => {
       };
     }
   });
+});
+
+// Initialize all functionality
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
+  initializeStickyHeader();
+  initializeCarousel();
+  console.log("🚀 All systems initialized and ready!");
 });
