@@ -1,51 +1,48 @@
-// Clean Navigation Implementation
-console.log("🚀 Navigation script starting...");
+// Fixed Navigation Implementation - No Overlay Conflicts
+console.log('🚀 Navigation script starting...');
 
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("📱 DOM loaded - initializing navigation");
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('📱 DOM loaded - initializing navigation');
 
   // Get navigation elements
-  const hamburger = document.getElementById("hamburger");
-  const nav = document.getElementById("nav");
-  const overlay = document.getElementById("overlay");
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  const overlay = document.getElementById('overlay');
 
   if (!hamburger || !nav || !overlay) {
-    console.error("❌ Navigation elements missing!");
-    console.log("Hamburger:", hamburger);
-    console.log("Nav:", nav);
-    console.log("Overlay:", overlay);
+    console.error('❌ Navigation elements missing!');
     return;
   }
 
-  console.log("✅ Navigation elements found");
+  console.log('✅ Navigation elements found');
 
   let isMenuOpen = false;
 
   // Open menu
   function openMenu() {
-    console.log("📂 Opening menu");
+    console.log('📂 Opening menu');
     isMenuOpen = true;
-    nav.classList.add("active");
-    hamburger.classList.add("active");
-    overlay.classList.add("active");
-    document.body.classList.add("menu-open");
+    nav.classList.add('active');
+    hamburger.classList.add('active');
+    overlay.classList.add('active');
+    document.body.classList.add('menu-open');
     hamburger.innerHTML = '<i class="fas fa-times"></i>';
   }
 
   // Close menu
   function closeMenu() {
-    console.log("📁 Closing menu");
+    console.log('📁 Closing menu');
     isMenuOpen = false;
-    nav.classList.remove("active");
-    hamburger.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.classList.remove("menu-open");
+    nav.classList.remove('active');
+    hamburger.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
     hamburger.innerHTML = '<i class="fas fa-bars"></i>';
   }
 
   // Toggle menu
   function toggleMenu() {
-    console.log("🔄 Toggling menu, current state:", isMenuOpen);
+    console.log('🔄 Toggling menu, current state:', isMenuOpen);
     if (isMenuOpen) {
       closeMenu();
     } else {
@@ -53,81 +50,86 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Hamburger click handler
-  hamburger.addEventListener("click", function (e) {
+  // Hamburger click handler - FIXED to prevent overlay conflicts
+  hamburger.addEventListener('click', function (e) {
     e.preventDefault();
-    e.stopPropagation();
-    console.log("🍔 Hamburger clicked");
+    e.stopPropagation(); // Prevent event from bubbling to overlay
+    e.stopImmediatePropagation(); // Stop all other handlers
+    console.log('🍔 Hamburger clicked');
     toggleMenu();
   });
 
-  // Overlay click to close menu
-  overlay.addEventListener("click", function () {
-    console.log("🖱️ Overlay clicked - closing menu");
-    closeMenu();
+  // Also handle touch events separately for mobile
+  hamburger.addEventListener('touchend', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    console.log('👆 Hamburger touched');
+    toggleMenu();
+  });
+
+  // Overlay click to close menu - ONLY when clicking overlay itself
+  overlay.addEventListener('click', function (e) {
+    // Only close if clicking the overlay directly, not its children
+    if (e.target === overlay) {
+      console.log('🖱️ Overlay clicked directly - closing menu');
+      closeMenu();
+    }
   });
 
   // Close menu on escape key
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && isMenuOpen) {
-      console.log("⌨️ Escape key pressed - closing menu");
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isMenuOpen) {
+      console.log('⌨️ Escape key pressed - closing menu');
       closeMenu();
     }
   });
 
   // Handle navigation links
   function setupNavigationLinks() {
-    console.log("🔗 Setting up navigation links");
+    console.log('🔗 Setting up navigation links');
 
-    const navLinks = nav.querySelectorAll("a");
+    const navLinks = nav.querySelectorAll('a');
     console.log(`Found ${navLinks.length} navigation links`);
 
     navLinks.forEach((link, index) => {
       const linkText = link.textContent.trim();
-      const linkHref = link.getAttribute("href");
+      const linkHref = link.getAttribute('href');
       console.log(`Setting up link ${index + 1}: "${linkText}" -> ${linkHref}`);
 
-      // Remove existing event listeners by cloning
-      const newLink = link.cloneNode(true);
-      link.parentNode.replaceChild(newLink, link);
-
-      // Add click handler
-      newLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+      // Clean click handler
+      link.addEventListener('click', function (e) {
         console.log(
           `🎯 Navigation link clicked: "${this.textContent.trim()}" -> ${
             this.href
           }`
         );
 
-        // Close menu if open
+        // If menu is open, close it and navigate
         if (isMenuOpen) {
+          console.log('📱 Menu is open - closing and navigating');
+          e.preventDefault();
           closeMenu();
-          // Wait for menu to close before navigating
+
+          // Navigate after menu closes
           setTimeout(() => {
+            console.log(`🚀 Navigating to: ${this.href}`);
             window.location.href = this.href;
           }, 300);
-        } else {
-          window.location.href = this.href;
         }
+        // If menu is closed, let the link work normally
       });
 
-      // Add touch handler for mobile
-      newLink.addEventListener("touchend", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log(
-          `👆 Touch navigation: "${this.textContent.trim()}" -> ${this.href}`
-        );
+      // Touch handler for mobile devices
+      link.addEventListener('touchend', function (e) {
+        console.log(`👆 Touch navigation: "${this.textContent.trim()}"`);
 
         if (isMenuOpen) {
+          e.preventDefault();
           closeMenu();
           setTimeout(() => {
             window.location.href = this.href;
           }, 300);
-        } else {
-          window.location.href = this.href;
         }
       });
 
@@ -139,25 +141,44 @@ document.addEventListener("DOMContentLoaded", function () {
   setupNavigationLinks();
 
   // Sticky header
-  window.addEventListener("scroll", function () {
-    const header = document.getElementById("header");
+  window.addEventListener('scroll', function () {
+    const header = document.getElementById('header');
     if (header) {
-      header.classList.toggle("scrolled", window.scrollY > 50);
+      header.classList.toggle('scrolled', window.scrollY > 50);
     }
   });
 
-  console.log("✅ Navigation initialization complete");
+  // Prevent any document-level clicks from interfering with hamburger
+  document.addEventListener('click', function (e) {
+    // If clicking the hamburger, don't let this handler do anything
+    if (e.target.closest('#hamburger')) {
+      e.stopPropagation();
+      return;
+    }
+
+    // If menu is open and clicking outside nav/hamburger, close menu
+    if (
+      isMenuOpen &&
+      !e.target.closest('#nav') &&
+      !e.target.closest('#hamburger')
+    ) {
+      console.log('🌐 Clicked outside menu - closing');
+      closeMenu();
+    }
+  });
+
+  console.log('✅ Navigation initialization complete');
 });
 
-// Testimonial Slider
-document.addEventListener("DOMContentLoaded", function () {
-  const track = document.getElementById("stories-track");
-  const dots = document.querySelectorAll(".slider-dot");
-  const nextBtn = document.getElementById("next");
-  const prevBtn = document.getElementById("prev");
+// Testimonial Slider (unchanged)
+document.addEventListener('DOMContentLoaded', function () {
+  const track = document.getElementById('stories-track');
+  const dots = document.querySelectorAll('.slider-dot');
+  const nextBtn = document.getElementById('next');
+  const prevBtn = document.getElementById('prev');
 
   if (track && nextBtn && prevBtn) {
-    console.log("📊 Initializing testimonial slider");
+    console.log('📊 Initializing testimonial slider');
 
     let currentIndex = 0;
     const slides = Array.from(track.children);
@@ -167,42 +188,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const setSliderPosition = () => {
       track.style.transform = `translateX(-${currentIndex * 100}%)`;
-      dots.forEach((dot) => dot.classList.remove("active"));
+      dots.forEach((dot) => dot.classList.remove('active'));
       if (dots[currentIndex]) {
-        dots[currentIndex].classList.add("active");
+        dots[currentIndex].classList.add('active');
       }
     };
 
-    nextBtn.addEventListener("click", () => {
+    nextBtn.addEventListener('click', () => {
       currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
       setSliderPosition();
     });
 
-    prevBtn.addEventListener("click", () => {
+    prevBtn.addEventListener('click', () => {
       currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
       setSliderPosition();
     });
 
     dots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        currentIndex = parseInt(dot.getAttribute("data-index"));
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.getAttribute('data-index'));
         setSliderPosition();
       });
     });
 
     // Touch events
     track.addEventListener(
-      "touchstart",
+      'touchstart',
       (e) => {
         startX = e.touches[0].clientX;
         isMouseDown = true;
-        track.style.transition = "none";
+        track.style.transition = 'none';
       },
       { passive: true }
     );
 
     track.addEventListener(
-      "touchmove",
+      'touchmove',
       (e) => {
         if (!isMouseDown) return;
         moveX = e.touches[0].clientX;
@@ -215,9 +236,9 @@ document.addEventListener("DOMContentLoaded", function () {
       { passive: true }
     );
 
-    track.addEventListener("touchend", () => {
+    track.addEventListener('touchend', () => {
       isMouseDown = false;
-      track.style.transition = "transform 0.5s ease";
+      track.style.transition = 'transform 0.5s ease';
 
       if (moveX) {
         const diff = moveX - startX;
@@ -231,8 +252,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    console.log("✅ Slider initialized");
+    console.log('✅ Slider initialized');
   }
 });
 
-console.log("🎯 Navigation script fully loaded!");
+console.log('🎯 Navigation script fully loaded!');

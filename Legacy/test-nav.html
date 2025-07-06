@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 100px;
+            font-family: Arial, sans-serif;
+        }
+
+        .test-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* Temporary debug styles */
+        @media (max-width: 768px) {
+            nav {
+                /* Force menu to be visible for testing */
+                right: 0 !important;
+                background: red !important;
+                opacity: 0.9 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Cymru <span>Unleashed</span></a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="nav">
+                <ul>
+                    <li><a href="/index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/About/about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/Activities/activities.html"><i class="fas fa-futbol"></i> Activities</a></li>
+                    <li><a href="legacy.html" class="active"><i class="fas fa-monument"></i> Legacy</a></li>
+                    <li><a href="/getInvolved/get-involved.html"><i class="fas fa-hands-helping"></i> Get Involved</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="test-content">
+        <h1>Navigation Test Page</h1>
+
+        <div class="test-section">
+            <h2>Test Instructions</h2>
+            <ol>
+                <li>Resize your browser window to mobile size (or use browser dev tools)</li>
+                <li>Click the hamburger menu icon</li>
+                <li>Verify the menu opens smoothly</li>
+                <li>Click on navigation links to test functionality</li>
+                <li>Click the overlay to close the menu</li>
+                <li>Press Escape key to close the menu</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>Expected Behavior</h2>
+            <ul>
+                <li>✅ Hamburger icon should be clear and not blurry</li>
+                <li>✅ Menu should slide in from the right</li>
+                <li>✅ Navigation links should be clickable</li>
+                <li>✅ Menu should close when clicking overlay</li>
+                <li>✅ Menu should close when pressing Escape</li>
+                <li>✅ Icon should change from bars to X when open</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>Current Status</h2>
+            <p>Menu State: <span id="menu-status">Closed</span></p>
+            <p>Last Action: <span id="last-action">None</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Add test logging
+        const menuStatus = document.getElementById('menu-status');
+        const lastAction = document.getElementById('last-action');
+
+        // Override console.log to also update the test display
+        const originalLog = console.log;
+        console.log = function (...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            if (message.includes('Opening menu')) {
+                menuStatus.textContent = 'Open';
+                lastAction.textContent = 'Menu opened';
+            } else if (message.includes('Closing menu')) {
+                menuStatus.textContent = 'Closed';
+                lastAction.textContent = 'Menu closed';
+            } else if (message.includes('Hamburger clicked')) {
+                lastAction.textContent = 'Hamburger clicked';
+            } else if (message.includes('Navigation link clicked')) {
+                lastAction.textContent = 'Link clicked: ' + message.split('->')[1]?.trim();
+            }
+        };
+    </script>
+</body>
+
+</html>
