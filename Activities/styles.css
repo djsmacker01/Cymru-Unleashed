@@ -1765,29 +1765,88 @@ footer {
         width: 100%;
     }
 
+    /* Timeline Mobile Improvements */
+    .timeline {
+        max-width: 100%;
+        padding: 20px 10px;
+    }
+
     .timeline::before {
-        left: 15px;
+        left: 20px;
+        width: 3px;
     }
 
     .timeline-item,
     .timeline-item:nth-child(even) {
-        padding-left: 50px;
-        margin-bottom: 30px;
+        width: 100%;
+        padding-left: 60px;
+        padding-right: 0;
+        margin-bottom: 25px;
+        justify-content: flex-start;
+        left: 0;
     }
 
     .timeline-dot,
     .timeline-item:nth-child(even) .timeline-dot {
-        left: 15px;
-        width: 12px;
-        height: 12px;
+        left: 20px;
+        width: 15px;
+        height: 15px;
+        top: 5px;
     }
 
     .timeline-content {
-        padding: 15px;
+        padding: 20px 15px;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        background: var(--light);
+        width: 100%;
     }
 
     .timeline-content h4 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .timeline-content p {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .timeline-content p:first-of-type {
+        font-weight: 500;
+        color: var(--secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Timeline Section Mobile Enhancements */
+    .timeline-section {
+        padding: 40px 0;
+    }
+
+    .timeline-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    /* Activity Intro Mobile Improvements */
+    .activity-intro {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 0 15px;
+    }
+
+    .activity-intro h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .activity-intro p {
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 100%;
     }
 
     .vr-experience {
@@ -1895,10 +1954,53 @@ footer {
 
     .timeline-content h4 {
         font-size: 1.1rem;
+        margin-bottom: 6px;
     }
 
     .timeline-content p {
         font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 6px;
+    }
+
+    /* Timeline Small Mobile Improvements */
+    .timeline {
+        padding: 15px 5px;
+    }
+
+    .timeline::before {
+        left: 15px;
+        width: 2px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        padding-left: 45px;
+        margin-bottom: 20px;
+    }
+
+    .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: 15px;
+        width: 12px;
+        height: 12px;
+        top: 3px;
+    }
+
+    .timeline-content {
+        padding: 15px 12px;
+    }
+
+    .timeline-content h4 {
+        font-size: 1rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.85rem;
+    }
+
+    .timeline-content p:first-of-type {
+        font-size: 0.8rem;
     }
 
     .btn {

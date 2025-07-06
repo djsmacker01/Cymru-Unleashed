@@ -1408,6 +1408,58 @@ footer {
 
     .footer-info {
         order: 1;
+        text-align: center;
+    }
+
+    /* Footer Social Media Mobile Improvements */
+    .footer-social {
+        justify-content: center;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .footer-social a {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .footer-links {
+        text-align: center;
+    }
+
+    .footer-links h3 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-links ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footer-links ul li {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .footer-links ul li a {
+        display: inline-block;
+        padding: 5px 0;
+    }
+
+    /* Partner Logos Mobile Improvements */
+    .partner-logos {
+        justify-content: center;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .partner-logos img {
+        width: 70px;
+        height: 25px;
     }
 
     .welsh-government-support {
@@ -1555,6 +1607,36 @@ footer {
     .btn {
         padding: 10px 20px;
         font-size: 0.9rem;
+    }
+
+    /* Footer Small Mobile Improvements */
+    .footer-social {
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .footer-social a {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .footer-links ul li {
+        margin-bottom: 6px;
+    }
+
+    .footer-links ul li a {
+        font-size: 0.9rem;
+    }
+
+    .partner-logos {
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .partner-logos img {
+        width: 60px;
+        height: 20px;
     }
 }
 
