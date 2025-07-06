@@ -1528,7 +1528,49 @@ footer {
 
     .home-footer .footer-info,
     .home-footer .footer-links {
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
+    }
+
+    .home-footer .footer-links h3 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .home-footer .footer-links ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .home-footer .footer-links ul li {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .home-footer .footer-links ul li a {
+        display: inline-block;
+        padding: 5px 0;
+    }
+
+    /* Contact section specific mobile styling */
+    .home-footer .footer-links:last-child ul li {
+        text-align: center;
+        margin-bottom: 12px;
+        line-height: 1.6;
+    }
+
+    .home-footer .footer-links:last-child ul li strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+    }
+
+    .home-footer .footer-links:last-child ul li a {
+        display: inline-block;
+        word-break: break-word;
+        max-width: 100%;
     }
 
     .home-footer .partner-logos {

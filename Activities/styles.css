@@ -1061,6 +1061,51 @@ nav ul li a.active {
     text-align: center;
 }
 
+/* Digital Campaign Mobile Improvements */
+.campaign-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.campaign-text {
+    padding: 20px 0;
+}
+
+.campaign-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+.campaign-text p {
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.feature-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.feature-list li {
+    padding-left: 30px;
+    margin-bottom: 15px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.feature-list li::before {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+    top: 2px;
+}
+
 .vr-experience h3 {
     margin-bottom: 20px;
     color: var(--primary);
@@ -1314,15 +1359,15 @@ footer {
         max-width: 100%;
         padding: 0 15px;
     }
-    
+
     .page-hero-content h1 {
         font-size: 3.5rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.2rem;
     }
-    
+
     .events-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
@@ -1333,51 +1378,51 @@ footer {
     .page-hero {
         min-height: 80vh;
     }
-    
+
     .page-hero-content h1 {
         font-size: 3rem;
         line-height: 1.1;
     }
-    
+
     .hero-subtitle {
         font-size: 1.1rem;
     }
-    
+
     .hero-stats {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .stat-item {
         margin: 10px;
         flex: 0 0 calc(50% - 20px);
     }
-    
+
     .events-grid,
     .installations-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-    
+
     .campaign-content {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .campaign-text {
         margin-bottom: 30px;
     }
-    
+
     .campaign-image {
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
     }
-    
+
     .timeline::before {
         left: 20px;
     }
-    
+
     .timeline-item,
     .timeline-item:nth-child(even) {
         flex-direction: column;
@@ -1386,16 +1431,152 @@ footer {
         margin-right: 0;
         padding-left: 60px;
     }
-    
+
     .timeline-dot,
     .timeline-item:nth-child(even) .timeline-dot {
         left: 20px;
         right: auto;
     }
-    
+
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
+    }
+
+    /* Digital Campaign Mobile Responsive */
+    .campaign-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .campaign-text {
+        order: 1;
+        padding: 0;
+    }
+
+    .campaign-image {
+        order: 2;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .campaign-text h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .campaign-text p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .feature-list {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .feature-list li {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        padding-left: 25px;
+    }
+
+    .vr-experience {
+        padding: 30px 20px;
+        margin-top: 30px;
+    }
+
+    .vr-experience h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .vr-experience p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .vr-image {
+        margin: 20px auto;
+    }
+
+    /* Footer Social Media Mobile Improvements */
+    .footer-social {
+        justify-content: center;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .footer-social a {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .footer-info {
+        text-align: center;
+    }
+
+    .footer-links {
+        text-align: center;
+    }
+
+    .footer-links h3 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-links ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footer-links ul li {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .footer-links ul li a {
+        display: inline-block;
+        padding: 5px 0;
+    }
+
+    /* Contact section specific mobile styling */
+    .footer-links:last-child ul li {
+        text-align: center;
+        margin-bottom: 12px;
+        line-height: 1.6;
+    }
+
+    .footer-links:last-child ul li strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+    }
+
+    .footer-links:last-child ul li a {
+        display: inline-block;
+        word-break: break-word;
+        max-width: 100%;
+    }
+
+    /* Additional mobile improvements for digital campaign */
+    .campaign-text {
+        padding: 0 10px;
+    }
+
+    .vr-experience {
+        margin: 20px 10px;
+        padding: 20px 15px;
+    }
+
+    .vr-experience .btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
 
@@ -1403,15 +1584,15 @@ footer {
     header {
         padding: 10px 0;
     }
-    
+
     .header-container {
         padding: 0 15px;
     }
-    
+
     .hamburger {
         display: flex;
     }
-    
+
     nav {
         position: fixed;
         top: 0;
@@ -1431,14 +1612,14 @@ footer {
         opacity: 0;
         pointer-events: none;
     }
-    
+
     nav.active {
         right: 0;
         visibility: visible;
         opacity: 1;
         pointer-events: auto;
     }
-    
+
     nav ul {
         flex-direction: column;
         padding: 80px 0 40px 0;
@@ -1448,17 +1629,17 @@ footer {
         justify-content: flex-start;
         align-items: stretch;
     }
-    
+
     nav ul li {
         margin: 0;
         width: 100%;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
-    
+
     nav ul li:last-child {
         border-bottom: none;
     }
-    
+
     nav ul li a {
         font-size: 1.1rem;
         font-weight: 500;
@@ -1477,162 +1658,162 @@ footer {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
         min-height: 60px;
     }
-    
+
     nav ul li a:hover,
     nav ul li a:focus {
         background: var(--grey);
         color: var(--primary);
         padding-left: 40px;
     }
-    
+
     nav ul li a.active {
         background: linear-gradient(90deg, var(--primary), transparent);
         color: var(--primary);
         font-weight: 600;
         border-left: 4px solid var(--primary);
     }
-    
+
     nav ul li a i {
         font-size: 1.2rem;
         width: 20px;
         text-align: center;
         transition: all 0.3s ease;
     }
-    
+
     nav ul li a:hover i,
     nav ul li a.active i {
         transform: scale(1.1);
     }
-    
+
     nav ul li a:focus {
         outline: none;
         background: var(--grey);
     }
-    
+
     .page-hero-content h1 {
         font-size: 2.5rem;
         line-height: 1.1;
     }
-    
+
     .page-hero-content p {
         font-size: 1rem;
         margin-bottom: 20px;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .hero-stats {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .stat-item {
         margin: 10px 0;
         flex: 0 0 auto;
         width: 100%;
         max-width: 200px;
     }
-    
+
     .stat-number {
         font-size: 2rem;
     }
-    
+
     .stat-label {
         font-size: 0.9rem;
     }
-    
+
     section {
         padding: 60px 0;
     }
-    
+
     h2 {
         font-size: 2rem;
         margin-bottom: 15px;
     }
-    
+
     .activities-tabs {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .activity-tab {
         width: 100%;
         padding: 15px 20px;
         font-size: 1rem;
     }
-    
+
     .events-grid,
     .installations-grid {
         grid-template-columns: 1fr;
         gap: 30px;
     }
-    
+
     .event-card,
     .installation-card {
         margin-bottom: 0;
     }
-    
+
     .event-meta {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .event-location,
     .event-date {
         width: 100%;
     }
-    
+
     .timeline::before {
         left: 15px;
     }
-    
+
     .timeline-item,
     .timeline-item:nth-child(even) {
         padding-left: 50px;
         margin-bottom: 30px;
     }
-    
+
     .timeline-dot,
     .timeline-item:nth-child(even) .timeline-dot {
         left: 15px;
         width: 12px;
         height: 12px;
     }
-    
+
     .timeline-content {
         padding: 15px;
     }
-    
+
     .timeline-content h4 {
         font-size: 1.2rem;
     }
-    
+
     .vr-experience {
         text-align: center;
     }
-    
+
     .vr-image {
         width: 100%;
         max-width: 300px;
         margin: 20px auto;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         gap: 30px;
         text-align: center;
     }
-    
+
     .footer-info {
         order: 1;
     }
-    
+
     .welsh-government-support {
         margin-top: 30px;
     }
-    
+
     .welsh-gov-logo {
         max-width: 150px;
     }
@@ -1643,83 +1824,83 @@ footer {
         width: 100%;
         right: -100%;
     }
-    
+
     nav ul li a {
         font-size: 1rem;
         padding: 18px 20px;
     }
-    
+
     .hamburger {
         width: 40px;
         height: 40px;
         font-size: 1rem;
     }
-    
+
     .page-hero {
         min-height: 70vh;
     }
-    
+
     .page-hero-content h1 {
         font-size: 2rem;
         line-height: 1.2;
     }
-    
+
     .hero-subtitle {
         font-size: 0.9rem;
     }
-    
+
     .stat-number {
         font-size: 1.8rem;
     }
-    
+
     .stat-label {
         font-size: 0.8rem;
     }
-    
+
     h2 {
         font-size: 1.8rem;
         margin-bottom: 10px;
     }
-    
+
     .container {
         padding: 0 10px;
     }
-    
+
     section {
         padding: 40px 0;
     }
-    
+
     .logo {
         font-size: 1.3rem;
     }
-    
+
     .footer-logo {
         font-size: 1.3rem;
     }
-    
+
     .activity-tab {
         padding: 12px 15px;
         font-size: 0.9rem;
     }
-    
+
     .event-card,
     .installation-card {
         padding: 20px 15px;
     }
-    
+
     .event-details h3,
     .installation-content h3 {
         font-size: 1.3rem;
     }
-    
+
     .timeline-content h4 {
         font-size: 1.1rem;
     }
-    
+
     .timeline-content p {
         font-size: 0.9rem;
     }
-    
+
     .btn {
         padding: 10px 20px;
         font-size: 0.9rem;
@@ -1731,26 +1912,26 @@ footer {
     .page-hero-content h1 {
         font-size: 3.5rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.3rem;
     }
-    
+
     .events-grid,
     .installations-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
     }
-    
+
     .stat-item {
         margin: 8px;
         padding: 20px 15px;
     }
-    
+
     .stat-number {
         font-size: 2.5rem;
     }
-    
+
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 40px;
@@ -1762,28 +1943,28 @@ footer {
     .page-hero-content h1 {
         font-size: 2.8rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.1rem;
     }
-    
+
     .events-grid,
     .installations-grid {
         grid-template-columns: 1fr;
         gap: 25px;
     }
-    
+
     .hero-stats {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .stat-item {
         margin: 8px;
         padding: 15px 12px;
         flex: 0 0 calc(50% - 16px);
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         gap: 25px;
@@ -1795,15 +1976,15 @@ footer {
     .event-card:hover {
         transform: none;
     }
-    
+
     .installation-card:hover {
         transform: none;
     }
-    
+
     .activity-tab:hover:not(.active) {
         transform: none;
     }
-    
+
     nav ul li a:hover {
         padding-left: 30px;
     }
