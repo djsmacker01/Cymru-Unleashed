@@ -173,42 +173,98 @@ const initializeTouchEvents = () => {
   document.addEventListener("touchstart", () => {}, { passive: true });
 };
 
-// Mobile Navigation Toggle - Activities Working Implementation
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-const overlay = document.getElementById("overlay");
-
-const toggleMenu = () => {
-  nav.classList.toggle("active");
-  hamburger.classList.toggle("active");
-  overlay.classList.toggle("active");
-  hamburger.innerHTML = nav.classList.contains("active")
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
-
-  // Toggle body scroll
-  document.body.style.overflow = nav.classList.contains("active")
-    ? "hidden"
-    : "";
-};
-
-// Initialize navigation event listeners
+// Fixed Navigation Implementation - No Conflicts
 const initializeNavigation = () => {
-  hamburger.addEventListener("click", toggleMenu);
-  overlay.addEventListener("click", toggleMenu);
+  const hamburger = document.getElementById("hamburger");
+  const nav = document.getElementById("nav");
+  const overlay = document.getElementById("overlay");
 
-  // Close menu when clicking navigation links - allow navigation to happen
-  document.querySelectorAll("nav a").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      // Allow the link to navigate normally
-      // Just close the menu after a small delay
-      if (nav.classList.contains("active")) {
+  if (!hamburger || !nav || !overlay) {
+    console.error("❌ Navigation elements missing!");
+    return;
+  }
+
+  let isMenuOpen = false;
+
+  // Toggle menu function
+  const toggleMenu = () => {
+    isMenuOpen = !isMenuOpen;
+    nav.classList.toggle("active");
+    hamburger.classList.toggle("active");
+    overlay.classList.toggle("active");
+
+    hamburger.innerHTML = isMenuOpen
+      ? '<i class="fas fa-times"></i>'
+      : '<i class="fas fa-bars"></i>';
+
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    console.log("🔄 Menu toggled, now:", isMenuOpen);
+  };
+
+  // Hamburger click handler with proper event handling
+  hamburger.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    console.log("🍔 Hamburger clicked");
+    toggleMenu();
+  });
+
+  // Touch handler for mobile
+  hamburger.addEventListener("touchend", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    console.log("👆 Hamburger touched");
+    toggleMenu();
+  });
+
+  // Overlay click handler - only close if clicking overlay directly
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay && isMenuOpen) {
+      console.log("🖱️ Overlay clicked - closing menu");
+      toggleMenu();
+    }
+  });
+
+  // Navigation links handler
+  document.querySelectorAll("nav a").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      console.log(
+        '🎯 Navigation link clicked: "' +
+          this.textContent.trim() +
+          '" -> ' +
+          this.href
+      );
+
+      if (isMenuOpen) {
+        console.log("📱 Menu is open - closing and navigating");
+        e.preventDefault();
+        toggleMenu();
+
+        // Navigate after menu closes
         setTimeout(() => {
-          toggleMenu();
-        }, 100);
+          console.log("🚀 Navigating to: " + this.href);
+          window.location.href = this.href;
+        }, 300);
       }
+      // If menu is closed, let link work normally
     });
   });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function (e) {
+    if (
+      isMenuOpen &&
+      !e.target.closest("#nav") &&
+      !e.target.closest("#hamburger")
+    ) {
+      console.log("🌐 Clicked outside - closing menu");
+      toggleMenu();
+    }
+  });
+
+  console.log("✅ Navigation initialized successfully");
 };
 
 // Initialize all functionality

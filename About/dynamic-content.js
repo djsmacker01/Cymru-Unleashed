@@ -28,23 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Render Navigation
-  // Commented out to prevent conflicts with hamburger menu
-  /*
-  const navList = document.querySelector("#nav ul");
-  if (navList) {
-    navList.innerHTML = siteConfig.navigation
-      .map(
-        (item) => `
-            <li><a href="${item.path}" ${
-          item.path.includes("about.html") ? 'class="active"' : ""
-        }>
-                <i class="${item.icon}"></i> ${item.label}
-            </a></li>
-        `
-      )
-      .join("");
-  }
-  */
 
   // Render Hero Stats
   const heroStats = document.querySelector(".hero-stats");
