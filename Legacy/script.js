@@ -1,136 +1,142 @@
-// SIMPLIFIED NAVIGATION FIX
-console.log("🚀 Starting navigation fix");
+// Clean Navigation Implementation
+console.log("🚀 Navigation script starting...");
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("📱 DOM loaded, setting up navigation");
+  console.log("📱 DOM loaded - initializing navigation");
 
+  // Get navigation elements
   const hamburger = document.getElementById("hamburger");
   const nav = document.getElementById("nav");
   const overlay = document.getElementById("overlay");
 
   if (!hamburger || !nav || !overlay) {
-    console.error("❌ Navigation elements missing");
+    console.error("❌ Navigation elements missing!");
+    console.log("Hamburger:", hamburger);
+    console.log("Nav:", nav);
+    console.log("Overlay:", overlay);
     return;
   }
 
-  console.log("✅ All navigation elements found");
+  console.log("✅ Navigation elements found");
 
   let isMenuOpen = false;
 
-  // Open menu function
+  // Open menu
   function openMenu() {
     console.log("📂 Opening menu");
     isMenuOpen = true;
     nav.classList.add("active");
     hamburger.classList.add("active");
     overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("menu-open");
     hamburger.innerHTML = '<i class="fas fa-times"></i>';
-
-    // Force all nav links to be clickable immediately
-    setTimeout(() => {
-      const links = nav.querySelectorAll("a");
-      links.forEach((link) => {
-        link.style.pointerEvents = "auto";
-        link.style.zIndex = "99999";
-        link.style.position = "relative";
-        console.log("🔗 Made link clickable:", link.href);
-      });
-    }, 100);
   }
 
-  // Close menu function
+  // Close menu
   function closeMenu() {
     console.log("📁 Closing menu");
     isMenuOpen = false;
     nav.classList.remove("active");
     hamburger.classList.remove("active");
     overlay.classList.remove("active");
-    document.body.style.overflow = "";
+    document.body.classList.remove("menu-open");
     hamburger.innerHTML = '<i class="fas fa-bars"></i>';
   }
 
-  // Hamburger click
-  hamburger.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("🍔 Hamburger clicked, menu open:", isMenuOpen);
-
+  // Toggle menu
+  function toggleMenu() {
+    console.log("🔄 Toggling menu, current state:", isMenuOpen);
     if (isMenuOpen) {
       closeMenu();
     } else {
       openMenu();
     }
+  }
+
+  // Hamburger click handler
+  hamburger.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🍔 Hamburger clicked");
+    toggleMenu();
   });
 
-  // Overlay click
+  // Overlay click to close menu
   overlay.addEventListener("click", function () {
-    console.log("🖱️ Overlay clicked");
+    console.log("🖱️ Overlay clicked - closing menu");
     closeMenu();
   });
 
-  // Fix navigation links - CRITICAL PART
-  function fixNavigationLinks() {
-    console.log("🔧 Fixing navigation links");
+  // Close menu on escape key
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isMenuOpen) {
+      console.log("⌨️ Escape key pressed - closing menu");
+      closeMenu();
+    }
+  });
 
-    const navLinks = document.querySelectorAll("nav a, #nav a");
-    console.log(`🔗 Found ${navLinks.length} navigation links`);
+  // Handle navigation links
+  function setupNavigationLinks() {
+    console.log("🔗 Setting up navigation links");
+
+    const navLinks = nav.querySelectorAll("a");
+    console.log(`Found ${navLinks.length} navigation links`);
 
     navLinks.forEach((link, index) => {
-      console.log(`🔗 Setting up link ${index + 1}: ${link.href}`);
+      const linkText = link.textContent.trim();
+      const linkHref = link.getAttribute("href");
+      console.log(`Setting up link ${index + 1}: "${linkText}" -> ${linkHref}`);
 
       // Remove existing event listeners by cloning
       const newLink = link.cloneNode(true);
       link.parentNode.replaceChild(newLink, link);
 
-      // Force link to be clickable
-      newLink.style.pointerEvents = "auto";
-      newLink.style.zIndex = "99999";
-      newLink.style.position = "relative";
-      newLink.style.cursor = "pointer";
-      newLink.style.display = "flex";
-      newLink.style.background = "transparent";
-
-      // Click event - SIMPLE approach
+      // Add click handler
       newLink.addEventListener("click", function (e) {
+        e.preventDefault();
         e.stopPropagation();
-        console.log("🎯 Link clicked! Navigating to:", this.href);
+        console.log(
+          `🎯 Navigation link clicked: "${this.textContent.trim()}" -> ${
+            this.href
+          }`
+        );
 
+        // Close menu if open
         if (isMenuOpen) {
           closeMenu();
+          // Wait for menu to close before navigating
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 300);
+        } else {
+          window.location.href = this.href;
         }
-
-        // Navigate immediately
-        window.location.href = this.href;
       });
 
-      // Touch events for mobile
-      newLink.addEventListener("touchstart", function (e) {
-        console.log("👆 Touch start on:", this.href);
-        this.style.backgroundColor = "#f0f0f0";
-      });
-
+      // Add touch handler for mobile
       newLink.addEventListener("touchend", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log("👆 Touch end - navigating to:", this.href);
+        console.log(
+          `👆 Touch navigation: "${this.textContent.trim()}" -> ${this.href}`
+        );
 
         if (isMenuOpen) {
           closeMenu();
-        }
-
-        // Navigate after short delay
-        setTimeout(() => {
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 300);
+        } else {
           window.location.href = this.href;
-        }, 100);
+        }
       });
+
+      console.log(`✅ Link setup complete for "${linkText}"`);
     });
   }
 
-  // Fix links immediately and after delay
-  fixNavigationLinks();
-  setTimeout(fixNavigationLinks, 500);
-  setTimeout(fixNavigationLinks, 1000);
+  // Setup navigation links
+  setupNavigationLinks();
 
   // Sticky header
   window.addEventListener("scroll", function () {
@@ -140,35 +146,93 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  console.log("✅ Navigation setup complete");
+  console.log("✅ Navigation initialization complete");
 });
 
-// Global backup click handler
-document.addEventListener(
-  "click",
-  function (e) {
-    if (e.target.closest("nav a") || e.target.closest("#nav a")) {
-      const link = e.target.closest("a");
-      console.log("🌐 Global backup handler:", link.href);
+// Testimonial Slider
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.getElementById("stories-track");
+  const dots = document.querySelectorAll(".slider-dot");
+  const nextBtn = document.getElementById("next");
+  const prevBtn = document.getElementById("prev");
 
-      e.stopPropagation();
+  if (track && nextBtn && prevBtn) {
+    console.log("📊 Initializing testimonial slider");
 
-      if (link && link.href) {
-        const nav = document.getElementById("nav");
-        if (nav && nav.classList.contains("active")) {
-          nav.classList.remove("active");
-          document.getElementById("hamburger").classList.remove("active");
-          document.getElementById("overlay").classList.remove("active");
-          document.body.style.overflow = "";
-        }
+    let currentIndex = 0;
+    const slides = Array.from(track.children);
+    let startX,
+      moveX,
+      isMouseDown = false;
 
-        setTimeout(() => {
-          window.location.href = link.href;
-        }, 100);
+    const setSliderPosition = () => {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot) => dot.classList.remove("active"));
+      if (dots[currentIndex]) {
+        dots[currentIndex].classList.add("active");
       }
-    }
-  },
-  true
-);
+    };
 
-console.log("🎯 Navigation script loaded");
+    nextBtn.addEventListener("click", () => {
+      currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+      setSliderPosition();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+      setSliderPosition();
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        currentIndex = parseInt(dot.getAttribute("data-index"));
+        setSliderPosition();
+      });
+    });
+
+    // Touch events
+    track.addEventListener(
+      "touchstart",
+      (e) => {
+        startX = e.touches[0].clientX;
+        isMouseDown = true;
+        track.style.transition = "none";
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!isMouseDown) return;
+        moveX = e.touches[0].clientX;
+        const diff = moveX - startX;
+        const move = (diff / window.innerWidth) * 100;
+        track.style.transform = `translateX(calc(-${
+          currentIndex * 100
+        }% + ${move}px))`;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener("touchend", () => {
+      isMouseDown = false;
+      track.style.transition = "transform 0.5s ease";
+
+      if (moveX) {
+        const diff = moveX - startX;
+        if (diff > 50 && currentIndex > 0) {
+          currentIndex--;
+        } else if (diff < -50 && currentIndex < slides.length - 1) {
+          currentIndex++;
+        }
+        setSliderPosition();
+        moveX = null;
+      }
+    });
+
+    console.log("✅ Slider initialized");
+  }
+});
+
+console.log("🎯 Navigation script fully loaded!");
