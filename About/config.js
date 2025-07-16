@@ -30,7 +30,7 @@ const siteConfig = {
         en: "Lead Partner",
         cy: "Cyfarwyddwr Prosiect",
       },
-      image: "/Images/otid.png",
+      image: "/Images/otiD.jpg",
       description: {
         en: "OTID Entertainment (AfroWales) is a Cardiff-based events company celebrating Afro-Caribbean culture through music and festivals. Founded in 2021, it's known for vibrant Afrobeats events and partnerships promoting diversity across Wales.",
         cy: "Mae Alys yn eiriolwr brwd dros rymuso merched yng Nghymru, gyda chefndir mewn arweinyddiaeth chwaraeon ac ymgysylltu cymunedol.",
